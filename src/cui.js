@@ -13387,68 +13387,83 @@ return jQuery;
         var y = (eventInfo.touches[0].pageY - eventInfo.touches[1].pageY);
         return Math.sqrt(x * x + y * y);
     };
-
+    var _getInfo = function (eventInfo) {
+        var arry = Array.prototype.slice.call(eventInfo.touches);
+        return {
+            touches: arry.map(function (e) {
+                return {
+                    pageX: e.pageX,
+                    pageY: e.pageY
+                };
+            })
+        };
+    };
     var eventSetting = {
         setup: function () {
             var $this = $(this);
-            $this.off("touchstart.cui").on("touchstart.cui", function (e) {
-                $this.data('_touchStart', null);
-                $this.data('_touchEnd', null);
+            $this.off("touchstart.cui").on("touchstart.cui", function () {
+                var $ele = $(this);
+                $ele.data('_touchStart', null);
+                $ele.data('_touchEnd', null);
+                return false;
             });
             $this.off("touchmove.cui").on('touchmove.cui', $.throttle(function (e) {
-                var event = e.originalEvent;
-                if (!$this.data('_touchStart')) {
-                    $this.data('_touchStart', event);
+                var $ele = $(this);
+                var event = _getInfo(e.originalEvent);
+                if (!$ele.data('_touchStart')) {
+                    $ele.data('_touchStart', event);
                 } else {
-                    if ($this.data('_touchStart').touches.length == 1 && event.touches.length == 2) {
-                        $this.data('_touchStart', event);
+                    if ($ele.data('_touchStart').touches.length == 1 && event.touches.length == 2) {
+                        $ele.data('_touchStart', event);
                     }
                 }
-                if ($this.data('_touchStart').touches.length == 2 && event.touches.length == 1) {
+                if ($ele.data('_touchStart').touches.length == 2 && event.touches.length == 1) {
                     return;
                 } else {
-                    $this.data('_touchEnd', event);
+                    $ele.data('_touchEnd', event);
                 }
-                $this.trigger('moving', [$this.data('_touchStart'), event]);
-                e.preventDefault();
-            }, 50));
+                $ele.trigger('moving', [$ele.data('_touchStart'), event]);
+                return false;
+            }, 100));
 
-            $this.off("touchend.cui").on("touchend.cui", function (e) {
-                var start = $this.data('_touchStart');
-                var end = $this.data('_touchEnd');
+            $this.off("touchend.cui").on("touchend.cui", function () {
+                var $ele = $(this);
+                var start = $ele.data('_touchStart');
+                var end = $ele.data('_touchEnd');
+
                 if (start && end) {
                     if (start.touches.length == 2) {
                         var startDistance = _getDist(start);
                         var endDistance = _getDist(end);
                         if (startDistance > endDistance) {
-                            $this.trigger('pinchin', [start, end]);
-                        } else if ($this.data('_touchEvent') < dist) {
-                            $this.trigger('pinchout', [start, end]);
+                            $ele.trigger('pinchin', [start, end]);
+                        } else if (startDistance < endDistance) {
+                            $ele.trigger('pinchout', [start, end]);
                         }
                     } else if (start.touches.length == 1) {
                         var xDistance = start.touches[0].pageX - end.touches[0].pageX;
                         var yDistance = start.touches[0].pageY - end.touches[0].pageY;
-                        if (Math.abs(xDistance) > Math.abs(yDistance)) {
+                        if (Math.abs(xDistance) > Math.abs(yDistance) * 2) {
                             if (xDistance !== 0) {
                                 if (xDistance > 0) {
-                                    $this.trigger('swipeleft', [start, end]);
+                                    $ele.trigger('swipeleft', [start, end]);
                                 } else {
-                                    $this.trigger('swiperight', [start, end]);
+                                    $ele.trigger('swiperight', [start, end]);
                                 }
                             }
-                        } else {
+                        } else if (Math.abs(xDistance) * 2 < Math.abs(yDistance)) {
                             if (yDistance !== 0) {
                                 if (yDistance > 0) {
-                                    $this.trigger('swipedown', [start, end]);
+                                    $ele.trigger('swipedown', [start, end]);
                                 } else {
-                                    $this.trigger('swipeup', [start, end]);
+                                    $ele.trigger('swipeup', [start, end]);
                                 }
                             }
                         }
                     }
                 }
+                return false;
             });
-
         },
         teardown: function () {
             var $this = $(this);
@@ -13560,7 +13575,7 @@ var tmpdiv = null;
 
 })(jQuery);
 
-"use strict";
+
 window.context = {};
 //initial event
 (function ($) {
@@ -13743,9 +13758,7 @@ Date.prototype.format = function (mask, utc) {
     return dateFormat(this, mask, utc);
 };
 
-(function () {
-    'use strict';
-
+(function ($) {
     var getPosition = function (alert, element, relativePosition) {
         var alertWidth = alert.outerWidth();
         var alertHeight = alert.outerHeight();
@@ -13992,7 +14005,7 @@ Date.prototype.format = function (mask, utc) {
             onbefore: null,
             onafter: null,
             defaultTemplate: null,
-            hideText:'See More',
+            hideText: 'See More',
         };
         var opt = $.extend({}, defaultOption, option);
         var $thead = $('<thead></thead>');
@@ -14008,7 +14021,7 @@ Date.prototype.format = function (mask, utc) {
                     if (value.replace) {
                         value = value.replace(/,|\s/g, '');
                     }
-                    return Number.parseFloat(value || 0);
+                    return value * 1 || 0;
                 default:
                     return value;
             }
@@ -14017,7 +14030,7 @@ Date.prototype.format = function (mask, utc) {
             switch (column.type) {
                 case 'number':
                     if ($.isNumeric(value)) {
-                        return column.format ? Number.parseFloat(value).toFixed(column.format * 1) : Number.parseFloat(value);
+                        return column.format ? value.toFixed(column.format * 1) : value;
                     } else {
                         return ''
                     }
@@ -14033,13 +14046,7 @@ Date.prototype.format = function (mask, utc) {
         var _getRenderHtml = function (template, data) {
             return Mustache.render(template, data);
         };
-        var _getColumnByKey = function (key) {
-            return opt.columns.reduce(function (pre, next) {
-                if (!pre && next.key === key) {
-                    return next;
-                }
-            }, null);
-        };
+
         var _sort = function (column, isDesc) {
             if (opt.data && opt.data.length) {
                 if (isDesc) {
@@ -14122,19 +14129,19 @@ Date.prototype.format = function (mask, utc) {
         };
         var _initalTfoot = function () {
             $tfoot.empty();
-            if (opt.maxcount >0 && opt.data.length > opt.maxcount) {
+            if (opt.maxcount > 0 && opt.data.length > opt.maxcount) {
                 var $tr = $('<tr></tr>');
-                var $link = $('<td colspan="' + opt.columns.length + '"><a href="javascript:;" class="btn blue" >'+opt.hideText+'</a></td>');
-                $tbody.find('tr').eq(opt.maxcount-1).nextAll().hide();
+                var $link = $('<td colspan="' + opt.columns.length + '"><a href="javascript:;" class="btn blue" >' + opt.hideText + '</a></td>');
+                $tbody.find('tr').eq(opt.maxcount - 1).nextAll().hide();
                 $link.click(function () {
-                    $tbody.find('tr').eq(opt.maxcount-1).nextAll().show();
+                    $tbody.find('tr').eq(opt.maxcount - 1).nextAll().show();
                     $(this).hide();
                 });
                 $tr.append($link);
                 $tfoot.append($tr);
             }
             return $tfoot;
-        }
+        };
         var _initalTable = function (isInital) {
             if (isInital) {
                 $table = $('<table class="datatable"></table>');
@@ -14179,7 +14186,7 @@ Date.prototype.format = function (mask, utc) {
         }
         $this.data('datatable', obj);
         return obj;
-    }
+    };
     $(document).on('dom.load.datatable', function () {
         $('[data-datatable]').each(function () {
             var $this = $(this);
@@ -14633,6 +14640,367 @@ Date.prototype.format = function (mask, utc) {
 
     });
 })(jQuery);
+//validate for form submit
+(function ($) {
+    //customer validate
+    var customValidate = {
+        max: function ($element) {
+            var value = $element.val();
+            var max = $element.attr("data-max");
+            var a = $.isNumeric(value) ? value : Date.parse(value);
+            var b = $.isNumeric(max) ? max : Date.parse(max);
+            return (a - b) <= 0;
+        },
+        less: function ($element) {
+            var value = $element.val();
+            var less = $element.attr("data-less");
+            var a = $.isNumeric(value) ? value : Date.parse(value);
+            var b = $.isNumeric(less) ? less : Date.parse(less);
+            return (a - b) < 0;
+        },
+        min: function ($element) {
+            var value = $element.val();
+            var min = $element.attr("data-min");
+            var a = $.isNumeric(value) ? value : Date.parse(value);
+            var b = $.isNumeric(min) ? min : Date.parse(min);
+            return (a - b) >= 0;
+        },
+        greater: function ($element) {
+            var value = $element.val();
+            var greater = $element.attr("data-greater");
+            var a = $.isNumeric(value) ? value : Date.parse(value);
+            var b = $.isNumeric(greater) ? greater : Date.parse(greater);
+            return (a - b) > 0;
+        }
+    };
+    var _showValidate = function ($element, message) {
+        $element.closest(".input").removeClass("has-success");
+        $element.closest(".input").addClass("has-error");
+        if ($element.is('[id]')) {
+            $('[for=' + $element.attr('id') + ']').addClass("error-text");
+        }
+        $element.attr('title', message);
+        $element.tooltip('destroy');
+        $element.tip({
+            type: 'error'
+        });
+        $element.tooltip('show');
+    };
+    var _passValidate = function ($element, isRequried) {
+        $element.closest(".input").removeClass("has-error");
+        $element.tooltip('hide');
+        if ($element.is('[id]')) {
+            $('[for=' + $element.attr('id') + ']').removeClass("error-text");
+        }
+        if (isRequried) {
+            $element.closest(".input").addClass("has-success");
+        } else if ($element.val()) {
+            $element.closest(".input").addClass("has-success");
+        } else {
+            $element.closest(".input").removeClass("has-success");
+        }
+    };
+    var _validate = function ($element) {
+        var type = $element.attr("data-validate") ? $element.attr("data-validate").split(',') : [];
+        var name = $element.attr("name");
+        var value = $.trim($element.val());
+        var isRequried = type[0] === "required";
+        var dataMessage = $element.attr("data-errortext");
+        var message = "";
+        for (var i = 0; i < type.length; i++) {
+            switch (type[i]) {
+                case "required":
+                    if (!value && value === "") {
+                        switch (name) {
+                            case "name":
+                            case "firstname":
+                            case "fullname":
+                                name = "Name";
+                                break;
+                            case "phoneNum":
+                                name = "Phone Number";
+                                break;
+                            case "email":
+                                name = "Email";
+                                break;
+                            case "comment":
+                                name = "Comment";
+                                break;
+                            case "agentName":
+                                name = "Agent name";
+                                break;
+                            case "zipcodecityname":
+                                name = "Zipcode or City name";
+                                break;
+                            case "username":
+                                name = "Email (Movoto ID)";
+                                break;
+                            case "password":
+                                name = "Password";
+                                break;
+                            case "address":
+                                name = "Address";
+                                break;
+                            case "zipcode":
+                                name = "Zipcode";
+                                break;
+                            case "cityname":
+                                name = "City name";
+                                break;
+                            case "first_name":
+                                name = "Firstname";
+                                break;
+                            case "last_name":
+                                name = "Lastname";
+                                break;
+                        }
+                        message = name ? (name + " is required.") : "This is requried";
+                        _showValidate($element, message);
+                        return false;
+                    }
+                    break;
+                case "email":
+                    if (value && !$.isEmail(value)) {
+                        message = dataMessage || "Please enter a valid email.";
+                        _showValidate($element, message);
+                        return false;
+                    }
+                    break;
+                case "mutilemail":
+                    if (value && !$.isEmails(value)) {
+                        message = dataMessage || "Please enter valid emails";
+                        _showValidate($element, message);
+                        return false;
+                    }
+                    break;
+                case "phone":
+                    if (value && !$.isPhone(value)) {
+                        message = dataMessage || "Please enter a valid Phone Number";
+                        _showValidate($element, message);
+                        return false;
+                    }
+                    break;
+                case "zipcode":
+                    if (value && !$.isZipCode(value)) {
+                        message = dataMessage || "Please enter a valid zipcode";
+                        _showValidate($element, message);
+                        return false;
+                    }
+                    break;
+                case "price":
+                    if (value && !$.isPrice(value)) {
+                        message = dataMessage || "Please enter a valid price";
+                        _showValidate($element, message);
+                        return false;
+                    }
+                    break;
+                case "int":
+                    if (value && !$.isInt(value)) {
+                        message = dataMessage || "Only allowed integer number";
+                        _showValidate($element, message);
+                        return false;
+                    }
+                    break;
+                case "float":
+                    if (value && !$.isFloat(value)) {
+                        message = dataMessage || "Only allowed floating number";
+                        _showValidate($element, message);
+                        return false;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        var key = $element.attr("data-customValidate");
+        if (customValidate[key] && !customValidate[key]($element)) {
+            message = $element.attr("data-errortext") || "Invalid value.";
+            _showValidate($element, message);
+            return false;
+        }
+        _passValidate($element, isRequried);
+        return true;
+    };
+    $.extend({
+        isNotEmpty: function (str) {
+            return !(str === '' || str === null || str === "undefined");
+        },
+        isEmail: function (str) {
+            var reg = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+            return reg.test(str);
+        },
+        isEmails: function (str) {
+            var reg = /^[\.a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+(\s*,\s*[\.a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+)*$/;
+            return reg.test(str);
+        },
+        isFloat: function (str) {
+            var reg = /^([-]){0,1}([0-9]){1,}([.]){0,1}([0-9]){0,}$/;
+            return reg.test(str);
+        },
+        isInt: function (str) {
+            var reg = /^-?\d+$/;
+            return reg.test(str);
+        },
+        isPhone: function (str) {
+            var reg = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4}$/im;
+            return reg.test(str);
+        },
+        isZipCode: function (str) {
+            var reg = /^([0-9]){5}$/;
+            return reg.test(str);
+        },
+        isPrice: function (str) {
+            var reg = /^(([$])?((([0-9]{1,3},)+([0-9]{3},)*[0-9]{3})|[0-9]+)(\.[0-9]+)?)$/;
+            return reg.test(str);
+        }
+    });
+    $.fn.extend({
+        validate: function () {
+            $(this).find("[data-validate]").each(function (index, item) {
+                var validateText = $(item).attr("data-validate");
+                if (validateText.indexOf('phone') >= 0) {
+                    $(item).inputformat({
+                        type: "phone"
+                    });
+                } else if (validateText.indexOf('price') >= 0) {
+                    $(item).inputformat({
+                        type: "price"
+                    });
+                } else if (validateText.indexOf('rate') >= 0) {
+                    var fraction = parseInt($(item).attr("data-fraction"));
+                    $(item).inputformat({
+                        type: "rate",
+                        fraction: fraction
+                    });
+                }
+                $(item).change(function () {
+                    _validate($(item));
+                });
+            });
+        },
+        formValue: function () {
+            var $element = $(this);
+            var obj = {};
+            $element.find(":text").each(function (index, item) {
+                var name = $(item).attr("name");
+                if (name) {
+                    obj[name] = $(item).prop("rawValue") || $(item).val();
+                }
+                if ($(item).attr('googleAutomcomplete')) {
+                    var data = $(item).data('gautoComplete').getValue();
+                    obj[$(item).attr('googleAutomcomplete')] = data ? data.value : null;
+                }
+            });
+            $element.find(":password").each(function (index, item) {
+                var name = $(item).attr("name");
+                if (name) {
+                    obj[name] = $(item).val();
+                }
+            });
+            $element.find(":hidden").each(function (index, item) {
+                var name = $(item).attr("name");
+                if (name) {
+                    obj[name] = $(item).val();
+                }
+            });
+            $element.find("textarea").each(function (index, item) {
+                var name = $(item).attr("name");
+                if (name) {
+                    obj[name] = $(item).val();
+                }
+            });
+            $element.find("select").each(function (index, item) {
+                var name = $(item).attr("name");
+                if (name) {
+                    obj[name] = $(item).val();
+                }
+            });
+            $element.find(".checkbox").each(function (index, item) {
+                var name;
+                var checkbox;
+                var checkboxList;
+                if ($(item).data("type") == "single") {
+                    checkbox = $(item).find(":checkbox").eq(0);
+                    if (checkbox.length) {
+
+                        name = checkbox.attr("name");
+                        if (checkbox.is(":checked")) {
+                            obj[name] = checkbox.attr("value") ? checkbox.attr("value") : true;
+                        } else {
+                            obj[name] = checkbox.attr("value") ? "" : false;
+                        }
+                    }
+                } else {
+                    checkboxList = $(item).find(":checkbox:checked");
+                    name = checkboxList.attr("name");
+                    if (name) {
+                        obj[name] = $.map(checkboxList, function (item) {
+                            return $(item).val();
+                        });
+                    }
+                }
+            });
+            $element.find(".radio").each(function (index, item) {
+                var radioItem = $(item).find(":radio:checked");
+                var name = radioItem.attr("name");
+                if (name) {
+                    obj[name] = $(radioItem).val();
+                }
+            });
+            return obj;
+        },
+        isValid: function () {
+            var foucsElement = null;
+            var $element = $(this);
+            var isPassed = true;
+            $element.find("[data-validate]").each(function (index, item) {
+                if (!_validate($(item))) {
+                    isPassed = false;
+                    if (!foucsElement) {
+                        foucsElement = $(item);
+                    }
+                }
+            });
+            if (foucsElement) {
+                foucsElement.focus();
+            }
+            return isPassed;
+        }
+    });
+    $(document).on("dom.load", function () {
+        $("[data-form]").each(function (index, item) {
+            $(item).validate();
+            $(item).removeAttr("data-form");
+        });
+    });
+    $.fn.textbox = function () {
+        var $this = $(this);
+        var $input = $this.find('input');
+        $input.on('focusin', function () {
+            $this.addClass('focus');
+        });
+        $input.on('focusout', function () {
+            if (!$input.val()) {
+                $this.removeClass('focus');
+            }
+        });
+
+        if ($input.val()) {
+            $this.addClass('focus');
+        } else {
+            $this.removeClass('focus');
+        }
+    }
+    $(document).on('dom.load', function () {
+        $("[data-textbox]").each(function (index, item) {
+            $(item).textbox();
+            $(item).attr('data-textbox-load', '');
+            $(item).removeAttr("data-textbox")
+        });
+    });
+})(jQuery);
+
 (function ($) {
     $.fn.gridtable = function (option) {
         var defaultOption = {
@@ -15821,18 +16189,19 @@ Date.prototype.format = function (mask, utc) {
     });
 })(jQuery);
 
-(function ($) {
-    $.fn.shifter = function (options) {
+(function($) {
+    $.fn.shifter = function(options) {
         var defaultOpt = {
             duration: 300,
-            height: 200,
-            width: 375,
+            height: 300,
+            width: 425,
             clickable: true,
             lazingload: true,
             autoscroll: 0,
             onchange: null,
             onbefore: null,
             onafter: null,
+            index: 1,
         };
         var $this = $(this);
         var obj;
@@ -15849,35 +16218,51 @@ Date.prototype.format = function (mask, utc) {
         var autoTimer = null;
         var prevLink = $('<a href="javascript:;" class="prev"><i class="icon-angle-left"></i></a>');
         var nextLink = $('<a href="javascript:;" class="next"><i class="icon-angle-right"></i></a>');
-        var _resize = function () {
+        var ratio = opt.height / opt.width;
+
+        var _getImageSize = function() {
+            var maxHeight = $(window).height() - 100;
+            var screenheight = opt.height > maxHeight ? maxHeight : opt.height;
+            var screenwidth = $this.width();
+            var tmpWidth = screenwidth > opt.width ? opt.width : screenwidth - 2;
+            var tmpHeight = tmpWidth * ratio;
+            tmpHeight = screenheight > tmpHeight ? tmpHeight : screenheight;
+            return {
+                width: tmpWidth,
+                height: tmpHeight
+            }
+        }
+        var _resize = function() {
             innerW = 0;
-            $items.each(function (i, item) {
-                var screenwidth = $this.width();
-                var height = opt.height;
-                var width = screenwidth > opt.width ? opt.width : screenwidth - 2;
+            var perIndex = opt.index;
+            var sizeInfo = _getImageSize();
+            $this.css("height", sizeInfo.height);
+            $wrap.css("height", sizeInfo.height + 21);
+            $items.each(function(i, item) {
                 $(item).css({
-                    width: width,
-                    height: opt.height
+                    width: sizeInfo.width,
+                    height: sizeInfo.height
                 });
                 $(item).children().css({
-                    width: width,
-                    height: opt.height,
+                    width: sizeInfo.width,
+                    height: sizeInfo.height,
                 });
                 innerW += $(item).outerWidth();
             });
             $list.width(innerW);
+            _shift(perIndex, true);
         };
-        var _markActive = function () {
+        var _markActive = function() {
             var list = [];
             var maxwidth = $wrap.outerWidth();
-            $items.each(function (index, item) {
+            $items.each(function(index, item) {
                 var $item = $(item);
                 $item.removeClass("active");
                 var left = $item.position().left;
                 var right = left + $item.outerWidth();
                 if (left >= 0 && left <= maxwidth || right >= 0 && right <= maxwidth) {
                     if (opt.lazingload) {
-                        $item.find("img").each(function (index, img) {
+                        $item.find("img").each(function(index, img) {
                             if ($(img).data("src")) {
                                 $(img).attr("src", $(img).data("src"));
                                 $(img).data("src", null);
@@ -15917,8 +16302,9 @@ Date.prototype.format = function (mask, utc) {
                 lastScrollLeft = $wrap.scrollLeft();
                 sign_isAuto = false;
             }
+            opt.index = $list.find('.active').attr('shift-index');
         };
-        var _scroll = function () {
+        var _scroll = function() {
             _markActive();
             maxOffsetX = $wrap.prop('scrollWidth') - $wrap.width();
             if ($wrap.scrollLeft() <= 0) {
@@ -15932,44 +16318,43 @@ Date.prototype.format = function (mask, utc) {
                 nextLink.removeClass('disable');
             }
         };
-        var _shift = function (index) {
+        var _shift = function(index, disableAnimation) {
+            var left;
+            var ismove = false;
+            var timer = disableAnimation ? 0 : opt.duration;
             if ($.isInt(index)) {
                 var item = $items.eq(index - 1);
                 var offset = ($wrap.outerWidth() - item.outerWidth()) / 2;
-                var left = $wrap.scrollLeft() + $(item).position().left - offset;
+                left = $wrap.scrollLeft() + $(item).position().left - offset;
                 $wrap.stop().animate({
                     "scrollLeft": left
-                }, opt.duration);
+                }, timer);
                 return index;
             } else {
+                var begin = $wrap.scrollLeft();
+                var end = $wrap.outerWidth();
+                var width;
                 if (index) {
-                    var begin = $wrap.scrollLeft();
-                    var end = $wrap.outerWidth();
-                    var ismove = false;
-                    $items.each(function (j, item) {
-                        var left = $(item).position().left;
-                        var width = $(item).outerWidth();
+                    $items.each(function(j, item) {
+                        left = $(item).position().left;
+                        width = $(item).outerWidth();
                         if (left > 0 && left < end && (left + width) > end) {
                             ismove = true;
                             $wrap.stop().animate({
                                 "scrollLeft": begin + $(item).position().left
-                            }, opt.duration);
+                            }, timer);
                             return false;
                         }
                     });
                     return ismove;
                 } else {
-                    var begin = $wrap.scrollLeft();
-                    var end = $wrap.outerWidth();
-                    var ismove = false;
-                    $items.each(function (j, item) {
-                        var left = $(item).position().left;
-                        var width = $(item).outerWidth();
+                    $items.each(function(j, item) {
+                        left = $(item).position().left;
+                        width = $(item).outerWidth();
                         if (left <= 0 && (left + width) > 0) {
-                            var ismove = true;
                             $wrap.stop().animate({
                                 "scrollLeft": begin - end + ($(item).width() + $(item).position().left)
-                            }, opt.duration);
+                            }, timer);
                             return true;
                         }
                     });
@@ -15977,20 +16362,32 @@ Date.prototype.format = function (mask, utc) {
                 }
             }
         };
-        var _prev = function () {
+        var _prev = function() {
             return _shift(false);
         };
-        var _next = function () {
+        var _next = function() {
             return _shift(true);
         };
-        var _go = function (index) {
+        var _go = function(index) {
             return _shift(index);
         };
-        var _option = function (option) {
+        var _option = function(option) {
             opt = $.extend(opt, option);
             return opt;
         };
-        var _init = function () {
+        var _init = function() {
+            obj = {
+                prev: function() {
+                    return _prev();
+                },
+                next: function() {
+                    return _next();
+                },
+                go: function(index) {
+                    return _go(index);
+                },
+                option: _option
+            };
             if (opt.onbefore) {
                 if ($.isFunction(opt.onbefore)) {
                     opt.onbefore($this);
@@ -15998,16 +16395,15 @@ Date.prototype.format = function (mask, utc) {
                     $(document).trigger(opt.onbefore, [$this]);
                 }
             }
-            $this.css('height', opt.height);
             $list = $this.find("ul");
             $list.wrap('<div class="wrap"></div>');
             $wrap = $this.find(".wrap");
             $items = $list.find("li");
-            $items.each(function (index, item) {
-                $(item).attr('shift-index', index);
+            $items.each(function(index, item) {
+                $(item).attr('shift-index', index + 1);
                 if (opt.clickable) {
-                    var i = index + 1;
-                    $(item).click(function () {
+                    var i = index + 2;
+                    $(item).click(function() {
                         obj.go(i);
                     });
                 }
@@ -16016,7 +16412,7 @@ Date.prototype.format = function (mask, utc) {
                     img.data('src', img.attr("src"));
                     img.attr('src', 'data:image/gif;base64,R0lGODlhAQABAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAABAAEAAAICVAEAOw==');
                     $(item).addClass('img-loading');
-                    img.on('load', function () {
+                    img.on('load', function() {
                         if (img.data("src") == null) {
                             $(item).removeClass('img-loading');
                         } else {
@@ -16026,46 +16422,39 @@ Date.prototype.format = function (mask, utc) {
                 }
             });
             if (opt.autoscroll && $.isNumeric(opt.autoscroll)) {
-                autoTimer = setInterval(function () {
+                autoTimer = setInterval(function() {
                     obj.next();
                     sign_isAuto = true;
-                }, opt.autoscroll * 1);
+                }, opt.autoscroll);
             }
-            $this.css("height", opt.height);
-            $wrap.css("height", opt.height + 21);
-            prevLink.click(function (e) {
+            var sizeInfo = _getImageSize();
+            $this.css("height", sizeInfo.height);
+            $wrap.css("height", sizeInfo.height + 21);
+            prevLink.click(function() {
                 obj.prev();
                 return false;
             });
-            nextLink.click(function (e) {
+            nextLink.click(function() {
                 obj.next();
                 return false;
             });
             $this.append(prevLink);
             $this.append(nextLink);
-            obj = {
-                prev: function () {
-                    return _prev();
-                },
-                next: function () {
-                    return _next();
-                },
-                go: function (index) {
-                    return _go(index);
-                },
-                option: _option
-            };
-            $(document).on("dom.resize.shifter", function () {
+            if ($.isMobile()) {
+                $list.on('swipeleft', obj.next);
+                $list.on('swiperight', obj.prev);
+            }
+            $(document).on("dom.resize.shifter", function() {
                 _resize();
                 _scroll();
             });
-            $wrap.on("scroll", function () {
+            $wrap.on("scroll", function() {
                 if (timer) {
                     clearTimeout(timer);
                 }
                 timer = setTimeout(_scroll, 500);
             });
-            $(document).on("dom.keydown", function (ctx, e) {
+            $(document).on("dom.keydown", function(ctx, e) {
                 if (e.keyCode == '37') {
                     obj.prev();
                 }
@@ -16089,8 +16478,8 @@ Date.prototype.format = function (mask, utc) {
         return _init();
     };
 
-    $(document).on("dom.load.shifter", function () {
-        $("[data-shifter]").each(function () {
+    $(document).on("dom.load.shifter", function() {
+        $("[data-shifter]").each(function() {
             var $this = $(this);
             $this.shifter($this.data());
             $this.removeAttr('data-shifter');
@@ -16123,8 +16512,6 @@ Date.prototype.format = function (mask, utc) {
             return opt;
         };
         var _slide = function (index, animated) {
-            var firstItem = null;
-            var secondItem = null;
             var currentItem = $list.find('li.active');
             if (!currentItem.length) {
                 currentItem = $list.find('li:first-child');
@@ -16246,15 +16633,17 @@ Date.prototype.format = function (mask, utc) {
                 autoTimer = setInterval(function () {
                     obj.next();
                     sign_isAuto = true;
-                }, opt.autoscroll * 1);
+                }, opt.autoscroll);
             }
-            $this.on('swipeleft', obj.next);
-            $this.on('swiperight', obj.prev);
-            prevLink.click(function (e) {
+            if ($.isMobile()) {
+                $list.on('swipeleft', obj.next);
+                $list.on('swiperight', obj.prev);
+            }
+            prevLink.click(function () {
                 obj.prev();
                 return false;
             });
-            nextLink.click(function (e) {
+            nextLink.click(function () {
                 obj.next();
                 return false;
             });
@@ -16278,7 +16667,7 @@ Date.prototype.format = function (mask, utc) {
                 }
             }
             return obj;
-        }
+        };
         return _init();
     };
 
@@ -16563,341 +16952,5 @@ Date.prototype.format = function (mask, utc) {
         });
         tippopover.show();
         $this.removeAttr("data-popover");
-    });
-})(jQuery);
-
-//validate for form submit
-(function ($) {
-    //customer validate
-    var customValidate = {
-        max: function ($element) {
-            var value = $element.val();
-            var max = $element.attr("data-max");
-            var a = $.isNumeric(value) ? value : Date.parse(value);
-            var b = $.isNumeric(max) ? max : Date.parse(max);
-            return (a - b) <= 0;
-        },
-        less: function ($element) {
-            var value = $element.val();
-            var less = $element.attr("data-less");
-            var a = $.isNumeric(value) ? value : Date.parse(value);
-            var b = $.isNumeric(less) ? less : Date.parse(less);
-            return (a - b) < 0;
-        },
-        min: function ($element) {
-            var value = $element.val();
-            var min = $element.attr("data-min");
-            var a = $.isNumeric(value) ? value : Date.parse(value);
-            var b = $.isNumeric(min) ? min : Date.parse(min);
-            return (a - b) >= 0;
-        },
-        greater: function ($element) {
-            var value = $element.val();
-            var greater = $element.attr("data-greater");
-            var a = $.isNumeric(value) ? value : Date.parse(value);
-            var b = $.isNumeric(greater) ? greater : Date.parse(greater);
-            return (a - b) > 0;
-        }
-    };
-    var _showValidate = function ($element, message) {
-        $element.closest(".input").removeClass("has-success");
-        $element.closest(".input").addClass("has-error");
-        if ($element.is('[id]')) {
-            $('[for=' + $element.attr('id') + ']').addClass("error-text");
-        }
-        $element.attr('title', message);
-        $element.tooltip('destroy');
-        $element.tip({
-            type: 'error'
-        });
-        $element.tooltip('show');
-    };
-    var _passValidate = function ($element, isRequried) {
-        $element.closest(".input").removeClass("has-error");
-        $element.tooltip('hide');
-        if ($element.is('[id]')) {
-            $('[for=' + $element.attr('id') + ']').removeClass("error-text");
-        }
-        if (isRequried) {
-            $element.closest(".input").addClass("has-success");
-        } else if ($element.val()) {
-            $element.closest(".input").addClass("has-success");
-        } else {
-            $element.closest(".input").removeClass("has-success");
-        }
-    };
-    var _validate = function ($element) {
-        var type = $element.attr("data-validate") ? $element.attr("data-validate").split(',') : [];
-        var name = $element.attr("name");
-        var value = $.trim($element.val());
-        var isRequried = type[0] === "required";
-        var dataMessage = $element.attr("data-errortext");
-        var message = "";
-        for (var i = 0; i < type.length; i++) {
-            switch (type[i]) {
-                case "required":
-                    if (!value && value === "") {
-                        switch (name) {
-                            case "name":
-                            case "firstname":
-                            case "fullname":
-                                name = "Name";
-                                break;
-                            case "phoneNum":
-                                name = "Phone Number";
-                                break;
-                            case "email":
-                                name = "Email";
-                                break;
-                            case "comment":
-                                name = "Comment";
-                                break;
-                            case "agentName":
-                                name = "Agent name";
-                                break;
-                            case "zipcodecityname":
-                                name = "Zipcode or City name";
-                                break;
-                            case "username":
-                                name = "Email (Movoto ID)";
-                                break;
-                            case "password":
-                                name = "Password";
-                                break;
-                            case "address":
-                                name = "Address";
-                                break;
-                            case "zipcode":
-                                name = "Zipcode";
-                                break;
-                            case "cityname":
-                                name = "City name";
-                                break;
-                            case "first_name":
-                                name = "Firstname";
-                                break;
-                            case "last_name":
-                                name = "Lastname";
-                                break;
-                        }
-                        message = name ? (name + " is required.") : "This is requried";
-                        _showValidate($element, message);
-                        return false;
-                    }
-                    break;
-                case "email":
-                    if (value && !$.isEmail(value)) {
-                        message = dataMessage || "Please enter a valid email.";
-                        _showValidate($element, message);
-                        return false;
-                    }
-                    break;
-                case "mutilemail":
-                    if (value && !$.isEmails(value)) {
-                        message = dataMessage || "Please enter valid emails";
-                        _showValidate($element, message);
-                        return false;
-                    }
-                    break;
-                case "phone":
-                    if (value && !$.isPhone(value)) {
-                        message = dataMessage || "Please enter a valid Phone Number";
-                        _showValidate($element, message);
-                        return false;
-                    }
-                    break;
-                case "zipcode":
-                    if (value && !$.isZipCode(value)) {
-                        message = dataMessage || "Please enter a valid zipcode";
-                        _showValidate($element, message);
-                        return false;
-                    }
-                    break;
-                case "price":
-                    if (value && !$.isPrice(value)) {
-                        message = dataMessage || "Please enter a valid price";
-                        _showValidate($element, message);
-                        return false;
-                    }
-                    break;
-                case "int":
-                    if (value && !$.isInt(value)) {
-                        message = dataMessage || "Only allowed integer number";
-                        _showValidate($element, message);
-                        return false;
-                    }
-                    break;
-                case "float":
-                    if (value && !$.isFloat(value)) {
-                        message = dataMessage || "Only allowed floating number";
-                        _showValidate($element, message);
-                        return false;
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        var key = $element.attr("data-customValidate");
-        if (customValidate[key] && !customValidate[key]($element)) {
-            message = $element.attr("data-errortext") || "Invalid value.";
-            _showValidate($element, message);
-            return false;
-        }
-        _passValidate($element, isRequried);
-        return true;
-    };
-    $.extend({
-        isNotEmpty: function (str) {
-            return !(str === '' || str === null || str === "undefined");
-        },
-        isEmail: function (str) {
-            var reg = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
-            return reg.test(str);
-        },
-        isEmails: function (str) {
-            var reg = /^[\.a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+(\s*,\s*[\.a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+)*$/;
-            return reg.test(str);
-        },
-        isFloat: function (str) {
-            var reg = /^([-]){0,1}([0-9]){1,}([.]){0,1}([0-9]){0,}$/;
-            return reg.test(str);
-        },
-        isInt: function (str) {
-            var reg = /^-?\d+$/;
-            return reg.test(str);
-        },
-        isPhone: function (str) {
-            var reg = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4}$/im;
-            return reg.test(str);
-        },
-        isZipCode: function (str) {
-            var reg = /^([0-9]){5}$/;
-            return reg.test(str);
-        },
-        isPrice: function (str) {
-            var reg = /^(([$])?((([0-9]{1,3},)+([0-9]{3},)*[0-9]{3})|[0-9]+)(\.[0-9]+)?)$/;
-            return reg.test(str);
-        }
-    });
-    $.fn.extend({
-        validate: function () {
-            $(this).find("[data-validate]").each(function (index, item) {
-                var validateText = $(item).attr("data-validate");
-                if (validateText.indexOf('phone') >= 0) {
-                    $(item).inputformat({
-                        type: "phone"
-                    });
-                } else if (validateText.indexOf('price') >= 0) {
-                    $(item).inputformat({
-                        type: "price"
-                    });
-                } else if (validateText.indexOf('rate') >= 0) {
-                    var fraction = parseInt($(item).attr("data-fraction"));
-                    $(item).inputformat({
-                        type: "rate",
-                        fraction: fraction
-                    });
-                }
-                $(item).change(function () {
-                    _validate($(item));
-                });
-            });
-        },
-        formValue: function () {
-            var $element = $(this);
-            var obj = {};
-            $element.find(":text").each(function (index, item) {
-                var name = $(item).attr("name");
-                if (name) {
-                    obj[name] = $(item).prop("rawValue") || $(item).val();
-                }
-                if ($(item).attr('googleAutomcomplete')) {
-                    var data = $(item).data('gautoComplete').getValue();
-                    obj[$(item).attr('googleAutomcomplete')] = data ? data.value : null;
-                }
-            });
-            $element.find(":password").each(function (index, item) {
-                var name = $(item).attr("name");
-                if (name) {
-                    obj[name] = $(item).val();
-                }
-            });
-            $element.find(":hidden").each(function (index, item) {
-                var name = $(item).attr("name");
-                if (name) {
-                    obj[name] = $(item).val();
-                }
-            });
-            $element.find("textarea").each(function (index, item) {
-                var name = $(item).attr("name");
-                if (name) {
-                    obj[name] = $(item).val();
-                }
-            });
-            $element.find("select").each(function (index, item) {
-                var name = $(item).attr("name");
-                if (name) {
-                    obj[name] = $(item).val();
-                }
-            });
-            $element.find(".checkbox").each(function (index, item) {
-                var name;
-                var checkbox;
-                var checkboxList;
-                if ($(item).data("type") == "single") {
-                    checkbox = $(item).find(":checkbox").eq(0);
-                    if (checkbox.length) {
-
-                        name = checkbox.attr("name");
-                        if (checkbox.is(":checked")) {
-                            obj[name] = checkbox.attr("value") ? checkbox.attr("value") : true;
-                        } else {
-                            obj[name] = checkbox.attr("value") ? "" : false;
-                        }
-                    }
-                } else {
-                    checkboxList = $(item).find(":checkbox:checked");
-                    name = checkboxList.attr("name");
-                    if (name) {
-                        obj[name] = $.map(checkboxList, function (item) {
-                            return $(item).val();
-                        });
-                    }
-                }
-            });
-            $element.find(".radio").each(function (index, item) {
-                var radioItem = $(item).find(":radio:checked");
-                var name = radioItem.attr("name");
-                if (name) {
-                    obj[name] = $(radioItem).val();
-                }
-            });
-            return obj;
-        },
-        isValid: function () {
-            var foucsElement = null;
-            var $element = $(this);
-            var isPassed = true;
-            $element.find("[data-validate]").each(function (index, item) {
-                if (!_validate($(item))) {
-                    isPassed = false;
-                    if (!foucsElement) {
-                        foucsElement = $(item);
-                    }
-                }
-            });
-            if (foucsElement) {
-                foucsElement.focus();
-            }
-            return isPassed;
-        }
-    });
-    $(document).on("dom.load", function () {
-        $("[data-form]").each(function (index, item) {
-            $(item).validate();
-            $(item).removeAttr("data-form");
-        });
     });
 })(jQuery);
