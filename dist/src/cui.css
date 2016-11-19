@@ -5211,21 +5211,21 @@ b,
   background-repeat: no-repeat;
 }
 
-/* line 84, C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 84, C:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .s-img-cn {
   background-position: 0 0;
   height: 128px;
   width: 128px;
 }
 
-/* line 84, C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 84, C:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .s-img-jp {
   background-position: 0 -128px;
   height: 128px;
   width: 128px;
 }
 
-/* line 84, C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 84, C:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .s-img-us {
   background-position: 0 -256px;
   height: 128px;
@@ -6131,7 +6131,7 @@ textarea {
   line-height: 1.5;
   opacity: 0;
   filter: alpha(opacity=0);
-  min-width: 80px;
+  min-width: 120px;
   max-width: 400px;
 }
 /* line 12, ../../../src/scss/plugin/_tip.scss */
@@ -6162,13 +6162,13 @@ textarea {
 
 /* line 34, ../../../src/scss/plugin/_tip.scss */
 .tooltip-inner {
-  padding: 10px;
-  color: #333333;
+  padding: 5px;
+  color: white;
   text-align: center;
   text-decoration: none;
-  background-color: white;
+  background-color: #555555;
   border-radius: 4px;
-  box-shadow: 0 0 10px #b0b0b0;
+  box-shadow: 0 0 2px black;
 }
 
 /* line 44, ../../../src/scss/plugin/_tip.scss */
@@ -6186,7 +6186,7 @@ textarea {
   left: 50%;
   margin-left: -5px;
   border-width: 5px 5px 0;
-  border-top-color: white;
+  border-top-color: #555555;
 }
 
 /* line 60, ../../../src/scss/plugin/_tip.scss */
@@ -6195,7 +6195,7 @@ textarea {
   right: 5px;
   margin-bottom: -5px;
   border-width: 5px 5px 0;
-  border-top-color: white;
+  border-top-color: #555555;
 }
 
 /* line 68, ../../../src/scss/plugin/_tip.scss */
@@ -6204,7 +6204,7 @@ textarea {
   left: 5px;
   margin-bottom: -5px;
   border-width: 5px 5px 0;
-  border-top-color: white;
+  border-top-color: #555555;
 }
 
 /* line 76, ../../../src/scss/plugin/_tip.scss */
@@ -6213,7 +6213,7 @@ textarea {
   left: 0;
   margin-top: -5px;
   border-width: 5px 5px 5px 0;
-  border-right-color: white;
+  border-right-color: #555555;
 }
 
 /* line 84, ../../../src/scss/plugin/_tip.scss */
@@ -6222,7 +6222,7 @@ textarea {
   right: 0;
   margin-top: -5px;
   border-width: 5px 0 5px 5px;
-  border-left-color: white;
+  border-left-color: #555555;
 }
 
 /* line 92, ../../../src/scss/plugin/_tip.scss */
@@ -6231,7 +6231,7 @@ textarea {
   left: 50%;
   margin-left: -5px;
   border-width: 0 5px 5px;
-  border-bottom-color: white;
+  border-bottom-color: #555555;
 }
 
 /* line 100, ../../../src/scss/plugin/_tip.scss */
@@ -6240,7 +6240,7 @@ textarea {
   right: 5px;
   margin-top: -5px;
   border-width: 0 5px 5px;
-  border-bottom-color: white;
+  border-bottom-color: #555555;
 }
 
 /* line 108, ../../../src/scss/plugin/_tip.scss */
@@ -6249,7 +6249,7 @@ textarea {
   left: 5px;
   margin-top: -5px;
   border-width: 0 5px 5px;
-  border-bottom-color: white;
+  border-bottom-color: #555555;
 }
 
 /* line 116, ../../../src/scss/plugin/_tip.scss */
@@ -6360,11 +6360,6 @@ textarea {
 /* line 207, ../../../src/scss/plugin/_tip.scss */
 .tooltip.error .tooltip-arrow {
   display: none;
-}
-
-/* line 213, ../../../src/scss/plugin/_tip.scss */
-.plaintext .tooltip {
-  left: 0 !important;
 }
 
 /* line 1, ../../../src/scss/plugin/_panel.scss */
