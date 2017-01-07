@@ -13385,6 +13385,24 @@ a.version="2.15.2",b(rb),a.fn=Se,a.min=tb,a.max=ub,a.now=Fe,a.utc=j,a.unix=Jc,a.
                         $.event.special.pinchin =
                             $.event.special.pinchout = eventSetting;
 })(jQuery);
+
+//Extend transistion event
+(function($) {
+    var eventSetting = {
+        setup: function() {
+            var $this = $(this);
+            $this.off('webkitTransitionEnd.cui otransitionend.cui oTransitionEnd.cui msTransitionEnd.cui transitionend.cui')
+            .on('webkitTransitionEnd.cui otransitionend.cui oTransitionEnd.cui msTransitionEnd.cui transitionend.cui', function() {
+                $this.trigger('transitionend', []);
+            });
+        },
+        teardown: function() {
+            var $this = $(this);
+            $this.off('webkitTransitionEnd.cui otransitionend.cui oTransitionEnd.cui msTransitionEnd.cui transitionend.cui');
+        }
+    }
+    $.event.special.transitionend = eventSetting;
+}(jQuery));
 (function($) {
     var tmpdiv = null;
     $.extend({
@@ -13474,6 +13492,33 @@ a.version="2.15.2",b(rb),a.fn=Se,a.min=tb,a.max=ub,a.now=Fe,a.utc=j,a.unix=Jc,a.
                     fn.apply(context, args);
                 }, delay);
             };
+        },
+        isNotEmpty: function(str) {
+            return !(str === '' || str === null || str === 'undefined');
+        },
+        isEmail: function(str) {
+            var reg = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+            return reg.test(str);
+        },
+        isFloat: function(str) {
+            var reg = /^([-]){0,1}([0-9]){1,}([.]){0,1}([0-9]){0,}$/;
+            return reg.test(str);
+        },
+        isInt: function(str) {
+            var reg = /^-?\d+$/;
+            return reg.test(str);
+        },
+        isPhone: function(str) {
+            var reg = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4}$/im;
+            return reg.test(str);
+        },
+        isZipCode: function(str) {
+            var reg = /^([0-9]){5}$/;
+            return reg.test(str);
+        },
+        isPrice: function(str) {
+            var reg = /^(([$])?((([0-9]{1,3},)+([0-9]{3},)*[0-9]{3})|[0-9]+)(\.[0-9]+)?)$/;
+            return reg.test(str);
         }
     });
 
@@ -13553,7 +13598,7 @@ window.context = {};
         plugin: function(pluginContext) {
             var name = pluginContext.name;
             if ($.fn[name]) {
-                window.console.log('the plugin name is duplicate: ' + name);
+                window.console.log('the plugin is exists: ' + name);
                 return null;
             }
 
@@ -13652,12 +13697,13 @@ window.context = {};
             $.CUI.addEvent('cui.init.after.' + context.name, context);
         },
         handleDestroy: function(context) {
+            var that = this;
             return function() {
                 //before plugin destroy event
                 $.CUI.addEvent('cui.before.destroy.' + context.name, context);
                 //before plugin destroy custom event
-                context.destroyBefore && $.CUI.addEvent(context.destroyBefore, context);
-                context.$element.data(name, null);
+                $.proxy(context.destroyBefore, that)(context);
+                context.$element.data(context.name, null);
             };
         },
         handleExports: function(context) {
@@ -13669,6 +13715,7 @@ window.context = {};
                         obj[key] = $.proxy(value, context);
                     }
                 });
+                obj.name = context.name;
                 context.exports = obj;
             }
         },
@@ -13783,24 +13830,22 @@ if (!Number.isNaN) {
         exports: {
             show: function() {
                 var opt = this.opt;
-                var $this = this.$element;
                 if (opt.showBefore) {
-                    $.CUI.addEvent(opt.showBefore, $this);
+                    $.CUI.addEvent(opt.showBefore, this);
                 }
                 this._show();
                 if (opt.showAfter) {
-                    $.CUI.addEvent(opt.showAfter, $this);
+                    $.CUI.addEvent(opt.showAfter, this);
                 }
             },
             hide: function() {
                 var opt = this.opt;
-                var $this = this.$element;
                 if (opt.hideBefore) {
-                    $.CUI.addEvent(opt.hideBefore, $this);
+                    $.CUI.addEvent(opt.hideBefore, this);
                 }
                 this._hide();
                 if (opt.hideAfter) {
-                    $.CUI.addEvent(opt.hideAfter, $this);
+                    $.CUI.addEvent(opt.hideAfter, this);
                 }
             },
             toggle: function() {
@@ -13846,6 +13891,7 @@ if (!Number.isNaN) {
             var data = $this.data();
             $this.collapse(data);
             $this.removeAttr('data-collapse');
+            $this.attr('data-collapse-load', '');
             $this.attr('role', 'Collapse');
         });
     });
@@ -13859,9 +13905,7 @@ if (!Number.isNaN) {
             columns: [],
             data: null,
             maxcount: -1,
-            onbefore: null,
-            onafter: null,
-            defaultTemplate: null,
+            nodatatemplate: null,
             hideText: 'See More'
         },
         initBefore: null,
@@ -13979,8 +14023,8 @@ if (!Number.isNaN) {
                         $tbody.append($tr);
                     }
                 } else {
-                    if (opt.defaultTemplate) {
-                        var tmpRow = $('<tr class="no-result"><td colspan="' + opt.columns.length + '">' + opt.defaultTemplate + '</td></tr>');
+                    if (opt.nodatatemplate) {
+                        var tmpRow = $('<tr class="no-result"><td colspan="' + opt.columns.length + '">' + opt.nodatatemplate + '</td></tr>');
                         $tbody.append(tmpRow);
                     }
                 }
@@ -14031,6 +14075,8 @@ if (!Number.isNaN) {
             var data = $this.data();
             $this.datatable(data);
             $this.removeAttr('data-datatable');
+            $this.attr('data-datatable-load', '');
+            $this.attr('role', 'Datatable');
         });
     });
 })(jQuery);
@@ -14040,7 +14086,9 @@ if (!Number.isNaN) {
     var pickerContext = {
         $element: null,
         name: 'picker',
-        defaultOpt: null,
+        defaultOpt: {
+            picker: null
+        },
         initBefore: null,
         init: function(context) {
             var $this = context.$element;
@@ -14095,150 +14143,155 @@ if (!Number.isNaN) {
         var opt = $this.data();
         $this.picker(opt);
         $this.removeAttr('data-picker');
+        $this.attr('data-picker-load', '');
         $this.attr('role', 'Datepicker');
     });
 })(jQuery);
 
 //dialog plugin
 (function($) {
-
-    $.fn.dialog = function(option) {
-        var $this = $(this);
-        if ($this.data('dialog')) {
-            $this.data('dialog').option(option);
-            return $this.data('dialog');
-        }
-        var defaultOpt = {
-            onshow: null,
-            onhide: null,
-            onbefore: null,
-            onafter: null,
+    var dialogConfig = {
+        name: 'dialog',
+        defaultOpt: {
             autoclose: true,
             cache: false,
             theme: 'default',
-            id: +new Date(),
+            id: null,
             trigger: null,
-        };
-        var opt = $.extend({}, defaultOpt, option);
-        var $dialog = $('<div class="dialog dialog-' + opt.theme + '" tabIndex="-1"></div>');
-        var $dialogCloseButton = $('<a class="dialog-title-close" dialog-close href="javascript:void(0);"><i class="icon-remove"></i></a>');
-        var $dialogPanel = $('<div class="dialog-panel"></div>');
-        var $dialogBody = $('<div class="dialog-body"></div>');
-        var $dialogOverLay = $('<div class="dialog-overlay"></div>');
-        var _reposition = function() {
-            var height = $dialog.height() - $dialogPanel.outerHeight();
-            if (height > 0) {
-                $dialogPanel.css({
-                    marginTop: height / 2 + 'px'
-                });
-            } else {
-                $dialogPanel.css({
-                    marginTop: 20
-                });
-            }
-        };
-        var _addCloseButton = function() {
-            if ($dialogBody && $dialogBody.find('.dialog-title') && $dialogBody.find('.dialog-title').length) {
-                $dialogBody.find('.dialog-title').append($dialogCloseButton);
-            }
-            $dialogBody.on('click', '[dialog-close]', function() {
-                _hide();
-            });
-        };
-        var _show = function() {
-            $(document).trigger('dialog.hidden.except', [opt.id]);
-            if (opt.onbefore) {
-                if ($.isFunction(opt.onbefore)) {
-                    opt.onbefore();
+            showbefore: null,
+            showafter: null,
+            hidebefore: null,
+            hideafter: null,
+            html: null
+        },
+        initBefore: null,
+        init: function(context) {
+            var opt = context.opt;
+            opt.id = 'dialog' + new Date();
+            var $this = context.$element;
+            var $dialog = $('<div class="dialog dialog-' + opt.theme + '" tabIndex="-1"></div>');
+            var $dialogCloseButton = $('<a class="dialog-title-close" dialog-close href="javascript:void(0);"><i class="icon-remove"></i></a>');
+            var $dialogPanel = $('<div class="dialog-panel"></div>');
+            var $dialogBody = $('<div class="dialog-body"></div>');
+            var $dialogOverLay = $('<div class="dialog-overlay"></div>');
+            var _reposition = context._reposition = function() {
+                var height = $dialog.height() - $dialogPanel.outerHeight();
+                if (height > 0) {
+                    $dialogPanel.css({
+                        marginTop: height / 2 + 'px'
+                    });
                 } else {
-                    $(document).trigger(opt.onbefore, [opt.trigger]);
+                    $dialogPanel.css({
+                        marginTop: 5
+                    });
                 }
-            }
-            if (!opt.cache || !$dialogBody.html()) {
-                $dialogBody.html($this.html());
-                _addCloseButton();
-            }
-            if (opt.onafter) {
-                if ($.isFunction(opt.onafter)) {
-                    opt.onafter();
-                } else {
-                    $(document).trigger(opt.onafter, [opt.trigger]);
-                }
-            }
-            $(document).trigger('dom.load');
-
-            $('html').addClass('model-dialog');
-            $dialog.show();
-            setTimeout(function() {
-                $dialog.addClass('dialog-active');
-                _reposition();
-                if (opt.onshow) {
-                    if ($.isFunction(opt.onshow)) {
-                        opt.onshow();
+            };
+            context._show = function() {
+                if (opt.showbefore) {
+                    if ($.isFunction(opt.showbefore)) {
+                        opt.showbefore();
                     } else {
-                        $(document).trigger(opt.onshow, [opt.trigger]);
+                        $(document).trigger(opt.showbefore, [opt.trigger]);
                     }
                 }
-            }, 50);
-        };
-        var _hide = function() {
-            $('html').removeClass('model-dialog');
-            $dialog.removeClass('dialog-active');
-            $dialogPanel.css({marginTop: '0'});
-            setTimeout(function() {
-                $dialog.hide();
-                if (opt.onhide) {
-                    if ($.isFunction(opt.onhide)) {
-                        opt.onhide();
-                    } else {
-                        $(document).trigger(opt.onhide, [opt.trigger]);
-                    }
+                if (!opt.cache || !$dialogBody.html()) {
+                    $dialogBody.html($this.html());
+                    _addCloseButton();
                 }
-            }, 500);
-        };
-        var _option = function(option) {
-            opt = $.extend(opt, option);
-            return opt;
-        };
-        var _init = function() {
-            $dialogPanel.append($dialogBody);
-            $dialog.append($dialogPanel);
-            $dialog.prepend($dialogOverLay);
-            $('body').append($dialog);
-
-            if (opt.theme == 'dropdown') {
-                $dialogBody.on('click', 'a', function() {
+                $(document).trigger('dom.load');
+                $('html').addClass('model-dialog');
+                $dialog.show();
+                setTimeout(function() {
+                    $dialog.addClass('dialog-active');
+                    _reposition();
+                    if (opt.showafter) {
+                        $.CUI.addEvent(opt.showafter, context);
+                    }
+                }, 50);
+            };
+            var _hide = context._hide = function() {
+                if ($dialog.hasClass('dialog-active')) {
+                    if (opt.hidebefore) {
+                        if ($.isFunction(opt.hidebefore)) {
+                            opt.hidebefore();
+                        } else {
+                            $(document).trigger(opt.hidebefore, [opt.trigger]);
+                        }
+                    }
+                    $dialog.removeClass('dialog-active');
+                    $dialogPanel.css({marginTop: '0'});
                     setTimeout(function() {
-                        _hide();
-                    }, 10);
+                        $dialog.hide();
+                        $('html').removeClass('model-dialog');
+                        if (opt.hideafter) {
+                            if ($.isFunction(opt.hideafter)) {
+                                opt.hideafter();
+                            } else {
+                                $(document).trigger(opt.hideafter, [opt.trigger]);
+                            }
+                        }
+                    }, 500);
+                }
+            };
+            var _addCloseButton = function() {
+                if ($dialogBody && $dialogBody.find('.dialog-title') && $dialogBody.find('.dialog-title').length) {
+                    $dialogBody.find('.dialog-title').append($dialogCloseButton);
+                }
+                $dialogBody.on('click', '[dialog-close]', function() {
+                    _hide();
                 });
+            };
+
+            var _init = function() {
+                $dialogPanel.append($dialogBody);
+                $dialog.append($dialogPanel);
+                $dialog.prepend($dialogOverLay);
+                $('html').append($dialog);
+                if (opt.theme == 'dropdown') {
+                    $dialogBody.on('click', 'a', function() {
+                        setTimeout(function() {
+                            _hide();
+                        }, 10);
+                    });
+                }
+                if (opt.autoclose) {
+                    $dialogOverLay.click(_hide);
+                }
+            };
+            _init();
+        },
+        exports: {
+            show: function() {
+                var opt = this.opt;
+                $(document).trigger('dialog.hidden.except', [opt.id]);
+                this._show();
+            },
+            hide: function() {
+                this._hide();
             }
-            if (opt.autoclose) {
-                $dialogOverLay.click(_hide);
-            }
+
+        },
+        setOptionsBefore: null,
+        setOptionsAfter: null,
+        destroyBefore: null,
+        initAfter: function(context) {
+            var opt = context.opt;
             $(document).on('dialog.hidden.except', function(e, id) {
                 if (id != opt.id) {
-                    _hide();
+                    context._hide();
                 }
             });
             $(document).on('dom.resize', function() {
-                _reposition();
+                context._reposition();
             });
-            var obj = {
-                show: _show,
-                hide: _hide,
-                option: _option
-            };
-            $this.data('dialog', obj);
-            $dialog.attr('role', 'Dialog');
-            return obj;
-        };
-        return _init();
+        },
+        isThirdPart: false,
     };
-
+    $.CUI.plugin(dialogConfig);
     $(document).on('dom.load.dialog', function() {
         $('[data-dialog]').each(function() {
-            $(this).click(function() {
+            var $this = $(this);
+            $this.click(function() {
                 var $this = $(this);
                 var data = $this.data();
                 data.trigger = $this;
@@ -14246,469 +14299,122 @@ if (!Number.isNaN) {
                 $target.dialog(data).show();
                 return false;
             });
-            $(this).removeAttr('data-dialog');
+            $this.removeAttr('data-dialog');
+            $this.attr('data-dialog-load', '');
+            $this.attr('role', 'Dialog');
         });
     });
 })(jQuery);
 
-(function ($) {
-    $.fn.dropdownmenu = function () {
-        var $this = $(this);
-        var $link = $(this).find('.caret');
-        var $item = $(this).find('.dropdown-item');
-        var timer = null;
-
-        var checkOverFlow = function () {
-            $this.find('li').removeClass('fullline');
-            var showLink = false;
-            var top = $item.find('li:eq(0)').offset().top;
-            $item.find('li').removeClass('first');
-            $item.find('li').each(function (index, item) {
-                if (($(item).offset().top - top) < 10 && ($(item).offset().top - top) > -10) {
-                    $(item).removeClass('fullline');
-                } else {
-                    $(item).addClass('fullline');
-                    showLink = true;
-                }
-            });
-            $item.find('.fullline:eq(0)').addClass('first');
-
-            if (showLink) {
-                $link.show();
-            } else {
-                $link.hide();
-            }
-        };
-
-        var expand = function () {
-            $this.addClass('active');
-        };
-
-        var close = function () {
-            $this.removeClass('active');
-        };
-
-        var toggle = function () {
-            if ($this.hasClass('active')) {
-                close();
-            } else {
-                $(document).trigger('mouseup.dropdownmenu');
-                expand();
-                $(document).off('mouseup.dropdownmenu').one('mouseup.menu', function () {
-                    close();
-                });
-            }
-        };
-
-        var namespace = {
-            expand: expand,
-            this: this,
-            toggle: toggle,
-            refresh: checkOverFlow
-        };
-
-        $link.mouseup(function () {
-            return false;
-        });
-
-        $link.on('click', toggle);
-
-        $(document).on('dom.resize', function () {
-            if (timer) {
-                clearTimeout(timer);
-            }
-            timer = setTimeout(function () {
-                checkOverFlow();
-            }, 200);
-        });
-        checkOverFlow();
-        $this.attr('role', 'Dropdownmenu');
-        return $this.data('dropdownmenu', namespace);
-    };
-
-    $(document).on('dom.load.dropdownmenu', function () {
-        $('[data-dropdownmenu]').each(function (index, item) {
-            $(item).dropdownmenu();
-            $(item).removeAttr('data-dropdownmenu');
-        });
-    });
-
-})(jQuery);
-
-(function ($) {
-    $.fn.fulidvideo = function () {
-        var $this = $(this);
-
-        if ($this.closest('.video-wrap').length == 0) {
-            $this.wrap('<div class="video-wrap"></div>');
-        }
-    };
-    $(document).on('dom.load', function () {
-        $('[data-fulidvideo]').each(function () {
-            $(this).find('iframe').each(function (index, item) {
-                $(item).fulidvideo();
-            });
-            $(this).removeAttr('data-fulidvideo');
-        });
-
-    });
-})(jQuery);
 //validate for form submit
 (function($) {
-    //customer validate
-    var customValidate = {
-        max: function($element) {
-            var value = $element.val();
-            var max = $element.attr('data-max');
-            var a = $.isNumeric(value) ? value : Date.parse(value);
-            var b = $.isNumeric(max) ? max : Date.parse(max);
-            return (a - b) <= 0;
-        },
-        less: function($element) {
-            var value = $element.val();
-            var less = $element.attr('data-less');
-            var a = $.isNumeric(value) ? value : Date.parse(value);
-            var b = $.isNumeric(less) ? less : Date.parse(less);
-            return (a - b) < 0;
-        },
-        min: function($element) {
-            var value = $element.val();
-            var min = $element.attr('data-min');
-            var a = $.isNumeric(value) ? value : Date.parse(value);
-            var b = $.isNumeric(min) ? min : Date.parse(min);
-            return (a - b) >= 0;
-        },
-        greater: function($element) {
-            var value = $element.val();
-            var greater = $element.attr('data-greater');
-            var a = $.isNumeric(value) ? value : Date.parse(value);
-            var b = $.isNumeric(greater) ? greater : Date.parse(greater);
-            return (a - b) > 0;
-        }
-    };
-    var _showValidate = function($element, message) {
-        $element.closest('.input').removeClass('has-success');
-        $element.closest('.input').addClass('has-error');
-        if ($element.is('[id]')) {
-            $('[for=' + $element.attr('id') + ']').addClass('error-text');
-        }
-        $element.tip({
-            type: 'error',
-            content: message,
-            trigger: null
-        }).show();
-    };
-    var _passValidate = function($element, isRequried) {
-        $element.closest('.input').removeClass('has-error');
-        $element.tip().hide();
-        if ($element.is('[id]')) {
-            $('[for=' + $element.attr('id') + ']').removeClass('error-text');
-        }
-        if (isRequried) {
-            $element.closest('.input').addClass('has-success');
-        } else if ($element.val()) {
-            $element.closest('.input').addClass('has-success');
-        } else {
-            $element.closest('.input').removeClass('has-success');
-        }
-    };
-    var _validate = function($element) {
-        var type = $element.attr('data-validate') ? $element.attr('data-validate').split(',') : [];
-        var name = $element.attr('name');
-        var value = $.trim($element.val());
-        var isRequried = type[0] === 'required';
-        var dataMessage = $element.attr('data-errortext');
-        var message = '';
-        for (var i = 0; i < type.length; i++) {
-            switch (type[i]) {
-                case 'required':
-                    if (!value && value === '') {
-                        switch (name) {
-                            case 'name':
-                            case 'firstname':
-                            case 'fullname':
-                                name = 'Name';
-                                break;
-                            case 'phoneNum':
-                                name = 'Phone Number';
-                                break;
-                            case 'email':
-                                name = 'Email';
-                                break;
-                            case 'comment':
-                                name = 'Comment';
-                                break;
-                            case 'agentName':
-                                name = 'Agent name';
-                                break;
-                            case 'zipcodecityname':
-                                name = 'Zipcode or City name';
-                                break;
-                            case 'username':
-                                name = 'Email (Movoto ID)';
-                                break;
-                            case 'password':
-                                name = 'Password';
-                                break;
-                            case 'address':
-                                name = 'Address';
-                                break;
-                            case 'zipcode':
-                                name = 'Zipcode';
-                                break;
-                            case 'cityname':
-                                name = 'City name';
-                                break;
-                            case 'first_name':
-                                name = 'Firstname';
-                                break;
-                            case 'last_name':
-                                name = 'Lastname';
-                                break;
+    var formConfig = {
+        name: 'form',
+        defaultOpt: null,
+        initBefore: null,
+        init: null,
+        exports: {
+            isValid: function() {
+                var $this = this.$element;
+                var foucsElement = null;
+                var isPassed = true;
+                $this.find('[data-validate-load]').each(function(index, item) {
+                    var isValide = $(item).data('validate').isValid();
+                    if (!isValide) {
+                        isPassed = false;
+                        if (!foucsElement) {
+                            foucsElement = $(item);
                         }
-                        message = name ? (name + ' is required.') : 'This is requried';
-                        _showValidate($element, message);
                         return false;
                     }
-                    break;
-                case 'email':
-                    if (value && !$.isEmail(value)) {
-                        message = dataMessage || 'Please enter a valid email.';
-                        _showValidate($element, message);
-                        return false;
-                    }
-                    break;
-                case 'mutilemail':
-                    if (value && !$.isEmails(value)) {
-                        message = dataMessage || 'Please enter valid emails';
-                        _showValidate($element, message);
-                        return false;
-                    }
-                    break;
-                case 'phone':
-                    if (value && !$.isPhone(value)) {
-                        message = dataMessage || 'Please enter a valid Phone Number';
-                        _showValidate($element, message);
-                        return false;
-                    }
-                    break;
-                case 'zipcode':
-                    if (value && !$.isZipCode(value)) {
-                        message = dataMessage || 'Please enter a valid zipcode';
-                        _showValidate($element, message);
-                        return false;
-                    }
-                    break;
-                case 'price':
-                    if (value && !$.isPrice(value)) {
-                        message = dataMessage || 'Please enter a valid price';
-                        _showValidate($element, message);
-                        return false;
-                    }
-                    break;
-                case 'int':
-                    if (value && !$.isInt(value)) {
-                        message = dataMessage || 'Only allowed integer number';
-                        _showValidate($element, message);
-                        return false;
-                    }
-                    break;
-                case 'float':
-                    if (value && !$.isFloat(value)) {
-                        message = dataMessage || 'Only allowed floating number';
-                        _showValidate($element, message);
-                        return false;
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        var key = $element.attr('data-customValidate');
-        if (customValidate[key] && !customValidate[key]($element)) {
-            message = $element.attr('data-errortext') || 'Invalid value.';
-            _showValidate($element, message);
-            return false;
-        }
-        _passValidate($element, isRequried);
-        return true;
-    };
-    $.extend({
-        isNotEmpty: function(str) {
-            return !(str === '' || str === null || str === 'undefined');
-        },
-        isEmail: function(str) {
-            var reg = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
-            return reg.test(str);
-        },
-        isEmails: function(str) {
-            var reg = /^[\.a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+(\s*,\s*[\.a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+)*$/;
-            return reg.test(str);
-        },
-        isFloat: function(str) {
-            var reg = /^([-]){0,1}([0-9]){1,}([.]){0,1}([0-9]){0,}$/;
-            return reg.test(str);
-        },
-        isInt: function(str) {
-            var reg = /^-?\d+$/;
-            return reg.test(str);
-        },
-        isPhone: function(str) {
-            var reg = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4}$/im;
-            return reg.test(str);
-        },
-        isZipCode: function(str) {
-            var reg = /^([0-9]){5}$/;
-            return reg.test(str);
-        },
-        isPrice: function(str) {
-            var reg = /^(([$])?((([0-9]{1,3},)+([0-9]{3},)*[0-9]{3})|[0-9]+)(\.[0-9]+)?)$/;
-            return reg.test(str);
-        }
-    });
-    $.fn.extend({
-        validate: function() {
-            $(this).find('[data-validate]').each(function(index, item) {
-                var validateText = $(item).attr('data-validate');
-                if (validateText.indexOf('phone') >= 0) {
-                    $(item).inputformat({
-                        type: 'phone'
-                    });
-                } else if (validateText.indexOf('price') >= 0) {
-                    $(item).inputformat({
-                        type: 'price'
-                    });
-                } else if (validateText.indexOf('rate') >= 0) {
-                    var fraction = parseInt($(item).attr('data-fraction'));
-                    $(item).inputformat({
-                        type: 'rate',
-                        fraction: fraction
-                    });
-                }
-                $(item).change(function() {
-                    _validate($(item));
                 });
-            });
-        },
-        formValue: function() {
-            var $element = $(this);
-            var obj = {};
-            $element.find(':text').each(function(index, item) {
-                var name = $(item).attr('name');
-                if (name) {
-                    obj[name] = $(item).prop('rawValue') || $(item).val();
+                if (foucsElement) {
+                    foucsElement.focus();
                 }
-                if ($(item).attr('googleAutomcomplete')) {
-                    var data = $(item).data('gautoComplete').getValue();
-                    obj[$(item).attr('googleAutomcomplete')] = data ? data.value : null;
-                }
-            });
-            $element.find(':password').each(function(index, item) {
-                var name = $(item).attr('name');
-                if (name) {
-                    obj[name] = $(item).val();
-                }
-            });
-            $element.find(':hidden').each(function(index, item) {
-                var name = $(item).attr('name');
-                if (name) {
-                    obj[name] = $(item).val();
-                }
-            });
-            $element.find('textarea').each(function(index, item) {
-                var name = $(item).attr('name');
-                if (name) {
-                    obj[name] = $(item).val();
-                }
-            });
-            $element.find('select').each(function(index, item) {
-                var name = $(item).attr('name');
-                if (name) {
-                    obj[name] = $(item).val();
-                }
-            });
-            $element.find('.checkbox').each(function(index, item) {
-                var name;
-                var checkbox;
-                var checkboxList;
-                if ($(item).data('type') == 'single') {
-                    checkbox = $(item).find(':checkbox').eq(0);
-                    if (checkbox.length) {
+                return isPassed;
+            },
+            getValue: function() {
+                var $this = this.$element;
+                var obj = {};
+                $this.find(':text').each(function(index, item) {
+                    var name = $(item).attr('name');
+                    if (name) {
+                        obj[name] = $(item).prop('rawValue') || $(item).val();
+                    }
+                });
+                $this.find(':password').each(function(index, item) {
+                    var name = $(item).attr('name');
+                    if (name) {
+                        obj[name] = $(item).val();
+                    }
+                });
+                $this.find(':hidden').each(function(index, item) {
+                    var name = $(item).attr('name');
+                    if (name) {
+                        obj[name] = $(item).val();
+                    }
+                });
+                $this.find('textarea').each(function(index, item) {
+                    var name = $(item).attr('name');
+                    if (name) {
+                        obj[name] = $(item).val();
+                    }
+                });
+                $this.find('select').each(function(index, item) {
+                    var name = $(item).attr('name');
+                    if (name) {
+                        obj[name] = $(item).val();
+                    }
+                });
+                $this.find('.checkbox').each(function(index, item) {
+                    var name;
+                    var checkbox;
+                    var checkboxList;
+                    if ($(item).data('type') == 'single') {
+                        checkbox = $(item).find(':checkbox').eq(0);
+                        if (checkbox.length) {
 
-                        name = checkbox.attr('name');
-                        if (checkbox.is(':checked')) {
-                            obj[name] = checkbox.attr('value') ? checkbox.attr('value') : true;
-                        } else {
-                            obj[name] = checkbox.attr('value') ? '' : false;
+                            name = checkbox.attr('name');
+                            if (checkbox.is(':checked')) {
+                                obj[name] = checkbox.attr('value') ? checkbox.attr('value') : true;
+                            } else {
+                                obj[name] = checkbox.attr('value') ? '' : false;
+                            }
+                        }
+                    } else {
+                        checkboxList = $(item).find(':checkbox:checked');
+                        name = checkboxList.attr('name');
+                        if (name) {
+                            obj[name] = $.map(checkboxList, function(item) {
+                                return $(item).val();
+                            });
                         }
                     }
-                } else {
-                    checkboxList = $(item).find(':checkbox:checked');
-                    name = checkboxList.attr('name');
+                });
+                $this.find('.radio').each(function(index, item) {
+                    var radioItem = $(item).find(':radio:checked');
+                    var name = radioItem.attr('name');
                     if (name) {
-                        obj[name] = $.map(checkboxList, function(item) {
-                            return $(item).val();
-                        });
+                        obj[name] = $(radioItem).val();
                     }
-                }
-            });
-            $element.find('.radio').each(function(index, item) {
-                var radioItem = $(item).find(':radio:checked');
-                var name = radioItem.attr('name');
-                if (name) {
-                    obj[name] = $(radioItem).val();
-                }
-            });
-            return obj;
-        },
-        isValid: function() {
-            var foucsElement = null;
-            var $element = $(this);
-            var isPassed = true;
-            $element.find('[data-validate]').each(function(index, item) {
-                if (!_validate($(item))) {
-                    isPassed = false;
-                    if (!foucsElement) {
-                        foucsElement = $(item);
-                    }
-                }
-            });
-            if (foucsElement) {
-                foucsElement.focus();
+                });
+                return obj;
             }
-            return isPassed;
-        }
-    });
+        },
+        setOptionsBefore: null,
+        setOptionsAfter: null,
+        destroyBefore: null,
+        initAfter: null,
+        isThirdPart: false,
+    };
+    $.CUI.plugin(formConfig);
     $(document).on('dom.load', function() {
         $('[data-form]').each(function(index, item) {
-            $(item).validate();
-            $(item).removeAttr('data-form');
-        });
-    });
-    $.fn.textbox = function() {
-        var $this = $(this);
-        var $input = $this.find('input');
-        $input.on('focusin', function() {
-            $this.addClass('focus');
-        });
-        $input.on('focusout', function() {
-            if (!$input.val()) {
-                $this.removeClass('focus');
-            }
-        });
-
-        if ($input.val()) {
-            $this.addClass('focus');
-        } else {
-            $this.removeClass('focus');
-        }
-    };
-    $(document).on('dom.load', function() {
-        $('[data-textbox]').each(function(index, item) {
-            $(item).textbox();
-            $(item).attr('data-textbox-load', '');
-            $(item).removeAttr('data-textbox');
+            var $this = $(item);
+            $this.form();
+            $this.removeAttr('data-form');
+            $this.attr('data-form-load', '');
+            $this.attr('role', 'Form');
         });
     });
 })(jQuery);
@@ -14777,6 +14483,8 @@ if (!Number.isNaN) {
                 limitheight: $(item).attr('data-limitheight'),
             });
             $(item).removeAttr('data-gridtable');
+            $(item).attr('data-gridtable-load', '');
+            $(item).attr('role', 'Gridtable');
         });
     });
 })(jQuery);
@@ -14841,7 +14549,8 @@ if (!Number.isNaN) {
     $.fn.inputformat = function(option) {
         var $this = $(this);
         var defaultOpt = {
-            type: 'phone'
+            type: 'phone',
+            fraction: ''
         };
         var opt = $.extend(defaultOpt, option);
         var timer = null;
@@ -14921,6 +14630,15 @@ if (!Number.isNaN) {
             }
         });
     };
+    $(document).on('dom.load.inputformat', function() {
+        $('[data-inputformat]').each(function(index, item) {
+            var $this = $(item);
+            $this.inputformat($this.data());
+            $this.removeAttr('data-inputformat');
+            $this.removeAttr('data-inputformat-load', '');
+        });
+
+    });
 })(jQuery);
 
 (function($) {
@@ -16203,29 +15921,26 @@ if (!Number.isNaN) {
                 $list.prepend(nextItem);
                 $list.prepend(currentItem);
                 $list.css({
-                    'right': '-' + $items.width() + 'px',
-                    'left': 'auto'
+                    'marginLeft': '0'
                 });
                 if (animated == false) {
-                    $list.css('right', 0);
+                    $list.css('marginLeft', '-' + $items.width() + 'px');
                 } else {
-
                     $list.stop().animate({
-                        'right': 0
+                        'marginLeft': '-' + $items.width() + 'px'
                     });
                 }
             } else {
                 $list.prepend(currentItem);
                 $list.prepend(nextItem);
                 $list.css({
-                    'left': '-' + $items.width() + 'px',
-                    'right': 'auto'
+                    'marginLeft': '-' + $items.width() + 'px',
                 });
                 if (animated == false) {
-                    $list.css('left', 0);
+                    $list.css('marginLeft', 0);
                 } else {
                     $list.stop().animate({
-                        'left': 0
+                        'marginLeft': 0
                     });
                 }
             }
@@ -16534,33 +16249,72 @@ if (!Number.isNaN) {
     });
 })(jQuery);
 
+(function($) {
+    $.fn.textbox = function() {
+        var $this = $(this);
+        var $input = $this.find('input');
+        var _switchLabel = function() {
+            if ($input.val()) {
+                $this.addClass('focus');
+            } else {
+                $this.removeClass('focus');
+            }
+        }
+        if (!$input.size()) {
+            $input = $this.find('textarea');
+        }
+        $input.on('focusin', function() {
+            $this.addClass('focus');
+        });
+        $input.on('focusout', function() {
+            if (!$input.val()) {
+                $this.removeClass('focus');
+            }
+        });
+        $input.on('change', _switchLabel);
+        _switchLabel();
+    };
+    $(document).on('dom.load', function() {
+        $('[data-textbox]').each(function(index, item) {
+            $(item).textbox();
+            $(item).removeAttr('data-textbox');
+            $(item).attr('data-textbox-load', '');
+        });
+    });
+})(jQuery);
+
 //tip
 (function($) {
+    var animationDuration = 500;
+
     var tipConfig = {
         name: 'tip',
         defaultOpt: {
             traget: null,
             height: 50,
             width: 320,
-            theme: 'normal',
+            type: '',
             placement: 'top',
-            trigger: 'click',
+            trigger: 'focus',
             html: true,
-            showBefore: null,
-            showAfter: null,
-            hideBefore: null,
-            hideAfter: null
+            once: false,
+            showbefore: null,
+            showafter: null,
+            hidebefore: null,
+            hideafter: null,
+            _timer: null
         },
         init: function(context) {
             var opt = context.opt;
             var $this = context.$element;
-            var $container = $('<div class="tooltip ' + opt.theme + '" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>');
-            $this.css({position: 'relative'});
-            $this.append($container);
+            var $container = $('<div class="tooltip ' + opt.type + ' ' + opt.placement + '" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>');
+            $this.parent().css({position: 'relative'});
+            $this.after($container);
             $container.click(function(e) {
                 e.stopPropagation();
             });
             context.$container = $container;
+            $container.hide();
         },
         destroy: null,
         exports: {
@@ -16568,80 +16322,92 @@ if (!Number.isNaN) {
                 var opt = this.opt;
                 var $this = this.$element;
                 var $container = this.$container;
-                if (opt.showBefore) {
-                    $.CUI.addEvent(opt.showBefore, $this);
+                clearTimeout(opt._timer);
+                if (opt.showbefore) {
+                    $.CUI.addEvent(opt.showbefore, this);
                 }
                 $container.find('.tooltip-inner').html(opt.content);
-                var cWidth = $container.width() + 10;
-                var cHeight = $container.height();
-                var tWidth = $this.width();
-                var tHeight = $this.height();
+                var cWidth = $container.outerWidth();
+                var cHeight = $container.outerHeight();
+                var tWidth = $this.outerWidth();
+                var tHeight = $this.outerHeight();
                 var offset = $this.offset();
+                var position = $this.position();
+                var pWidth = $this.parent().outerWidth(true);
                 var x = 0;
                 var y = 0;
                 var css = {};
-                $container.addClass('in');
+                $container.show();
+                setTimeout(function() {
+                    $container.addClass('in');
+                }, 10);
                 switch (opt.placement) {
                     case 'top':
                     case 'bottom':
-                        $container.removeClass('{0} {0}-left {0}-right'.format(opt.placement));
-                        y = cHeight + 3;
+                        $container.removeClass('{0}-left {0}-right'.format(opt.placement));
                         x = (Math.abs(tWidth - cWidth) / 2);
                         if (x > offset.left) {
                             css = {
-                                left: 0,
+                                left: position.left,
                                 right: ''
                             };
                             $container.addClass('{0}-right'.format(opt.placement));
                         } else if ((offset.left + (tWidth + cWidth) / 2) > $(window).width()) {
+
                             css = {
                                 left: '',
-                                right: 0
+                                right: pWidth - tWidth - position.left
                             };
                             $container.addClass('{0}-left'.format(opt.placement));
                         } else {
+                            x = x - position.left;
                             css = {
                                 left: -1 * x
                             };
                             $container.addClass(opt.placement);
                         }
-                        css[opt.placement] = -1 * y;
                         $container.css(css);
                         break;
                     case 'left':
                     case 'right':
                         $container.removeClass(opt.placement);
-                        x = tWidth;
+                        if (opt.placement === 'left') {
+                            x = cWidth * -1 + position.left - 5;
+                        } else {
+                            x = tWidth + position.left + 5;
+                        }
                         y = (Math.abs(tHeight - cHeight) / 2);
                         css = {
-                            top: -1 * y
+                            top: -1 * y,
+                            left: x,
+                            right: ''
                         };
-                        if (opt.placement === 'left') {
-                            css['right'] = tWidth;
-                            css['left'] = '';
-                        } else {
-                            css['left'] = tWidth;
-                            css['right'] = '';
-                        }
                         $container.css(css);
                         $container.addClass(opt.placement);
                         break;
                 }
-                if (opt.showAfter) {
-                    $.CUI.addEvent(opt.showAfter, $this);
+                if (opt.showafter) {
+                    $.CUI.addEvent(opt.showafter, this);
                 }
             },
             hide: function() {
                 var opt = this.opt;
-                var $this = this.$element;
+                var that = this;
                 var $container = this.$container;
-                if (opt.hideBefore) {
-                    $.CUI.addEvent(opt.hideBefore, $this);
+                var exports = this.exports;
+                if (opt.hidebefore) {
+                    $.CUI.addEvent(opt.hidebefore, this);
                 }
                 $container.removeClass('in');
-                if (opt.hideAfter) {
-                    $.CUI.addEvent(opt.hideAfter, $this);
-                }
+                opt._timer = setTimeout(function() {
+                    $container.hide();
+                    if (opt.hideafter) {
+                        $.CUI.addEvent(opt.hideafter, that);
+                    }
+                    if (opt.once) {
+                        exports.destroy();
+                    }
+                }, animationDuration + 1);
             }
         },
         setOptionsBefore: null,
@@ -16667,10 +16433,6 @@ if (!Number.isNaN) {
                     $this.on('focusin.' + exports.name, exports.show);
                     $this.on('focusout.' + exports.name, exports.hide);
                     break;
-                case 'hover' :
-                    $this.on('mouseenter.' + exports.name, exports.show);
-                    $this.on('mouseleave.' + exports.name, exports.hide);
-                    break;
             }
         },
         destroyBefore: function(context) {
@@ -16679,8 +16441,6 @@ if (!Number.isNaN) {
             $this.off('click.' + exports.name);
             $this.off('focusin.' + exports.name);
             $this.off('focusout.' + exports.name);
-            $this.off('mouseenter.' + exports.name);
-            $this.off('mouseleave.' + exports.name);
             context.$container.remove();
         },
     };
@@ -16694,3 +16454,232 @@ if (!Number.isNaN) {
         });
     });
 })(jQuery);
+(function($) {
+    //customer validate
+    var customValidate = {
+        max: function($element) {
+            var value = $element.val();
+            var max = $element.attr('data-max');
+            var a = $.isNumeric(value) ? value : Date.parse(value);
+            var b = $.isNumeric(max) ? max : Date.parse(max);
+            return (a - b) <= 0;
+        },
+        less: function($element) {
+            var value = $element.val();
+            var less = $element.attr('data-less');
+            var a = $.isNumeric(value) ? value : Date.parse(value);
+            var b = $.isNumeric(less) ? less : Date.parse(less);
+            return (a - b) < 0;
+        },
+        min: function($element) {
+            var value = $element.val();
+            var min = $element.attr('data-min');
+            var a = $.isNumeric(value) ? value : Date.parse(value);
+            var b = $.isNumeric(min) ? min : Date.parse(min);
+            return (a - b) >= 0;
+        },
+        greater: function($element) {
+            var value = $element.val();
+            var greater = $element.attr('data-greater');
+            var a = $.isNumeric(value) ? value : Date.parse(value);
+            var b = $.isNumeric(greater) ? greater : Date.parse(greater);
+            return (a - b) > 0;
+        }
+    };
+    var _showValidate = function($element, message) {
+        $element.closest('.input').removeClass('has-success');
+        $element.closest('.input').addClass('has-error');
+        if (message) {
+            $element.tip({
+                once: true,
+                type: 'error',
+                content: message,
+                placement: 'bottom',
+                trigger: null
+            }).show();
+        }
+    };
+    var _passValidate = function($element, isRequried) {
+        $element.closest('.input').removeClass('has-error');
+        if ($element.data('tip')) {
+            $element.data('tip').hide();
+        }
+        if ($element.is('[id]')) {
+            $('[for=' + $element.attr('id') + ']').removeClass('error-text');
+        }
+        if (isRequried) {
+            $element.closest('.input').addClass('has-success');
+        } else if ($element.val()) {
+            $element.closest('.input').addClass('has-success');
+        } else {
+            $element.closest('.input').removeClass('has-success');
+        }
+    };
+    var _validate = function($element, type, errorText, addition) {
+        var value = $.trim($element.val());
+        var isRequired = type.indexOf('required') >= 0;
+        var message = '';
+        for (var i = 0; i < type.length; i++) {
+            switch (type[i]) {
+                case 'required':
+                    if (!value && value === '') {
+                        message = 'This is requried';
+                        _showValidate($element, message);
+                        return false;
+                    }
+                    break;
+                case 'email':
+                    if (value && !$.isEmail(value)) {
+                        message = errorText || 'Please enter a valid email.';
+                        _showValidate($element, message);
+                        return false;
+                    }
+                    break;
+                case 'phone':
+                    if (value && !$.isPhone(value)) {
+                        message = errorText || 'Please enter a valid Phone Number';
+                        _showValidate($element, message);
+                        return false;
+                    }
+                    break;
+                case 'zipcode':
+                    if (value && !$.isZipCode(value)) {
+                        message = errorText || 'Please enter a valid zipcode';
+                        _showValidate($element, message);
+                        return false;
+                    }
+                    break;
+                case 'price':
+                    if (value && !$.isPrice(value)) {
+                        message = errorText || 'Please enter a valid price';
+                        _showValidate($element, message);
+                        return false;
+                    }
+                    break;
+                case 'int':
+                    if (value && !$.isInt(value)) {
+                        message = errorText || 'Only allowed integer number';
+                        _showValidate($element, message);
+                        return false;
+                    }
+                    break;
+                case 'float':
+                    if (value && !$.isFloat(value)) {
+                        message = errorText || 'Only allowed floating number';
+                        _showValidate($element, message);
+                        return false;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (customValidate[addition] && !customValidate[addition]($element)) {
+            _showValidate($element, message);
+            return false;
+        }
+
+        _passValidate($element, isRequired);
+        return true;
+    };
+    var validateConfig = {
+        name: 'validate',
+        defaultOpt: {
+            errortext: 'Invalid value.'
+        },
+        initBefore: null,
+        init: function(context) {
+            var $this = context.$element;
+            var opt = context.opt;
+            opt.validate = opt.validate ? opt.validate.split(',') : [];
+            $this.on('change.validate', function() {
+                _validate($this, opt.validate, opt.errortext, opt.addition);
+            });
+        },
+        exports: {
+            isValid: function() {
+                var $this = this.$element;
+                var opt = this.opt;
+                return _validate($this, opt.validate, opt.errortext, opt.addition);
+            }
+        },
+        setOptionsBefore: function(e, context, options) {
+            options.validate = options.validate ? options.validate.split(',') : [];
+        },
+        setOptionsAfter: function(context) {
+            var $this = context.$element;
+            var opt = context.opt;
+            $this.off('change.validate').on('change.validate', function() {
+                _validate($this, opt.validate, opt.errortext, opt.addition);
+            });
+        },
+        destroyBefore: function(context) {
+            var $this = context.$element;
+            $this.off('change.validate');
+        },
+        initAfter: null,
+        isThirdPart: false,
+    };
+    $.CUI.plugin(validateConfig);
+    $(document).on('dom.load.validate', function() {
+        $('[data-validate]').each(function(index, item) {
+            var $item = $(item);
+            $item.validate($item.data());
+            $item.removeAttr('data-validate');
+            $item.attr('data-validate-load', '');
+        });
+    });
+})(jQuery);
+// simplezoomer
+(function($) {
+    $.fn.imgzoom = function(options) {
+        var defaultOpt = {
+            zoomType: 'zoomin',
+            zoomStep: 10,
+            max: 200,
+            min: 50,
+            target: '',
+            onZoom: null,
+        };
+        var opt = $.extend({}, defaultOpt, options);
+        var $this = $(this);
+        var $target = $(opt.target);
+        var _zoom = function() {
+            var currentzoom = $target.data('currentzoom');
+            if (!currentzoom) {
+                currentzoom = Math.floor($target.find('img').width() / $target.outerWidth() * 10) * 10;
+            }
+            if (opt.zoomType === 'zoomin') {
+                currentzoom = Math.min(opt.max, (currentzoom + opt.zoomStep));
+            } else if (opt.zoomType === 'zoomout') {
+                currentzoom = Math.max(opt.min, (currentzoom - opt.zoomStep));
+            }
+            $target.data('currentzoom', currentzoom);
+            $target.find('img').css({'width': currentzoom + '%'});
+            if (opt.onZoom) {
+                if ($.isFunction(opt.onZoom)) {
+                    opt.onZoom(currentzoom);
+                } else {
+                    $(document).trigger(opt.onZoom, [currentzoom]);
+                }
+            }
+        }
+        $this.on('click', _zoom);
+    };
+    $(document).on('dom.load.imgzoom', function() {
+        $('[data-imgzoom]').each(function() {
+            var $this = $(this);
+            $this.imgzoom({
+                zoomType: $this.attr('data-zoomtype'),
+                zoomStep: $this.attr('data-zoomstep'),
+                max: $this.attr('data-max:'),
+                min: $this.attr('data-min'),
+                target: $this.attr('data-target'),
+                onZoom: $this.attr('data-onzoom')
+            });
+            $this.removeAttr('data-imgzoom');
+        });
+    });
+})(jQuery);
+
