@@ -407,7 +407,8 @@ b,
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translateY(-50%) translateX(-50%);
+  -webkit-transform: translateY(-50%) translateX(-50%);
+          transform: translateY(-50%) translateX(-50%);
 }
 
 /* line 54, ../../../src/scss/base/_utilities.scss */
@@ -415,7 +416,8 @@ b,
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translateY(-50%) translateX(-50%);
+  -webkit-transform: translateY(-50%) translateX(-50%);
+          transform: translateY(-50%) translateX(-50%);
   max-width: 100%;
   max-height: 100%;
 }
@@ -5201,6 +5203,21 @@ b,
   display: inline-block;
 }
 
+@-webkit-keyframes iconZoom {
+  0% {
+    font-size: 21px;
+  }
+  30% {
+    font-size: 27px;
+  }
+  75% {
+    font-size: 27px;
+  }
+  100% {
+    font-size: 21px;
+  }
+}
+
 @keyframes iconZoom {
   0% {
     font-size: 21px;
@@ -5215,26 +5232,46 @@ b,
     font-size: 21px;
   }
 }
-@keyframes imageZoom {
+@-webkit-keyframes imageZoom {
   0% {
-    transform: scale(1);
+    -webkit-transform: scale(1);
+            transform: scale(1);
   }
   50% {
-    transform: scale(1.24);
+    -webkit-transform: scale(1.24);
+            transform: scale(1.24);
   }
   100% {
-    transform: scale(1);
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+@keyframes imageZoom {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.24);
+            transform: scale(1.24);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
   }
 }
 /* line 26, ../../../src/scss/base/_animation.scss */
 .animation-zoom {
-  animation: imageZoom linear 50s;
-  animation-iteration-count: infinite;
+  -webkit-animation: imageZoom linear 50s;
+          animation: imageZoom linear 50s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
 }
 
 /* line 36, ../../../src/scss/base/_animation.scss */
 .animation-img-hover img {
-  transition: width 1s;
+  -webkit-transition: width 1s;
+          transition: width 1s;
 }
 /* line 40, ../../../src/scss/base/_animation.scss */
 .animation-img-hover:hover img {
@@ -5244,37 +5281,57 @@ b,
 /* line 49, ../../../src/scss/base/_animation.scss */
 .cube-up,
 .cube-down {
-  transform-style: preserve-3d;
-  transition: transform 0.5s;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  -webkit-transition: -webkit-transform 0.5s;
+          transition: transform 0.5s;
 }
 
 /* line 54, ../../../src/scss/base/_animation.scss */
 .cube-up {
-  transform: rotateY(0deg) rotateX(-90deg) translateZ(-25px);
+  -webkit-transform: rotateY(0deg) rotateX(-90deg) translateZ(-25px);
+          transform: rotateY(0deg) rotateX(-90deg) translateZ(-25px);
 }
 
 /* line 57, ../../../src/scss/base/_animation.scss */
 .cube-down {
-  transform: rotateY(0deg) rotateX(90deg) translateZ(-25px);
+  -webkit-transform: rotateY(0deg) rotateX(90deg) translateZ(-25px);
+          transform: rotateY(0deg) rotateX(90deg) translateZ(-25px);
 }
 
 /* line 60, ../../../src/scss/base/_animation.scss */
 .cube-show {
-  transform: rotateY(0deg) rotateX(0deg) translateZ(-25px);
+  -webkit-transform: rotateY(0deg) rotateX(0deg) translateZ(-25px);
+          transform: rotateY(0deg) rotateX(0deg) translateZ(-25px);
 }
 
 /* line 63, ../../../src/scss/base/_animation.scss */
 .cube-clear {
-  transform: none !important;
-  transform-style: flat !important;
+  -webkit-transform: none !important;
+          transform: none !important;
+  -webkit-transform-style: flat !important;
+          transform-style: flat !important;
+}
+
+@-webkit-keyframes rotate {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
+  }
 }
 
 @keyframes rotate {
   0% {
-    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
   }
   100% {
-    transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
   }
 }
 /* line 79, ../../../src/scss/base/_animation.scss */
@@ -5287,9 +5344,12 @@ b,
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translateY(-50%) translateX(-50%);
-  transition: transform 0.5s;
-  animation: rotate 1s infinite steps(8);
+  -webkit-transform: translateY(-50%) translateX(-50%);
+          transform: translateY(-50%) translateX(-50%);
+  -webkit-transition: -webkit-transform 0.5s;
+          transition: transform 0.5s;
+  -webkit-animation: rotate 1s infinite steps(8);
+          animation: rotate 1s infinite steps(8);
 }
 
 /* line 1, ../../../src/scss/plugin/_link.scss */
@@ -5335,7 +5395,8 @@ a [disable] {
   background-color: #c3c3c3;
   border: 1px solid transparent;
   border-radius: 5px;
-  transition: opacity 0.5s;
+  -webkit-transition: opacity 0.5s;
+          transition: opacity 0.5s;
   opacity: 1;
 }
 /* line 15, ../../../src/scss/plugin/_button.scss */
@@ -5690,7 +5751,8 @@ input[type='text']::-ms-clear {
   height: 40px;
   line-height: 38px;
   padding: 0 5px;
-  transition: border-color .5s;
+  -webkit-transition: border-color .5s;
+          transition: border-color .5s;
   border-radius: 3px;
   font-size: 16px;
 }
@@ -5865,12 +5927,14 @@ input[type='text']::-ms-clear {
 }
 /* line 195, ../../../src/scss/plugin/_input.scss */
 .input.has-error .tooltip {
-  transition: all 1s;
+  -webkit-transition: all 1s;
+          transition: all 1s;
   margin-top: 0;
   left: 0 !important;
   right: 0 !important;
   max-width: initial !important;
-  transform: translateY(50%);
+  -webkit-transform: translateY(50%);
+          transform: translateY(50%);
   padding: 0;
 }
 /* line 203, ../../../src/scss/plugin/_input.scss */
@@ -5879,7 +5943,8 @@ input[type='text']::-ms-clear {
 }
 /* line 206, ../../../src/scss/plugin/_input.scss */
 .input.has-error .tooltip.error.in {
-  transform: translateY(100%);
+  -webkit-transform: translateY(100%);
+          transform: translateY(100%);
 }
 
 /* line 2, ../../../src/scss/plugin/_textbox.scss */
@@ -5904,12 +5969,14 @@ input[type='text']::-ms-clear {
   line-height: 20px;
   width: auto;
   height: 20px;
-  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
   padding: 0 2px;
   border: none;
   color: #777777;
   font-size: 16px;
-  transition: all .3s;
+  -webkit-transition: all .3s;
+          transition: all .3s;
   z-index: 1;
 }
 /* line 29, ../../../src/scss/plugin/_textbox.scss */
@@ -5968,8 +6035,10 @@ input[type='text']::-ms-clear {
   top: 0;
   left: 10px;
   right: auto;
-  transform: scale(0.8) translateY(0);
-  transform-origin: left;
+  -webkit-transform: scale(0.8) translateY(0);
+          transform: scale(0.8) translateY(0);
+  -webkit-transform-origin: left;
+          transform-origin: left;
 }
 /* line 89, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox].focus .input.small > label[for], [data-textbox-load].focus .input.small > label[for] {
@@ -6011,7 +6080,8 @@ input[type='text']::-ms-clear {
 #body.mobile [data-textbox] .tooltip.error, #body.mobile [data-textbox-load] .tooltip.error {
   right: 0 !important;
   left: auto !important;
-  transform: translateY(0) !important;
+  -webkit-transform: translateY(0) !important;
+          transform: translateY(0) !important;
 }
 
 /* line 1, ../../../src/scss/plugin/_textarea.scss */
@@ -6040,7 +6110,10 @@ textarea {
 .checkbox label, .radio label {
   cursor: pointer;
   padding: 0;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 /* line 8, ../../../src/scss/plugin/_checkboxradio.scss */
 .checkbox label > input, .radio label > input {
@@ -6133,7 +6206,8 @@ textarea {
   filter: alpha(opacity=0);
   min-width: 150px;
   max-width: 320px;
-  transition: opacity .5s;
+  -webkit-transition: opacity .5s;
+          transition: opacity .5s;
 }
 /* line 13, ../../../src/scss/plugin/_tip.scss */
 .tooltip.in {
@@ -6143,7 +6217,8 @@ textarea {
 /* line 17, ../../../src/scss/plugin/_tip.scss */
 .tooltip.top {
   padding: 5px 0;
-  transform: translateY(-100%);
+  -webkit-transform: translateY(-100%);
+          transform: translateY(-100%);
   top: 3px;
 }
 /* line 21, ../../../src/scss/plugin/_tip.scss */
@@ -6168,7 +6243,8 @@ textarea {
 /* line 42, ../../../src/scss/plugin/_tip.scss */
 .tooltip.bottom {
   padding: 5px 0;
-  transform: translateY(100%);
+  -webkit-transform: translateY(100%);
+          transform: translateY(100%);
   bottom: 3px;
 }
 /* line 46, ../../../src/scss/plugin/_tip.scss */
@@ -6792,23 +6868,28 @@ textarea {
 
 /* line 6, ../../../src/scss/plugin/_collapse.scss */
 .shown.icon-angle-up, .shown > .icon-angle-up {
-  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
 }
 /* line 10, ../../../src/scss/plugin/_collapse.scss */
 .shown.icon-angle-down, .shown > .icon-angle-down {
-  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
 }
 /* line 14, ../../../src/scss/plugin/_collapse.scss */
 .shown.icon-arrow-circle-up, .shown > .icon-arrow-circle-up {
-  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
 }
 /* line 18, ../../../src/scss/plugin/_collapse.scss */
 .shown.icon-arrow-circle-down, .shown > .icon-arrow-circle-down {
-  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
 }
 /* line 26, ../../../src/scss/plugin/_collapse.scss */
 .shown.icon-caret-right, .shown > .icon-caret-right {
-  transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
 }
 
 /* line 31, ../../../src/scss/plugin/_collapse.scss */
@@ -6836,6 +6917,7 @@ textarea {
   padding-left: 30px;
   right: 0;
   bottom: 0;
+  background: -webkit-linear-gradient(left, transparent -10%, white 20%);
   background: linear-gradient(to right, transparent -10%, white 20%);
   opacity: 1;
 }
@@ -6866,7 +6948,8 @@ textarea {
   float: left;
   overflow: hidden;
   position: relative;
-  transition: opacity 1s 0.5s;
+  -webkit-transition: opacity 1s 0.5s;
+          transition: opacity 1s 0.5s;
 }
 /* line 20, ../../../src/scss/plugin/_slider.scss */
 .slider .next,
@@ -6875,7 +6958,8 @@ textarea {
   display: block;
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
   font-size: 40px;
   width: 40px;
   height: 40px;
@@ -6894,7 +6978,8 @@ textarea {
 /* line 40, ../../../src/scss/plugin/_slider.scss */
 .slider .prev {
   left: 15px;
-  transition: left 0.5s ease;
+  -webkit-transition: left 0.5s ease;
+          transition: left 0.5s ease;
 }
 /* line 43, ../../../src/scss/plugin/_slider.scss */
 .slider .prev i {
@@ -6903,7 +6988,8 @@ textarea {
 /* line 47, ../../../src/scss/plugin/_slider.scss */
 .slider .next {
   right: 15px;
-  transition: right 0.5s ease;
+  -webkit-transition: right 0.5s ease;
+          transition: right 0.5s ease;
 }
 /* line 50, ../../../src/scss/plugin/_slider.scss */
 .slider .next i {
@@ -6943,7 +7029,8 @@ textarea {
   float: left;
   overflow: hidden;
   position: relative;
-  transition: opacity 1s .5s;
+  -webkit-transition: opacity 1s .5s;
+          transition: opacity 1s .5s;
 }
 /* line 16, ../../../src/scss/plugin/_shifter.scss */
 .shifter .wrap > ul > li > * {
@@ -6956,7 +7043,8 @@ textarea {
   display: block;
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
   font-size: 40px;
   width: 40px;
   height: 40px;
@@ -6981,7 +7069,8 @@ textarea {
 /* line 47, ../../../src/scss/plugin/_shifter.scss */
 .shifter .prev {
   left: 15px;
-  transition: opacity, left 0.5s ease;
+  -webkit-transition: opacity, left 0.5s ease;
+          transition: opacity, left 0.5s ease;
 }
 /* line 50, ../../../src/scss/plugin/_shifter.scss */
 .shifter .prev i {
@@ -6990,7 +7079,8 @@ textarea {
 /* line 54, ../../../src/scss/plugin/_shifter.scss */
 .shifter .next {
   right: 15px;
-  transition: opacity, right 0.5s ease;
+  -webkit-transition: opacity, right 0.5s ease;
+          transition: opacity, right 0.5s ease;
 }
 /* line 57, ../../../src/scss/plugin/_shifter.scss */
 .shifter .next i {
@@ -7021,7 +7111,8 @@ textarea {
   background-color: #78004E;
   min-width: 320px;
   height: 50px;
-  transition: top .5s;
+  -webkit-transition: top .5s;
+          transition: top .5s;
 }
 
 /* line 16, ../../../src/scss/plugin/_header.scss */
@@ -7117,7 +7208,8 @@ textarea {
 }
 /* line 97, ../../../src/scss/plugin/_header.scss */
 .header-menu-item .active .caret {
-  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
 }
 
 @media (max-width: 639px) {
@@ -7148,7 +7240,8 @@ textarea {
     right: -300px;
     width: 300px;
     overflow-y: auto;
-    transition: right 0.2s;
+    -webkit-transition: right 0.2s;
+            transition: right 0.2s;
     background-color: #78004E;
     border-top: solid #ffabe2 1px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
@@ -7191,7 +7284,8 @@ textarea {
   }
   /* line 160, ../../../src/scss/plugin/_header.scss */
   .header-menu-item > ul {
-    transition: height 0.2s linear 0.4s;
+    -webkit-transition: height 0.2s linear 0.4s;
+            transition: height 0.2s linear 0.4s;
   }
   /* line 163, ../../../src/scss/plugin/_header.scss */
   .header-menu-item > ul.active > li {
@@ -7199,7 +7293,8 @@ textarea {
   }
   /* line 167, ../../../src/scss/plugin/_header.scss */
   .header-menu-item > ul > li {
-    transition: opacity 0.4s;
+    -webkit-transition: opacity 0.4s;
+            transition: opacity 0.4s;
     background-color: white;
     padding: 0;
     text-align: left;
@@ -7376,7 +7471,8 @@ table.gridtable tbody tr {
   table.gridtable tr.open:before {
     color: #78004E;
     display: inline-block;
-    transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+            transform: rotate(-90deg);
   }
   /* line 82, ../../../src/scss/plugin/_gridtable.scss */
   table.gridtable tr.close {
@@ -7445,7 +7541,8 @@ table.gridtable tbody tr {
   overflow-y: auto;
   min-width: 320px;
   opacity: 0;
-  transition: opacity .5s;
+  -webkit-transition: opacity .5s;
+          transition: opacity .5s;
 }
 /* line 13, ../../../src/scss/plugin/_dialog.scss */
 .dialog .dialog-overlay {
@@ -7464,7 +7561,8 @@ table.gridtable tbody tr {
   position: relative;
   padding: 0;
   margin-top: 0;
-  transition: margin-top 0.5s;
+  -webkit-transition: margin-top 0.5s;
+          transition: margin-top 0.5s;
 }
 /* line 29, ../../../src/scss/plugin/_dialog.scss */
 .dialog .dialog-panel:before {
