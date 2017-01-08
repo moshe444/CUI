@@ -27,114 +27,70 @@
   font-style: normal;
 }
 /* line 1, ../../../src/scss/base/_reset.scss */
+* {
+  box-sizing: border-box;
+}
+
+/* line 5, ../../../src/scss/base/_reset.scss */
+input, div, span, ul, li, ol, p, select, textarea, dl, dt, dd, html, body, select, form {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 10, ../../../src/scss/base/_reset.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 15, ../../../src/scss/base/_reset.scss */
 html {
   font-size: 16px;
+  line-height: 1.2em;
   font-family: "robotolight", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-style: normal;
 }
 
-/* line 7, ../../../src/scss/base/_reset.scss */
-input, div, span, ul, li, ol, p, select, textarea {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* line 13, ../../../src/scss/base/_reset.scss */
-ol,
-ul {
-  list-style: none;
-}
-
-/* line 18, ../../../src/scss/base/_reset.scss */
-i {
-  text-align: center;
-}
-
 /* line 22, ../../../src/scss/base/_reset.scss */
-abbr[title],
-acronym[title] {
-  border-bottom: 1px dotted;
-  cursor: help;
-}
-
-/* line 28, ../../../src/scss/base/_reset.scss */
-q:after,
-q:before {
-  content: '';
-}
-
-/* line 33, ../../../src/scss/base/_reset.scss */
-legend {
-  color: black;
-}
-
-/* line 37, ../../../src/scss/base/_reset.scss */
-a,
-button,
-input,
-select,
-textarea {
-  outline: none;
-}
-
-/* line 45, ../../../src/scss/base/_reset.scss */
-button,
-input,
-select,
-textarea {
-  font-size: 100%;
-}
-
-/* line 52, ../../../src/scss/base/_reset.scss */
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-/* line 57, ../../../src/scss/base/_reset.scss */
-hr {
-  border: none;
-  height: 1px;
-}
-
-/* line 62, ../../../src/scss/base/_reset.scss */
-fieldset {
-  padding: 0;
-  margin: 0;
-  border: 0;
-}
-
-/* line 71, ../../../src/scss/base/_reset.scss */
-input:focus,
-select:focus,
-textarea:focus {
-  outline: none;
-}
-
-/* line 76, ../../../src/scss/base/_reset.scss */
-img {
-  border: 0;
-}
-
-/* line 80, ../../../src/scss/base/_reset.scss */
 body,
 html {
   min-height: 100%;
   overflow-x: hidden;
 }
 
-/* line 86, ../../../src/scss/base/_reset.scss */
+/* line 28, ../../../src/scss/base/_reset.scss */
+fieldset {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+/* line 34, ../../../src/scss/base/_reset.scss */
+legend {
+  color: black;
+}
+
+/* line 38, ../../../src/scss/base/_reset.scss */
 label[for] {
   cursor: pointer;
 }
 
-/* line 90, ../../../src/scss/base/_reset.scss */
+/* line 42, ../../../src/scss/base/_reset.scss */
+input, select, textarea, button {
+  font-size: 100%;
+  outline: none;
+}
+
+/* line 47, ../../../src/scss/base/_reset.scss */
+img {
+  border: 0;
+}
+
+/* line 51, ../../../src/scss/base/_reset.scss */
 [readonly] {
   cursor: not-allowed;
 }
 
-/* line 94, ../../../src/scss/base/_reset.scss */
+/* line 55, ../../../src/scss/base/_reset.scss */
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
   padding: 0;
@@ -142,10 +98,20 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "robotoregular";
 }
 
-/* line 101, ../../../src/scss/base/_reset.scss */
-table {
-  width: 100%;
-  border-collapse: collapse;
+/* line 62, ../../../src/scss/base/_reset.scss */
+i {
+  text-align: center;
+}
+
+/* line 66, ../../../src/scss/base/_reset.scss */
+abbr[title], acronym[title] {
+  border-bottom: 1px dotted;
+  cursor: help;
+}
+
+/* line 71, ../../../src/scss/base/_reset.scss */
+q:after, q:before {
+  content: '';
 }
 
 /* line 1, ../../../src/scss/base/_text.scss */
@@ -226,7 +192,7 @@ h4,
 h5,
 .h5,
 .f5 {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 /* line 94, ../../../src/scss/base/_text.scss */
@@ -276,7 +242,7 @@ h6,
   h5,
   .h5,
   .f5 {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   /* line 138, ../../../src/scss/base/_text.scss */
@@ -5392,22 +5358,23 @@ a {
   cursor: pointer;
   color: #0b0dad;
   opacity: 0.95;
+  outline: none;
 }
-/* line 6, ../../../src/scss/plugin/_link.scss */
+/* line 7, ../../../src/scss/plugin/_link.scss */
 a:hover, a:active {
   opacity: 1;
   color: #c50080;
   text-decoration: none;
 }
-/* line 12, ../../../src/scss/plugin/_link.scss */
+/* line 13, ../../../src/scss/plugin/_link.scss */
 a:visited {
   color: #0b0dad;
 }
-/* line 16, ../../../src/scss/plugin/_link.scss */
+/* line 17, ../../../src/scss/plugin/_link.scss */
 a.link:hover, a.link:active {
   text-decoration: underline;
 }
-/* line 21, ../../../src/scss/plugin/_link.scss */
+/* line 22, ../../../src/scss/plugin/_link.scss */
 a [disable] {
   color: #b0b0b0;
   pointer-events: none;
@@ -5418,8 +5385,8 @@ a [disable] {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  height: 36px;
-  line-height: 18px;
+  height: 40px;
+  line-height: 22px;
   font-size: 16px;
   padding: 8px 10px;
   display: block;
@@ -5448,23 +5415,23 @@ a [disable] {
 }
 /* line 28, ../../../src/scss/plugin/_button.scss */
 .btn.large {
-  height: 42px;
-  line-height: 22px;
+  height: 45px;
+  line-height: 27px;
   font-size: 18px;
   padding: 8px 20px;
   border-radius: 6px;
 }
 /* line 35, ../../../src/scss/plugin/_button.scss */
 .btn.small {
-  height: 30px;
-  line-height: 14px;
-  font-size: 14px;
+  height: 36px;
+  line-height: 34px;
+  font-size: 16px;
   padding: 0 8px;
   border-radius: 4px;
 }
 /* line 41, ../../../src/scss/plugin/_button.scss */
 .btn.small > * {
-  line-height: 28px;
+  line-height: 34px;
 }
 /* line 45, ../../../src/scss/plugin/_button.scss */
 .btn.white {
@@ -5754,8 +5721,8 @@ input[type='text'], input[type='password'], input[type='email'], input[type='tel
   width: 100%;
   height: 100%;
   line-height: 100%;
-  border-radius: 2px;
   border: 1px solid #dfdfdf;
+  font-family: "robotolight";
 }
 
 /* line 9, ../../../src/scss/plugin/_input.scss */
@@ -5777,41 +5744,42 @@ input[type='text']::-ms-clear {
 }
 /* line 22, ../../../src/scss/plugin/_input.scss */
 .input > input {
-  height: 36px;
-  line-height: 34px;
+  height: 40px;
+  line-height: 38px;
   padding: 0 5px;
   -webkit-transition: border-color .5s;
           transition: border-color .5s;
   border-radius: 3px;
+  font-size: 16px;
 }
-/* line 29, ../../../src/scss/plugin/_input.scss */
+/* line 30, ../../../src/scss/plugin/_input.scss */
 .input > .btn {
   margin: 0;
   padding: 0;
 }
-/* line 33, ../../../src/scss/plugin/_input.scss */
+/* line 34, ../../../src/scss/plugin/_input.scss */
 .input > label {
   color: #777777;
 }
-/* line 36, ../../../src/scss/plugin/_input.scss */
+/* line 37, ../../../src/scss/plugin/_input.scss */
 .input > label, .input > i, .input > a {
   top: 0;
   position: absolute;
   z-index: 1;
   vertical-align: middle;
   text-align: center;
-  width: 36px;
-  height: 36px;
-  line-height: 36px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* line 48, ../../../src/scss/plugin/_input.scss */
+/* line 49, ../../../src/scss/plugin/_input.scss */
 .input.right > input {
-  padding-right: 36px;
+  padding-right: 40px;
 }
-/* line 51, ../../../src/scss/plugin/_input.scss */
+/* line 52, ../../../src/scss/plugin/_input.scss */
 .input.right > label, .input.right > i, .input.right > a {
   right: 0;
   left: auto;
@@ -5820,11 +5788,11 @@ input[type='text']::-ms-clear {
   border-bottom-right-radius: 3px;
   border-top-right-radius: 3px;
 }
-/* line 59, ../../../src/scss/plugin/_input.scss */
+/* line 60, ../../../src/scss/plugin/_input.scss */
 .input.left > input {
-  padding-left: 36px;
+  padding-left: 40px;
 }
-/* line 62, ../../../src/scss/plugin/_input.scss */
+/* line 63, ../../../src/scss/plugin/_input.scss */
 .input.left > label, .input.left > i, .input.left > a {
   left: 0;
   right: auto;
@@ -5833,7 +5801,7 @@ input[type='text']::-ms-clear {
   border-bottom-right-radius: 0px;
   border-top-right-radius: 0px;
 }
-/* line 70, ../../../src/scss/plugin/_input.scss */
+/* line 71, ../../../src/scss/plugin/_input.scss */
 .input.left.right > label:last-of-type, .input.left.right > i:last-of-type, .input.left.right > a:last-of-type {
   right: 0;
   left: auto;
@@ -5842,116 +5810,118 @@ input[type='text']::-ms-clear {
   border-bottom-left-radius: 0px;
   border-top-left-radius: 0px;
 }
-/* line 80, ../../../src/scss/plugin/_input.scss */
+/* line 81, ../../../src/scss/plugin/_input.scss */
 .input.small > input {
-  height: 30px;
-  line-height: 28px;
+  height: 36px;
+  line-height: 34px;
+  font-size: 12px;
 }
-/* line 84, ../../../src/scss/plugin/_input.scss */
+/* line 86, ../../../src/scss/plugin/_input.scss */
 .input.small > label, .input.small > i, .input.small > a {
-  height: 30px;
-  line-height: 30px;
-  width: 30px;
+  height: 36px;
+  line-height: 36px;
+  width: 36px;
 }
-/* line 90, ../../../src/scss/plugin/_input.scss */
+/* line 92, ../../../src/scss/plugin/_input.scss */
 .input.small.right > input {
-  padding-right: 30px;
+  padding-right: 36px;
 }
-/* line 95, ../../../src/scss/plugin/_input.scss */
+/* line 97, ../../../src/scss/plugin/_input.scss */
 .input.small.left > input {
-  padding-left: 30px;
+  padding-left: 36px;
 }
-/* line 101, ../../../src/scss/plugin/_input.scss */
+/* line 103, ../../../src/scss/plugin/_input.scss */
 .input.large > input {
   border-radius: 5px;
-  height: 42px;
-  line-height: 40px;
+  height: 45px;
+  line-height: 43px;
   padding: 0 10px;
+  font-size: 18px;
 }
-/* line 107, ../../../src/scss/plugin/_input.scss */
+/* line 110, ../../../src/scss/plugin/_input.scss */
 .input.large > label, .input.large > i, .input.large > a {
-  height: 42px;
-  line-height: 42px;
-  width: 42px;
+  height: 45px;
+  line-height: 45px;
+  width: 45px;
 }
-/* line 113, ../../../src/scss/plugin/_input.scss */
+/* line 116, ../../../src/scss/plugin/_input.scss */
 .input.large.right > input {
   padding-left: 10px;
-  padding-right: 52px;
+  padding-right: 55px;
 }
-/* line 117, ../../../src/scss/plugin/_input.scss */
+/* line 120, ../../../src/scss/plugin/_input.scss */
 .input.large.right > label, .input.large.right > i, .input.large.right > a {
   border-bottom-left-radius: 0px;
   border-top-left-radius: 0px;
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
 }
-/* line 123, ../../../src/scss/plugin/_input.scss */
+/* line 126, ../../../src/scss/plugin/_input.scss */
 .input.large.left > input {
-  padding-left: 52px;
+  padding-left: 55px;
   padding-right: 10px;
 }
-/* line 127, ../../../src/scss/plugin/_input.scss */
+/* line 130, ../../../src/scss/plugin/_input.scss */
 .input.large.left > label, .input.large.left > i, .input.large.left > a {
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
   border-bottom-right-radius: 0px;
   border-top-right-radius: 0px;
 }
-/* line 133, ../../../src/scss/plugin/_input.scss */
+/* line 136, ../../../src/scss/plugin/_input.scss */
 .input.large.left.right > label:last-of-type, .input.large.left.right > i:last-of-type, .input.large.left.right > a:last-of-type {
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
   border-bottom-left-radius: 0px;
   border-top-left-radius: 0px;
 }
-/* line 142, ../../../src/scss/plugin/_input.scss */
+/* line 145, ../../../src/scss/plugin/_input.scss */
 .input.plaintext > input {
   background-color: transparent !important;
   border-color: transparent !important;
   display: inline-block;
 }
-/* line 147, ../../../src/scss/plugin/_input.scss */
+/* line 150, ../../../src/scss/plugin/_input.scss */
 .input.plaintext > i {
   color: #333333 !important;
 }
-/* line 152, ../../../src/scss/plugin/_input.scss */
+/* line 155, ../../../src/scss/plugin/_input.scss */
 .input.has-success > input, .input.has-success > select {
   border-color: #4cae4c;
 }
-/* line 155, ../../../src/scss/plugin/_input.scss */
+/* line 158, ../../../src/scss/plugin/_input.scss */
 .input.has-success > i {
   color: #4cae4c;
 }
-/* line 160, ../../../src/scss/plugin/_input.scss */
+/* line 163, ../../../src/scss/plugin/_input.scss */
 .input.has-warning > input, .input.has-warning > select {
   border-color: #ff800e;
 }
-/* line 163, ../../../src/scss/plugin/_input.scss */
+/* line 166, ../../../src/scss/plugin/_input.scss */
 .input.has-warning > i {
   color: #ff800e;
 }
-/* line 168, ../../../src/scss/plugin/_input.scss */
+/* line 171, ../../../src/scss/plugin/_input.scss */
 .input.has-error > input, .input.has-error > select {
   border-color: #d53e39;
 }
-/* line 171, ../../../src/scss/plugin/_input.scss */
+/* line 174, ../../../src/scss/plugin/_input.scss */
 .input.has-error > i {
   color: #d53e39;
 }
-/* line 174, ../../../src/scss/plugin/_input.scss */
+/* line 177, ../../../src/scss/plugin/_input.scss */
 .input.has-error label {
   color: #d53e39;
 }
-/* line 180, ../../../src/scss/plugin/_input.scss */
+/* line 183, ../../../src/scss/plugin/_input.scss */
 .input.has-info > input, .input.has-info > select {
   border-color: #0bc1ff;
 }
-/* line 183, ../../../src/scss/plugin/_input.scss */
+/* line 186, ../../../src/scss/plugin/_input.scss */
 .input.has-info > i {
   color: #0bc1ff;
 }
-/* line 188, ../../../src/scss/plugin/_input.scss */
+/* line 191, ../../../src/scss/plugin/_input.scss */
 .input.has-error .tooltip {
   -webkit-transition: all 1s;
           transition: all 1s;
@@ -5963,11 +5933,11 @@ input[type='text']::-ms-clear {
           transform: translateY(50%);
   padding: 0;
 }
-/* line 196, ../../../src/scss/plugin/_input.scss */
+/* line 199, ../../../src/scss/plugin/_input.scss */
 .input.has-error .tooltip .tooltip-inner {
   border-top: none;
 }
-/* line 199, ../../../src/scss/plugin/_input.scss */
+/* line 202, ../../../src/scss/plugin/_input.scss */
 .input.has-error .tooltip.error.in {
   -webkit-transform: translateY(100%);
           transform: translateY(100%);
@@ -6000,26 +5970,27 @@ input[type='text']::-ms-clear {
   padding: 0 2px;
   border: none;
   color: #777777;
-  font-size: 14px;
+  font-size: 16px;
   -webkit-transition: all .3s;
           transition: all .3s;
   z-index: 1;
 }
-/* line 30, ../../../src/scss/plugin/_textbox.scss */
+/* line 29, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .input > label[for], [data-textbox-load] .input > label[for] {
   left: 10px;
   right: auto;
   top: 50%;
 }
-/* line 36, ../../../src/scss/plugin/_textbox.scss */
+/* line 35, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .input input, [data-textbox-load] .input input {
   padding: 15px 10px 0 10px;
 }
-/* line 40, ../../../src/scss/plugin/_textbox.scss */
+/* line 39, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .input.large > label[for], [data-textbox-load] .input.large > label[for] {
   left: 10px;
   right: auto;
   top: 50%;
+  font-size: 18px;
 }
 /* line 45, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .input.large input, [data-textbox-load] .input.large input {
@@ -6030,75 +6001,83 @@ input[type='text']::-ms-clear {
   left: 10px;
   right: auto;
   top: 50%;
+  font-size: 11px;
 }
-/* line 55, ../../../src/scss/plugin/_textbox.scss */
+/* line 56, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .input.small input, [data-textbox-load] .input.small input {
-  padding: 15px 10px 0 10px;
+  padding: 8px 10px 0 10px;
 }
-/* line 60, ../../../src/scss/plugin/_textbox.scss */
+/* line 61, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .textarea, [data-textbox-load] .textarea {
   background-color: white;
   border: 1px solid #dfdfdf;
 }
-/* line 63, ../../../src/scss/plugin/_textbox.scss */
+/* line 64, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .textarea label[for], [data-textbox-load] .textarea label[for] {
+  left: 10px;
+  right: auto;
   top: 12px;
 }
-/* line 66, ../../../src/scss/plugin/_textbox.scss */
+/* line 69, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .textarea textarea, [data-textbox-load] .textarea textarea {
   border: none;
   margin: 19px 0 10px 0;
   padding: 0 10px 0 10px;
-  min-height: 40px;
+  min-height: 2em;
   overflow: hidden;
 }
-/* line 76, ../../../src/scss/plugin/_textbox.scss */
-[data-textbox].focus .input > label[for], [data-textbox-load].focus .input > label[for] {
+/* line 79, ../../../src/scss/plugin/_textbox.scss */
+[data-textbox].focus .input > label[for], [data-textbox].focus .textarea > label[for], [data-textbox-load].focus .input > label[for], [data-textbox-load].focus .textarea > label[for] {
   top: 0;
-  left: 11px;
+  left: 10px;
   right: auto;
   -webkit-transform: scale(0.8) translateY(0);
           transform: scale(0.8) translateY(0);
   -webkit-transform-origin: left;
           transform-origin: left;
 }
-/* line 86, ../../../src/scss/plugin/_textbox.scss */
-[data-textbox] .tooltip.error, [data-textbox-load] .tooltip.error {
-  margin-top: 0 !important;
-}
-/* line 88, ../../../src/scss/plugin/_textbox.scss */
-[data-textbox] .tooltip.error .tooltip-inner, [data-textbox-load] .tooltip.error .tooltip-inner {
-  background: transparent !important;
-  border: none !important;
-}
-/* line 93, ../../../src/scss/plugin/_textbox.scss */
-[data-textbox] .tooltip.error, [data-textbox-load] .tooltip.error {
-  margin-top: -1px !important;
+/* line 89, ../../../src/scss/plugin/_textbox.scss */
+[data-textbox].focus .input.small > label[for], [data-textbox-load].focus .input.small > label[for] {
+  top: -2px;
 }
 /* line 95, ../../../src/scss/plugin/_textbox.scss */
+[data-textbox] .tooltip.error, [data-textbox-load] .tooltip.error {
+  top: auto;
+  bottom: 0;
+}
+/* line 98, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .tooltip.error .tooltip-inner, [data-textbox-load] .tooltip.error .tooltip-inner {
   background: transparent !important;
   border: none !important;
 }
 
-/* line 105, ../../../src/scss/plugin/_textbox.scss */
+/* line 108, ../../../src/scss/plugin/_textbox.scss */
 #body.mobile [data-textbox] .textarea .tooltip.error, #body.mobile [data-textbox-load] .textarea .tooltip.error {
-  top: auto !important;
+  top: 0 !important;
 }
-/* line 111, ../../../src/scss/plugin/_textbox.scss */
+/* line 114, ../../../src/scss/plugin/_textbox.scss */
 #body.mobile [data-textbox] .input, #body.mobile [data-textbox-load] .input {
   margin-bottom: -1px;
 }
-/* line 113, ../../../src/scss/plugin/_textbox.scss */
+/* line 116, ../../../src/scss/plugin/_textbox.scss */
 #body.mobile [data-textbox] .input input, #body.mobile [data-textbox-load] .input input {
   border-color: #dfdfdf !important;
   border-radius: 0;
 }
-/* line 118, ../../../src/scss/plugin/_textbox.scss */
+/* line 122, ../../../src/scss/plugin/_textbox.scss */
+#body.mobile [data-textbox] .textarea .tooltip.error, #body.mobile [data-textbox-load] .textarea .tooltip.error {
+  top: -5px !important;
+}
+/* line 127, ../../../src/scss/plugin/_textbox.scss */
+#body.mobile [data-textbox] .input .tooltip.error, #body.mobile [data-textbox-load] .input .tooltip.error {
+  top: 0 !important;
+}
+/* line 131, ../../../src/scss/plugin/_textbox.scss */
 #body.mobile [data-textbox] .tooltip.error, #body.mobile [data-textbox-load] .tooltip.error {
   right: 0 !important;
   left: auto !important;
-  top: 3px !important;
+  -webkit-transform: translateY(0) !important;
+          transform: translateY(0) !important;
 }
 
 /* line 1, ../../../src/scss/plugin/_checkboxradio.scss */
@@ -6126,7 +6105,7 @@ input[type='text']::-ms-clear {
 .checkbox label > i, .radio label > i {
   display: inline-block;
   width: 18px;
-  font-size: 14px;
+  font-size: 16px;
   color: #888888;
 }
 /* line 28, ../../../src/scss/plugin/_checkboxradio.scss */
@@ -6164,8 +6143,8 @@ input[type='text']::-ms-clear {
 .group-btn label {
   padding: 0;
   margin: 0;
-  height: 36px;
-  line-height: 36px -2;
+  height: 40px;
+  line-height: 40px -2;
   background: white;
   color: #1417f0;
   text-align: center;
@@ -6184,28 +6163,28 @@ input[type='text']::-ms-clear {
 }
 /* line 38, ../../../src/scss/plugin/_groupbutton.scss */
 .group-btn.small label {
-  height: 30px;
-  line-height: 28px;
+  height: 36px;
+  line-height: 34px;
 }
 /* line 44, ../../../src/scss/plugin/_groupbutton.scss */
 .group-btn.large label {
-  height: 42px;
-  line-height: 40px;
+  height: 45px;
+  line-height: 43px;
 }
 
 /* line 1, ../../../src/scss/plugin/_select.scss */
 select {
-  height: 36px;
+  height: 40px;
   background: white;
   cursor: pointer;
 }
 /* line 5, ../../../src/scss/plugin/_select.scss */
 select.small {
-  height: 30px;
+  height: 36px;
 }
 /* line 8, ../../../src/scss/plugin/_select.scss */
 select.large {
-  height: 36px;
+  height: 40px;
 }
 
 /* line 1, ../../../src/scss/plugin/_textarea.scss */
@@ -6217,9 +6196,10 @@ textarea {
   min-height: 70px;
   overflow-y: auto;
   border-radius: 2px;
+  font-family: "robotolight";
 }
 
-/* line 11, ../../../src/scss/plugin/_textarea.scss */
+/* line 12, ../../../src/scss/plugin/_textarea.scss */
 .textarea {
   position: relative;
   margin-bottom: 20px;
@@ -6435,7 +6415,7 @@ textarea {
 }
 /* line 34, ../../../src/scss/plugin/_panel.scss */
 .panel .h1 .subtitle, .panel .h2 .subtitle, .panel .h3 .subtitle, .panel .h4 .subtitle, .panel .h5 .subtitle {
-  font-size: 14px;
+  font-size: 16px;
   color: #777777;
 }
 /* line 39, ../../../src/scss/plugin/_panel.scss */
@@ -7690,7 +7670,7 @@ table.gridtable tbody tr {
 /* line 112, ../../../src/scss/plugin/_dialog.scss */
 .dialog.dialog-dropdown ul > li a {
   display: block;
-  padding: 15px 20px;
+  padding: 12px 20px;
   border-top: 1px solid #dfdfdf;
 }
 /* line 113, ../../../src/scss/plugin/_dialog.scss */
@@ -7787,7 +7767,7 @@ table.gridtable tbody tr {
 
 /* line 29, ../../../src/scss/plugin/_rangesilder.scss */
 .rangeslider-horizontal {
-  height: 36px;
+  height: 40px;
   width: 100%;
 }
 /* line 32, ../../../src/scss/plugin/_rangesilder.scss */
@@ -7811,7 +7791,7 @@ table.gridtable tbody tr {
 
 /* line 49, ../../../src/scss/plugin/_rangesilder.scss */
 .rangeslider-vertical {
-  width: 36px;
+  width: 40px;
   min-height: 150px;
   max-height: 100%;
 }
