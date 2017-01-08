@@ -5727,23 +5727,27 @@ input[type='text'], input[type='password'], input[type='email'], input[type='tel
 
 /* line 9, ../../../src/scss/plugin/_input.scss */
 select {
-  padding: 0 5px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: white;
+  cursor: pointer;
 }
 
-/* line 13, ../../../src/scss/plugin/_input.scss */
+/* line 17, ../../../src/scss/plugin/_input.scss */
 input[type='text']::-ms-clear {
   width: 0;
   height: 0;
 }
 
-/* line 18, ../../../src/scss/plugin/_input.scss */
+/* line 22, ../../../src/scss/plugin/_input.scss */
 .input {
   position: relative;
   display: inline-block;
   width: 165px;
 }
-/* line 22, ../../../src/scss/plugin/_input.scss */
-.input > input {
+/* line 26, ../../../src/scss/plugin/_input.scss */
+.input > input, .input > select {
   height: 40px;
   line-height: 38px;
   padding: 0 5px;
@@ -5752,16 +5756,16 @@ input[type='text']::-ms-clear {
   border-radius: 3px;
   font-size: 16px;
 }
-/* line 30, ../../../src/scss/plugin/_input.scss */
+/* line 34, ../../../src/scss/plugin/_input.scss */
 .input > .btn {
   margin: 0;
   padding: 0;
 }
-/* line 34, ../../../src/scss/plugin/_input.scss */
+/* line 38, ../../../src/scss/plugin/_input.scss */
 .input > label {
   color: #777777;
 }
-/* line 37, ../../../src/scss/plugin/_input.scss */
+/* line 41, ../../../src/scss/plugin/_input.scss */
 .input > label, .input > i, .input > a {
   top: 0;
   position: absolute;
@@ -5775,11 +5779,11 @@ input[type='text']::-ms-clear {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* line 49, ../../../src/scss/plugin/_input.scss */
+/* line 53, ../../../src/scss/plugin/_input.scss */
 .input.right > input {
   padding-right: 40px;
 }
-/* line 52, ../../../src/scss/plugin/_input.scss */
+/* line 56, ../../../src/scss/plugin/_input.scss */
 .input.right > label, .input.right > i, .input.right > a {
   right: 0;
   left: auto;
@@ -5788,11 +5792,11 @@ input[type='text']::-ms-clear {
   border-bottom-right-radius: 3px;
   border-top-right-radius: 3px;
 }
-/* line 60, ../../../src/scss/plugin/_input.scss */
+/* line 64, ../../../src/scss/plugin/_input.scss */
 .input.left > input {
   padding-left: 40px;
 }
-/* line 63, ../../../src/scss/plugin/_input.scss */
+/* line 67, ../../../src/scss/plugin/_input.scss */
 .input.left > label, .input.left > i, .input.left > a {
   left: 0;
   right: auto;
@@ -5801,7 +5805,7 @@ input[type='text']::-ms-clear {
   border-bottom-right-radius: 0px;
   border-top-right-radius: 0px;
 }
-/* line 71, ../../../src/scss/plugin/_input.scss */
+/* line 75, ../../../src/scss/plugin/_input.scss */
 .input.left.right > label:last-of-type, .input.left.right > i:last-of-type, .input.left.right > a:last-of-type {
   right: 0;
   left: auto;
@@ -5810,118 +5814,118 @@ input[type='text']::-ms-clear {
   border-bottom-left-radius: 0px;
   border-top-left-radius: 0px;
 }
-/* line 81, ../../../src/scss/plugin/_input.scss */
-.input.small > input {
+/* line 85, ../../../src/scss/plugin/_input.scss */
+.input.small > input, .input.small > select {
   height: 36px;
   line-height: 34px;
   font-size: 12px;
 }
-/* line 86, ../../../src/scss/plugin/_input.scss */
+/* line 90, ../../../src/scss/plugin/_input.scss */
 .input.small > label, .input.small > i, .input.small > a {
   height: 36px;
   line-height: 36px;
   width: 36px;
 }
-/* line 92, ../../../src/scss/plugin/_input.scss */
+/* line 96, ../../../src/scss/plugin/_input.scss */
 .input.small.right > input {
   padding-right: 36px;
 }
-/* line 97, ../../../src/scss/plugin/_input.scss */
+/* line 101, ../../../src/scss/plugin/_input.scss */
 .input.small.left > input {
   padding-left: 36px;
 }
-/* line 103, ../../../src/scss/plugin/_input.scss */
-.input.large > input {
+/* line 107, ../../../src/scss/plugin/_input.scss */
+.input.large > input, .input.large > select {
   border-radius: 5px;
   height: 45px;
   line-height: 43px;
   padding: 0 10px;
   font-size: 18px;
 }
-/* line 110, ../../../src/scss/plugin/_input.scss */
+/* line 114, ../../../src/scss/plugin/_input.scss */
 .input.large > label, .input.large > i, .input.large > a {
   height: 45px;
   line-height: 45px;
   width: 45px;
 }
-/* line 116, ../../../src/scss/plugin/_input.scss */
+/* line 120, ../../../src/scss/plugin/_input.scss */
 .input.large.right > input {
   padding-left: 10px;
   padding-right: 55px;
 }
-/* line 120, ../../../src/scss/plugin/_input.scss */
+/* line 124, ../../../src/scss/plugin/_input.scss */
 .input.large.right > label, .input.large.right > i, .input.large.right > a {
   border-bottom-left-radius: 0px;
   border-top-left-radius: 0px;
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
 }
-/* line 126, ../../../src/scss/plugin/_input.scss */
+/* line 130, ../../../src/scss/plugin/_input.scss */
 .input.large.left > input {
   padding-left: 55px;
   padding-right: 10px;
 }
-/* line 130, ../../../src/scss/plugin/_input.scss */
+/* line 134, ../../../src/scss/plugin/_input.scss */
 .input.large.left > label, .input.large.left > i, .input.large.left > a {
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
   border-bottom-right-radius: 0px;
   border-top-right-radius: 0px;
 }
-/* line 136, ../../../src/scss/plugin/_input.scss */
+/* line 140, ../../../src/scss/plugin/_input.scss */
 .input.large.left.right > label:last-of-type, .input.large.left.right > i:last-of-type, .input.large.left.right > a:last-of-type {
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
   border-bottom-left-radius: 0px;
   border-top-left-radius: 0px;
 }
-/* line 145, ../../../src/scss/plugin/_input.scss */
+/* line 149, ../../../src/scss/plugin/_input.scss */
 .input.plaintext > input {
   background-color: transparent !important;
   border-color: transparent !important;
   display: inline-block;
 }
-/* line 150, ../../../src/scss/plugin/_input.scss */
+/* line 154, ../../../src/scss/plugin/_input.scss */
 .input.plaintext > i {
   color: #333333 !important;
 }
-/* line 155, ../../../src/scss/plugin/_input.scss */
+/* line 159, ../../../src/scss/plugin/_input.scss */
 .input.has-success > input, .input.has-success > select {
   border-color: #4cae4c;
 }
-/* line 158, ../../../src/scss/plugin/_input.scss */
+/* line 162, ../../../src/scss/plugin/_input.scss */
 .input.has-success > i {
   color: #4cae4c;
 }
-/* line 163, ../../../src/scss/plugin/_input.scss */
+/* line 167, ../../../src/scss/plugin/_input.scss */
 .input.has-warning > input, .input.has-warning > select {
   border-color: #ff800e;
 }
-/* line 166, ../../../src/scss/plugin/_input.scss */
+/* line 170, ../../../src/scss/plugin/_input.scss */
 .input.has-warning > i {
   color: #ff800e;
 }
-/* line 171, ../../../src/scss/plugin/_input.scss */
+/* line 175, ../../../src/scss/plugin/_input.scss */
 .input.has-error > input, .input.has-error > select {
   border-color: #d53e39;
 }
-/* line 174, ../../../src/scss/plugin/_input.scss */
+/* line 178, ../../../src/scss/plugin/_input.scss */
 .input.has-error > i {
   color: #d53e39;
 }
-/* line 177, ../../../src/scss/plugin/_input.scss */
+/* line 181, ../../../src/scss/plugin/_input.scss */
 .input.has-error label {
   color: #d53e39;
 }
-/* line 183, ../../../src/scss/plugin/_input.scss */
+/* line 187, ../../../src/scss/plugin/_input.scss */
 .input.has-info > input, .input.has-info > select {
   border-color: #0bc1ff;
 }
-/* line 186, ../../../src/scss/plugin/_input.scss */
+/* line 190, ../../../src/scss/plugin/_input.scss */
 .input.has-info > i {
   color: #0bc1ff;
 }
-/* line 191, ../../../src/scss/plugin/_input.scss */
+/* line 195, ../../../src/scss/plugin/_input.scss */
 .input.has-error .tooltip {
   -webkit-transition: all 1s;
           transition: all 1s;
@@ -5933,11 +5937,11 @@ input[type='text']::-ms-clear {
           transform: translateY(50%);
   padding: 0;
 }
-/* line 199, ../../../src/scss/plugin/_input.scss */
+/* line 203, ../../../src/scss/plugin/_input.scss */
 .input.has-error .tooltip .tooltip-inner {
   border-top: none;
 }
-/* line 202, ../../../src/scss/plugin/_input.scss */
+/* line 206, ../../../src/scss/plugin/_input.scss */
 .input.has-error .tooltip.error.in {
   -webkit-transform: translateY(100%);
           transform: translateY(100%);
@@ -6080,6 +6084,24 @@ input[type='text']::-ms-clear {
           transform: translateY(0) !important;
 }
 
+/* line 1, ../../../src/scss/plugin/_textarea.scss */
+textarea {
+  width: 100%;
+  resize: none;
+  padding: 5px;
+  border: 1px solid #dfdfdf;
+  min-height: 70px;
+  overflow-y: auto;
+  border-radius: 2px;
+  font-family: "robotolight";
+}
+
+/* line 12, ../../../src/scss/plugin/_textarea.scss */
+.textarea {
+  position: relative;
+  margin-bottom: 20px;
+}
+
 /* line 1, ../../../src/scss/plugin/_checkboxradio.scss */
 .checkbox, .radio {
   display: inline-block;
@@ -6170,39 +6192,6 @@ input[type='text']::-ms-clear {
 .group-btn.large label {
   height: 45px;
   line-height: 43px;
-}
-
-/* line 1, ../../../src/scss/plugin/_select.scss */
-select {
-  height: 40px;
-  background: white;
-  cursor: pointer;
-}
-/* line 5, ../../../src/scss/plugin/_select.scss */
-select.small {
-  height: 36px;
-}
-/* line 8, ../../../src/scss/plugin/_select.scss */
-select.large {
-  height: 40px;
-}
-
-/* line 1, ../../../src/scss/plugin/_textarea.scss */
-textarea {
-  width: 100%;
-  resize: none;
-  padding: 5px;
-  border: 1px solid #dfdfdf;
-  min-height: 70px;
-  overflow-y: auto;
-  border-radius: 2px;
-  font-family: "robotolight";
-}
-
-/* line 12, ../../../src/scss/plugin/_textarea.scss */
-.textarea {
-  position: relative;
-  margin-bottom: 20px;
 }
 
 /* line 1, ../../../src/scss/plugin/_tip.scss */
