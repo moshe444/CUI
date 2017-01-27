@@ -13309,7 +13309,7 @@ a.version="2.15.2",b(rb),a.fn=Se,a.min=tb,a.max=ub,a.now=Fe,a.utc=j,a.unix=Jc,a.
                 var $ele = $(this);
                 $ele.data('_touchStart', null);
                 $ele.data('_touchEnd', null);
-                return false;
+                return true;
             });
             $this.off('touchmove.cui').on('touchmove.cui', $.throttle(function(e) {
                 var $ele = $(this);
@@ -13322,12 +13322,12 @@ a.version="2.15.2",b(rb),a.fn=Se,a.min=tb,a.max=ub,a.now=Fe,a.utc=j,a.unix=Jc,a.
                     }
                 }
                 if ($ele.data('_touchStart').touches.length == 2 && event.touches.length == 1) {
-                    return;
+                    return true;
                 } else {
                     $ele.data('_touchEnd', event);
                 }
                 $ele.trigger('moving', [$ele.data('_touchStart'), event]);
-                return false;
+                return true;
             }, 100));
 
             $this.off('touchend.cui').on('touchend.cui', function() {
@@ -13366,7 +13366,7 @@ a.version="2.15.2",b(rb),a.fn=Se,a.min=tb,a.max=ub,a.now=Fe,a.utc=j,a.unix=Jc,a.
                         }
                     }
                 }
-                return false;
+                return true;
             });
         },
         teardown: function() {
@@ -13497,7 +13497,7 @@ a.version="2.15.2",b(rb),a.fn=Se,a.min=tb,a.max=ub,a.now=Fe,a.utc=j,a.unix=Jc,a.
             return !(str === '' || str === null || str === 'undefined');
         },
         isEmail: function(str) {
-            var reg = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+            var reg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
             return reg.test(str);
         },
         isFloat: function(str) {
@@ -14419,8 +14419,75 @@ if (!Number.isNaN) {
     });
 })(jQuery);
 
-(function($) {
-    $.fn.gridtable = function(option) {
+(function ($) {
+    var gridtableConfig = {
+        $element: $this,
+        name: 'gridtable',
+        defaultOpt: {
+            limitwidth: 150,
+            key: 'thead th',
+            limitheight: 40
+        },
+        initBefore: function () {
+
+        },
+        init: function () {
+            var opt = context.opt;
+            var $this = context.$element;
+            var $key = $this.find(opt.key);
+            var $list = $this.find('tbody tr');
+            var inital = function () {
+                var classname = 'table-' + +new Date();
+                var colIndex = 0;
+                var fontsize = $key.css('fontSize').replace(/[a-z]/g, '');
+                var keymaxwidth = 0;
+                var columns = $key.map(function (index, item) {
+                    return {
+                        text: $(item).text() || '',
+                        colspan: $(item).attr('colspan') * 1 || 1
+                    };
+                });
+                for (var i = 0; i < columns.length; i++) {
+                    var column = columns[i];
+                    colIndex = colIndex + 1;
+                    $.insertCSS(['.' + classname + ' td:nth-of-type(' + colIndex + '):before'], 'content:"' + column.text + ':";');
+                    if (column.colspan > 1) {
+                        colIndex = colIndex + column.colspan - 1;
+                    }
+                    var keywidth = $.getTextWidth(column.text, fontsize);
+                    if (keywidth > keymaxwidth) {
+                        keymaxwidth = keywidth;
+                    }
+                }
+                keymaxwidth = opt.limitwidth > keymaxwidth ? keymaxwidth : opt.limitwidth;
+                $.insertCSS(['.' + classname + ' tbody td'], 'padding-left:' + (keymaxwidth + 15) + 'px;');
+                $.insertCSS(['.' + classname + ' tbody td:before'], 'width:' + (keymaxwidth + 5) + 'px;');
+                if (opt.limitheight > 0) {
+                    $.insertCSS(['.' + classname + ' tbody tr.close'], 'max-height:' + opt.limitheight + 'px;');
+                }
+                $list.addClass('close');
+                return classname;
+            };
+            $list.each(function (index, item) {
+                $(item).click(function () {
+                    if (!$(this).hasClass('open')) {
+                        $list.filter('.open').removeClass('open').addClass('close');
+                        $(this).addClass('open').removeClass('close');
+                    }
+                });
+            });
+
+            $this.addClass(inital());
+            $this.attr('role', 'grid table');
+        },
+        exports: {},
+        setOptionsBefore: null,
+        setOptionsAfter: null,
+        destroyBefore: null,
+        initAfter: null,
+        isThirdPart: false,
+    };
+    $.fn.gridtable = function (option) {
         var defaultOption = {
             limitwidth: 150,
             key: 'thead th',
@@ -14430,58 +14497,50 @@ if (!Number.isNaN) {
         var $this = $(this);
         var $key = $this.find(opt.key);
         var $list = $this.find('tbody tr');
-        var inital = function() {
-            var classname = 'table-' + +new Date();
-            var colIndex = 0;
-            var fontsize = $key.css('fontSize').replace(/[a-z]/g, '');
-            var keymaxwidth = 0;
-            var columns = $key.map(function(index, item) {
-                return {
-                    text: $(item).text() || '',
-                    colspan: $(item).attr('colspan') * 1 || 1
-                };
-            });
-            for (var i = 0; i < columns.length; i++) {
-                var column = columns[i];
-                colIndex = colIndex + 1;
-                $.insertCSS(['.' + classname + ' td:nth-of-type(' + colIndex + '):before'], 'content:"' + column.text + ':";');
-                if (column.colspan > 1) {
-                    colIndex = colIndex + column.colspan - 1;
-                }
-                var keywidth = $.getTextWidth(column.text, fontsize);
-                if (keywidth > keymaxwidth) {
-                    keymaxwidth = keywidth;
-                }
+        var classname = 'table-' + +new Date();
+        var colIndex = 0;
+        var fontsize = $key.css('fontSize').replace(/[a-z]/g, '');
+        var keymaxwidth = 0;
+        var columns = $key.map(function (index, item) {
+            return {
+                text: $(item).text() || '',
+                colspan: $(item).attr('colspan') * 1 || 1
+            };
+        });
+        for (var i = 0; i < columns.length; i++) {
+            var column = columns[i];
+            colIndex = colIndex + 1;
+            $.insertCSS(['.' + classname + ' td:nth-of-type(' + colIndex + '):before'], 'content:"' + column.text + ':";');
+            if (column.colspan > 1) {
+                colIndex = colIndex + column.colspan - 1;
             }
-            keymaxwidth = opt.limitwidth > keymaxwidth ? keymaxwidth : opt.limitwidth;
-            $.insertCSS(['.' + classname + ' tbody td'], 'padding-left:' + (keymaxwidth + 15) + 'px;');
-            $.insertCSS(['.' + classname + ' tbody td:before'], 'width:' + (keymaxwidth + 5) + 'px;');
-            if (opt.limitheight > 0) {
-                $.insertCSS(['.' + classname + ' tbody tr.close'], 'max-height:' + opt.limitheight + 'px;');
+            var keywidth = $.getTextWidth(column.text, fontsize);
+            if (keywidth > keymaxwidth) {
+                keymaxwidth = keywidth;
             }
-            $list.addClass('close');
-            return classname;
-        };
-        $list.each(function(index, item) {
-            $(item).click(function() {
+        }
+        keymaxwidth = opt.limitwidth > keymaxwidth ? keymaxwidth : opt.limitwidth;
+        $.insertCSS(['.' + classname + ' tbody td'], 'padding-left:' + (keymaxwidth + 15) + 'px;');
+        $.insertCSS(['.' + classname + ' tbody td:before'], 'width:' + (keymaxwidth + 5) + 'px;');
+        if (opt.limitheight > 0) {
+            $.insertCSS(['.' + classname + ' tbody tr.close'], 'max-height:' + opt.limitheight + 'px;');
+        }
+        $list.addClass('close');
+        $list.each(function (index, item) {
+            $(item).click(function () {
                 if (!$(this).hasClass('open')) {
                     $list.filter('.open').removeClass('open').addClass('close');
                     $(this).addClass('open').removeClass('close');
                 }
             });
         });
-
-        $this.addClass(inital());
-        $this.attr('role', 'grid table');
+        $this.addClass(classname);
     };
 
-    $(document).on('dom.load', function() {
-        $('[data-gridtable]').each(function(index, item) {
-            $(item).gridtable({
-                limitwidth: $(item).attr('data-limitwidth'),
-                key: $(item).attr('data-key'),
-                limitheight: $(item).attr('data-limitheight'),
-            });
+    $(document).on('dom.load', function () {
+        $('[data-gridtable]').each(function (index, item) {
+            var data = $(item).data();
+            $(item).gridtable(data);
             $(item).removeAttr('data-gridtable');
             $(item).attr('data-gridtable-load', '');
             $(item).attr('role', 'Gridtable');
@@ -16628,6 +16687,83 @@ if (!Number.isNaN) {
             $item.validate($item.data());
             $item.removeAttr('data-validate');
             $item.attr('data-validate-load', '');
+        });
+    });
+})(jQuery);
+(function($) {
+    $.fn.webview = function() {
+        var $this = $(this);
+        var webviewInfo = {};
+        var eventlist = null;
+        var _getPonitInfo = null;
+        var _init = function() {
+            $this.css({overflow: 'hidden'});
+
+            if ($.isMobile()) {
+                eventlist = {
+                    start: 'touchstart',
+                    moveing: 'touchmove',
+                    end: 'touchend'
+                }
+                _getPonitInfo = function(e) {
+                    return {
+                        x: e.originalEvent.touches[0].pageX,
+                        y: e.originalEvent.touches[0].pageY
+                    };
+                };
+            } else {
+                eventlist = {
+                    start: 'moursedown',
+                    moveing: 'mousemove',
+                    end: 'mourseup'
+                }
+                _getPonitInfo = function(e) {
+                    return {
+                        x: e.originalEvent.pageX,
+                        y: e.originalEvent.pageY
+                    };
+                };
+            }
+        }
+
+        var _getWebviewInfo = function() {
+            webviewInfo['maxTop'] = $this.outerHeight() + $this.prop('scrollHeight');
+            webviewInfo['maxLeft'] = $this.outerWidth() + $this.prop('scrollWidth');
+            webviewInfo['scrollTop'] = $this.scrollTop();
+            webviewInfo['scrollLeft'] = $this.scrollLeft();
+        };
+        var pointStart = null;
+
+        var _move = function(point) {
+            var offsetTop = pointStart.y - point.y;
+            var offsetLeft = pointStart.x - point.x;
+            var top = webviewInfo.scrollTop + offsetTop;
+            var left = webviewInfo.scrollLeft + offsetLeft;
+            $this.scrollTop(top);
+            $this.scrollLeft(left);
+        };
+        _getWebviewInfo();
+        $this.on(eventlist.start, function(e) {
+            pointStart = _getPonitInfo(e);
+        });
+        $this.on(eventlist.moving, function(e) {
+            _move(_getPonitInfo(e));
+        });
+        $this.on(eventlist.end, function() {
+            _getWebviewInfo();
+        });
+
+        $this.on('mousewheel', function(e) {
+            $this.scrollTop($this.scrollTop() + e.originalEvent.wheelDelta);
+        });
+
+        _init();
+
+    };
+    $(document).on('dom.load', function() {
+        $('[data-webview]').each(function() {
+            $(this).webview();
+            $(this).removeAttr('data-webview');
         });
     });
 })(jQuery);
