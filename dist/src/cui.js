@@ -13284,6 +13284,53 @@ a.version="2.15.2",b(rb),a.fn=Se,a.min=tb,a.max=ub,a.now=Fe,a.utc=j,a.unix=Jc,a.
   mustache.Writer = Writer;
 
 }));
+//seed code for create a plugin
+//replace all of the "example" with the plugin name. (the plugin name should be same as the js file name);
+
+// (function($) {
+//     var exampleConfig = {
+//         name: 'example',
+//         defaultOpt: {},
+//         init: function(context) {
+//             var opt = context.opt;
+//             var $this = context.$element;
+//             var $target = context.$target = $(opt.target);
+//
+//         },
+//         exports: {
+//             show: function() {
+//
+//             },
+//             hide: function() {
+//
+//             }
+//         },
+//         setOptionsBefore: null,
+//         setOptionsAfter: null,
+//         initBefore: null,
+//         initAfter: function(context) {
+//             var $this = context.$element;
+//             var $target = context.$target;
+//             var opt = context.opt;
+//             var exports = context.exports;
+//
+//         },
+//         destroyBefore: function(context) {
+//             var $this = context.$element;
+//         }
+//     };
+//     $.CUI.plugin(exampleConfig);
+//     $(document).on('dom.load.example', function() {
+//         $('[data-example]').each(function(index, item) {
+//             var $this = $(item);
+//             var data = $this.data();
+//             $this.example(data);
+//             $this.removeAttr('data-example');
+//             $this.attr('data-example-load', '');
+//             $this.attr('role', 'example');
+//         });
+//     });
+// })(jQuery);
 //Extend touch event
 (function($) {
     var _getDist = function(eventInfo) {
@@ -13305,6 +13352,9 @@ a.version="2.15.2",b(rb),a.fn=Se,a.min=tb,a.max=ub,a.now=Fe,a.utc=j,a.unix=Jc,a.
     var eventSetting = {
         setup: function() {
             var $this = $(this);
+            $this.off('gesturestart').on('gesturestart', function(e) {
+                e.preventDefault();
+            });
             $this.off('touchstart.cui').on('touchstart.cui', function() {
                 var $ele = $(this);
                 $ele.data('_touchStart', null);
@@ -13461,36 +13511,63 @@ a.version="2.15.2",b(rb),a.fn=Se,a.min=tb,a.max=ub,a.now=Fe,a.utc=j,a.unix=Jc,a.
         isMobile: function() {
             return !!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         },
-        throttle: function(fn, delay, scope) {
-            delay || (delay = 250);
-            var last,
-                timer;
+        throttle: function(func, wait, options) {
+            var context, args, result, wait = wait || 200;
+            var timeout = null;
+            var previous = 0;
+            if (!options) options = {};
+            var later = function() {
+                previous = options.leading === false ? 0 : +new Date();
+                timeout = null;
+                result = func.apply(context, args);
+                if (!timeout) context = args = null;
+            };
             return function() {
-                var context = scope || this;
-
-                var now = +new Date(),
-                    args = arguments;
-                if (last && now - last + delay < 0) {
-                    // hold on to it
-                    clearTimeout(timer);
-                    timer = setTimeout(function() {
-                        last = now;
-                        fn.apply(context, args);
-                    }, delay);
-                } else {
-                    last = now;
-                    fn.apply(context, args);
+                var now = +new Date();
+                if (!previous && options.leading === false) previous = now;
+                var remaining = wait - (now - previous);
+                context = this;
+                args = arguments;
+                if (remaining <= 0 || remaining > wait) {
+                    if (timeout) {
+                        clearTimeout(timeout);
+                        timeout = null;
+                    }
+                    previous = now;
+                    result = func.apply(context, args);
+                    if (!timeout) context = args = null;
+                } else if (!timeout && options.trailing !== false) {
+                    timeout = setTimeout(later, remaining);
                 }
+                return result;
             };
         },
-        debounce: function(fn, delay) {
-            var timer = null;
+        debounce: function(func, wait, immediate) {
+            var timeout, args, context, timestamp, result, wait = wait || 200;
+            var later = function() {
+                var last = +new Date() - timestamp;
+
+                if (last < wait && last >= 0) {
+                    timeout = setTimeout(later, wait - last);
+                } else {
+                    timeout = null;
+                    if (!immediate) {
+                        result = func.apply(context, args);
+                        if (!timeout) context = args = null;
+                    }
+                }
+            };
             return function() {
-                var context = this, args = arguments;
-                clearTimeout(timer);
-                timer = setTimeout(function() {
-                    fn.apply(context, args);
-                }, delay);
+                context = this;
+                args = arguments;
+                timestamp = +new Date();
+                var callNow = immediate && !timeout;
+                if (!timeout) timeout = setTimeout(later, wait);
+                if (callNow) {
+                    result = func.apply(context, args);
+                    context = args = null;
+                }
+                return result;
             };
         },
         isNotEmpty: function(str) {
@@ -13528,7 +13605,6 @@ window.context = {};
 //initial event
 (function($) {
     $(document).ready(function($) {
-
         var _isMobile = function() {
             if ($.isMobile()) {
                 $('#body').addClass('mobile');
@@ -13536,7 +13612,6 @@ window.context = {};
                 $('#body').addClass('desktop');
             }
         };
-
         var _eventKeyDownListener = function() {
             $(window).on('keydown', function(e) {
                 var $focus = $(':focus');
@@ -13546,7 +13621,6 @@ window.context = {};
                 }
             });
         };
-
         var scrollTimer;
         var originalScrollTop = 0;
         var isScrollDown;
@@ -13556,6 +13630,8 @@ window.context = {};
             var currentScrollTop = $(document).scrollTop();
             if (currentScrollTop > originalScrollTop) {
                 isScrollDown = true;
+            } else if (currentScrollTop < originalScrollTop) {
+                isScrollDown = false;
             }
             originalScrollTop = currentScrollTop;
             $(document).trigger('dom.scroll', [e, isScrollDown, originalScrollTop, causeByKeyboard]);
@@ -13570,9 +13646,9 @@ window.context = {};
         };
 
         var resizeTimer;
-        var _oringaWindowWidth = $(window).width();
+        var _oringalWindowWidth = $(window).width();
         var _resizeTrigger = function(e) {
-            var isWidthChange = _oringaWindowWidth != $(window).width();
+            var isWidthChange = _oringalWindowWidth != $(window).width();
             var causeByKeyboard = $('input, select, textarea').is(':focus');
             $(document).trigger('dom.resize', [e, causeByKeyboard, isWidthChange]);
         };
@@ -13733,8 +13809,8 @@ window.context = {};
 })(jQuery);
 
 // For use moment.js convenience
-Date.prototype.format = function(mask, utc) {
-    return moment(this, mask, utc);
+Date.prototype.format = function(mask) {
+    return moment(this).format(mask);
 };
 
 String.prototype.format = function() {
@@ -13923,7 +13999,7 @@ if (!Number.isNaN) {
                         return +new Date(value) || 0;
                     case 'number':
                         if (value.replace) {
-                            value = value.replace(/,|\s/g, '');
+                            value = value.replace(/[^0-9.]/g, '');
                         }
                         return value * 1 || 0;
                     default:
@@ -13942,7 +14018,7 @@ if (!Number.isNaN) {
                         return $.htmlencode(value);
                     case 'date':
                         var time = new Date(value);
-                        return time.valueOf() ? time.format(column.format || 'Y-m-d') : '';
+                        return time.valueOf() ? time.format(column.format || 'M/D/Y') : '';
                     default:
                         return value;
                 }
@@ -14307,18 +14383,18 @@ if (!Number.isNaN) {
 })(jQuery);
 
 //validate for form submit
-(function($) {
+(function ($) {
     var formConfig = {
         name: 'form',
         defaultOpt: null,
         initBefore: null,
         init: null,
         exports: {
-            isValid: function() {
+            isValid: function () {
                 var $this = this.$element;
                 var foucsElement = null;
                 var isPassed = true;
-                $this.find('[data-validate-load]').each(function(index, item) {
+                $this.find('[data-validate-load]').each(function (index, item) {
                     var isValide = $(item).data('validate').isValid();
                     if (!isValide) {
                         isPassed = false;
@@ -14333,40 +14409,40 @@ if (!Number.isNaN) {
                 }
                 return isPassed;
             },
-            getValue: function() {
+            getValue: function () {
                 var $this = this.$element;
                 var obj = {};
-                $this.find(':text').each(function(index, item) {
-                    var name = $(item).attr('name');
-                    if (name) {
-                        obj[name] = $(item).prop('rawValue') || $(item).val();
-                    }
-                });
-                $this.find(':password').each(function(index, item) {
+                $this.find(':text').each(function (index, item) {
                     var name = $(item).attr('name');
                     if (name) {
                         obj[name] = $(item).val();
                     }
                 });
-                $this.find(':hidden').each(function(index, item) {
+                $this.find(':password').each(function (index, item) {
                     var name = $(item).attr('name');
                     if (name) {
                         obj[name] = $(item).val();
                     }
                 });
-                $this.find('textarea').each(function(index, item) {
+                $this.find(':hidden').each(function (index, item) {
                     var name = $(item).attr('name');
                     if (name) {
                         obj[name] = $(item).val();
                     }
                 });
-                $this.find('select').each(function(index, item) {
+                $this.find('textarea').each(function (index, item) {
                     var name = $(item).attr('name');
                     if (name) {
                         obj[name] = $(item).val();
                     }
                 });
-                $this.find('.checkbox').each(function(index, item) {
+                $this.find('select').each(function (index, item) {
+                    var name = $(item).attr('name');
+                    if (name) {
+                        obj[name] = $(item).val();
+                    }
+                });
+                $this.find('.checkbox').each(function (index, item) {
                     var name;
                     var checkbox;
                     var checkboxList;
@@ -14385,13 +14461,13 @@ if (!Number.isNaN) {
                         checkboxList = $(item).find(':checkbox:checked');
                         name = checkboxList.attr('name');
                         if (name) {
-                            obj[name] = $.map(checkboxList, function(item) {
+                            obj[name] = $.map(checkboxList, function (item) {
                                 return $(item).val();
                             });
                         }
                     }
                 });
-                $this.find('.radio').each(function(index, item) {
+                $this.find('.radio').each(function (index, item) {
                     var radioItem = $(item).find(':radio:checked');
                     var name = radioItem.attr('name');
                     if (name) {
@@ -14408,8 +14484,8 @@ if (!Number.isNaN) {
         isThirdPart: false,
     };
     $.CUI.plugin(formConfig);
-    $(document).on('dom.load', function() {
-        $('[data-form]').each(function(index, item) {
+    $(document).on('dom.load', function () {
+        $('[data-form]').each(function (index, item) {
             var $this = $(item);
             $this.form();
             $this.removeAttr('data-form');
@@ -14421,7 +14497,6 @@ if (!Number.isNaN) {
 
 (function ($) {
     var gridtableConfig = {
-        $element: $this,
         name: 'gridtable',
         defaultOpt: {
             limitwidth: 150,
@@ -14431,7 +14506,7 @@ if (!Number.isNaN) {
         initBefore: function () {
 
         },
-        init: function () {
+        init: function (context) {
             var opt = context.opt;
             var $this = context.$element;
             var $key = $this.find(opt.key);
@@ -14487,56 +14562,7 @@ if (!Number.isNaN) {
         initAfter: null,
         isThirdPart: false,
     };
-    $.fn.gridtable = function (option) {
-        var defaultOption = {
-            limitwidth: 150,
-            key: 'thead th',
-            limitheight: 40
-        };
-        var opt = $.extend({}, defaultOption, option);
-        var $this = $(this);
-        var $key = $this.find(opt.key);
-        var $list = $this.find('tbody tr');
-        var classname = 'table-' + +new Date();
-        var colIndex = 0;
-        var fontsize = $key.css('fontSize').replace(/[a-z]/g, '');
-        var keymaxwidth = 0;
-        var columns = $key.map(function (index, item) {
-            return {
-                text: $(item).text() || '',
-                colspan: $(item).attr('colspan') * 1 || 1
-            };
-        });
-        for (var i = 0; i < columns.length; i++) {
-            var column = columns[i];
-            colIndex = colIndex + 1;
-            $.insertCSS(['.' + classname + ' td:nth-of-type(' + colIndex + '):before'], 'content:"' + column.text + ':";');
-            if (column.colspan > 1) {
-                colIndex = colIndex + column.colspan - 1;
-            }
-            var keywidth = $.getTextWidth(column.text, fontsize);
-            if (keywidth > keymaxwidth) {
-                keymaxwidth = keywidth;
-            }
-        }
-        keymaxwidth = opt.limitwidth > keymaxwidth ? keymaxwidth : opt.limitwidth;
-        $.insertCSS(['.' + classname + ' tbody td'], 'padding-left:' + (keymaxwidth + 15) + 'px;');
-        $.insertCSS(['.' + classname + ' tbody td:before'], 'width:' + (keymaxwidth + 5) + 'px;');
-        if (opt.limitheight > 0) {
-            $.insertCSS(['.' + classname + ' tbody tr.close'], 'max-height:' + opt.limitheight + 'px;');
-        }
-        $list.addClass('close');
-        $list.each(function (index, item) {
-            $(item).click(function () {
-                if (!$(this).hasClass('open')) {
-                    $list.filter('.open').removeClass('open').addClass('close');
-                    $(this).addClass('open').removeClass('close');
-                }
-            });
-        });
-        $this.addClass(classname);
-    };
-
+    $.CUI.plugin(gridtableConfig);
     $(document).on('dom.load', function () {
         $('[data-gridtable]').each(function (index, item) {
             var data = $(item).data();
@@ -14544,6 +14570,302 @@ if (!Number.isNaN) {
             $(item).removeAttr('data-gridtable');
             $(item).attr('data-gridtable-load', '');
             $(item).attr('role', 'Gridtable');
+        });
+    });
+})(jQuery);
+
+(function() {
+    $.fn.gridview = function(option) {
+        var defaultOpt = {
+            items: [{
+                src: 'dist/src/img/ex_1.jpg',
+                height: 640,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_2.jpg',
+                height: 250,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_3.jpg',
+                height: 250,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_4.jpg',
+                height: 640,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_5.jpg',
+                height: 250,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_6.jpg',
+                height: 250,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_7.jpg',
+                height: 640,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_8.jpg',
+                height: 250,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_9.jpg',
+                height: 250,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_1.jpg',
+                height: 640,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_2.jpg',
+                height: 250,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_3.jpg',
+                height: 250,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_4.jpg',
+                height: 640,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_5.jpg',
+                height: 250,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_6.jpg',
+                height: 250,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_7.jpg',
+                height: 640,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_8.jpg',
+                height: 250,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_9.jpg',
+                height: 250,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_1.jpg',
+                height: 640,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_2.jpg',
+                height: 250,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_3.jpg',
+                height: 250,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_4.jpg',
+                height: 640,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_5.jpg',
+                height: 250,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_6.jpg',
+                height: 250,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_7.jpg',
+                height: 640,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_8.jpg',
+                height: 250,
+                width: 400
+            }, {
+                src: 'dist/src/img/ex_9.jpg',
+                height: 250,
+                width: 400
+            }],
+            target: null,
+            container: null,
+            template: '<img >',
+            breakpoint: [414, 640, 992, 1200],
+            colCount: -1
+        };
+        var opt = $.extend({}, defaultOpt, option);
+        var $this = opt.target ? $(opt.target) : $(this);
+        var $container = opt.container ? $(opt.container) : $(window);
+        var _getpositionInfo = function() {
+            return {
+                scrollTop: $container.scrollTop(),
+                scrollBottom: $container.scrollTop() + $container.height(),
+                offsetTop: $this.offset().top,
+                offsetBottom: $this.offset().top + $this.height()
+            };
+        };
+        var positionInfo = _getpositionInfo();
+        var _getColumnByBreakPoint = function(newBreakPoint) {
+            opt.breakpoint = newBreakPoint || opt.breakpoint;
+            var containerWidth = $this.width();
+            if (opt.breakpoint && opt.breakpoint.length) {
+                return opt.breakpoint.reduce(function(pre, next, index) {
+                    if (containerWidth > next) {
+                        return pre + 1;
+                    } else {
+                        return pre;
+                    }
+                }, 1);
+            }
+            return 1;
+        };
+        var _getSmallestColumn = function(array) {
+            return array.reduce(function(pre, next) {
+                if (pre) {
+                    return pre.data('ratio') <= next.data('ratio') ? pre : next;
+                } else {
+                    return next;
+                }
+            }, null);
+        };
+        var _createColumns = function(count) {
+            var columns = [];
+            var columnswidth = (100 / count) + '%';
+            while (count > 0) {
+                var $ul = $('<ul class="gridview-ul"></ul>').css({
+                    width: columnswidth
+                });
+                $ul.data('ratio', 0);
+                columns.push($ul);
+                count--;
+            }
+            return columns;
+        };
+        var _createItemInColumns = function(item) {
+            var $tmp = $('<li class="gridview-li">' + opt.template + '</li>');
+            var ratio = item.height / item.width;
+            $tmp.data({
+                ratio: ratio,
+                src: item.src
+            });
+            $tmp.css({
+                paddingTop: (ratio * 100) + '%',
+            });
+            return $tmp;
+        };
+        var _loadImage = function() {
+            $this.find('li').each(function(index, item) {
+                var $item = $(item);
+                var offsetTop = $item.offset().top;
+                var offsetBottom = offsetTop + $item.outerHeight();
+                if (offsetTop < positionInfo.scrollBottom && offsetBottom > positionInfo.scrollTop) {
+                    var src = $item.data('src');
+                    var $img = $item.find('img');
+                    $item.addClass('gridview-loading');
+                    $img.on('load', function() {
+                        $item.removeClass('gridview-loading');
+                        $item.addClass('gridview-loaded');
+                    });
+                    $img.on('error', function() {
+                        $item.removeClass('gridview-loading');
+                        $item.addClass('gridview-error');
+                    });
+                    $img.attr('src', src);
+                }
+            });
+        };
+        var _moveByScroll = function(isScrollDown) {
+            var verticalBottom = $this.hasClass('verticalBottom');
+            var heightList = $this.find('> ul').map(function(index, item) {
+                return $(item).outerHeight();
+            });
+            var needMove = false;
+            var minHeight = $this.height() - Math.min.apply(this, heightList);
+            if (isScrollDown) {
+                minHeight = !verticalBottom ? minHeight : 0;
+                if (positionInfo.scrollTop > (positionInfo.offsetTop + minHeight) && positionInfo.scrollBottom < positionInfo.offsetBottom) {
+                    needMove = true;
+                }
+            } else {
+                minHeight = verticalBottom ? minHeight : 0;
+                if (positionInfo.scrollTop > positionInfo.offsetTop && positionInfo.scrollBottom < (positionInfo.offsetBottom - minHeight)) {
+                    needMove = true;
+                }
+            }
+            if (needMove) {
+                if (isScrollDown) {
+                    $this.removeClass('scrollUP');
+                    var containerHeight = $this.height();
+                    $this.find('.gridview-ul').each(function(index, item) {
+                        var $item = $(item);
+                        var offsetY = containerHeight - $item.height();
+                        $item.css('transform', ('translateY(' + offsetY + 'px)'));
+                    });
+                    $this.addClass('verticalBottom');
+                } else {
+                    $this.addClass('scrollUP');
+                    $this.find('.gridview-ul').each(function(index, item) {
+                        var $item = $(item);
+                        $item.css('transform', ('translateY(' + 0 + ')'));
+                    });
+                    $this.removeClass('verticalBottom');
+                }
+            }
+
+        };
+
+        var _render = function() {
+            var ulList = _createColumns(opt.colCount);
+            $.each(opt.items, function(index, item) {
+                var $li = _createItemInColumns(item);
+                var $ul = _getSmallestColumn(ulList);
+                $ul.append($li);
+                var newRatio = $ul.data('ratio') + $li.data('ratio');
+                $ul.data('ratio', newRatio);
+            });
+            $this.addClass('gridview');
+            $this.empty();
+            $.each(ulList, function(index, ul) {
+                $this.append(ul);
+            });
+            _loadImage();
+            $(document).trigger('dom.load');
+        };
+        var _reload = function(force) {
+            if (force) {
+                opt.colCount = -1;
+            }
+            if (opt.items && opt.items.length) {
+                var newColCount = _getColumnByBreakPoint();
+                if (opt.colCount !== newColCount) {
+                    opt.colCount = newColCount;
+                    _render();
+                }
+            }
+        };
+        _reload(true);
+        var obj = {
+            reload: _reload
+        };
+        $container.on('scroll', $.throttle(function() {
+            var currentPositionInfo = _getpositionInfo();
+            var isDown = positionInfo.scrollTop < currentPositionInfo.scrollTop;
+            positionInfo = currentPositionInfo;
+            _moveByScroll(isDown);
+            _loadImage();
+        }));
+        $(document).on('dom.resize', function() {
+            positionInfo = _getpositionInfo();
+            _reload();
+        });
+        $this.data('gridview', obj);
+    };
+    $(document).on('dom.load', function() {
+        $('[data-gridview]').each(function(index, item) {
+            var $item = $(item);
+            $item.removeAttr('data-gridview');
+            $item.gridview($item.data());
+            $item.attr('data-gridview-load');
+            $item.attr('role', 'gridview');
         });
     });
 })(jQuery);
@@ -14604,93 +14926,89 @@ if (!Number.isNaN) {
 
 })(jQuery);
 
-(function($) {
-    $.fn.inputformat = function(option) {
-        var $this = $(this);
-        var defaultOpt = {
+(function ($) {
+    var inputformatConfig = {
+        name: 'inputformat',
+        defaultOpt: {
             type: 'phone',
-            fraction: ''
-        };
-        var opt = $.extend(defaultOpt, option);
-        var timer = null;
-        var _get = function() {
-            var value = $this.val();
-            switch (opt.type) {
-                case 'phone':
-                    return value.replace(/-/g, '');
-                case 'price':
-                    return value.replace(/,/g, '');
-                default:
-                    return value;
-            }
-        };
-        var _set = function(programmatic) {
-            var value = _get();
-            var formatString = '';
-            switch (opt.type) {
-                case 'phone':
-                    if (value.length >= 4) {
-                        formatString += value.slice(0, 3) + '-';
-                        if (value.length >= 7) {
-                            formatString += value.slice(3, 6) + '-';
-                            formatString += value.slice(6, value.length);
+        },
+        initBefore: null,
+        init: function (context) {
+            var $this = context.$element;
+            var opt = context.opt;
+            var timer = null;
+            var _get = function () {
+                var value = $this.val();
+                switch (opt.type) {
+                    case 'phone':
+                        return value.replace(/[^0-9]/g, '');
+                    case 'price':
+                        return value.replace(/[^0-9.]/g, '');
+                    default:
+                        return value;
+                }
+            };
+            var _set = function () {
+                var value = _get();
+                var formatString = '';
+                switch (opt.type) {
+                    case 'phone':
+                        if (value.length >= 4) {
+                            formatString += value.slice(0, 3) + '-';
+                            if (value.length >= 7) {
+                                formatString += value.slice(3, 6) + '-';
+                                formatString += value.slice(6, Math.min(value.length, 11));
+                            } else {
+                                formatString += value.slice(3, value.length);
+                            }
                         } else {
-                            formatString += value.slice(3, value.length);
+                            formatString += value;
                         }
-                    } else {
-                        formatString += value;
-                    }
-                    break;
-                case 'price':
-                    var arrPrice = value.toString().split('.');
-                    formatString = arrPrice[0].replace(/[^0-9]/g, '');
-                    var pattern = /(-?\d+)(\d{3})/;
-                    while (pattern.test(formatString))
-                        formatString = formatString.replace(pattern, '$1,$2');
-                    break;
-                case 'rate':
-                    var fraction = $.isInt(opt.fraction) ? opt.fraction : 2;
-                    var arrRate = value.toString().split('.');
-                    formatString = arrRate[0].replace(/[^0-9]/g, '');
-                    if (fraction > 0 && arrRate.length > 1) {
-                        var decimals = arrRate[1].length > fraction ? arrRate[1].substring(0, fraction) : arrRate[1];
-                        decimals = decimals.replace(/[^0-9]/g, '');
-                        if (decimals) {
-                            formatString += '.' + decimals;
-                        } else {
-                            formatString += '.';
+                        break;
+                    case 'price':
+                        var arrPrice = value.toString().split('.');
+                        formatString = arrPrice[0];
+                        var pricePattern = /(\d+)(\d{3})/;
+                        while (pricePattern.test(formatString))
+                            formatString = formatString.replace(pricePattern, '$1,$2');
+                        if (arrPrice.length >= 2) {
+                            formatString += ('.' + arrPrice[1]);
+                            value = arrPrice[0] + '.' + arrPrice[1];
                         }
-                    }
-                    break;
-                default:
-                    formatString = value;
-                    break;
-            }
-            $this.val(formatString);
-            $this.prop('rawValue', value);
-            if (!programmatic) {
-                $this.trigger('formatinput', [formatString, value]);
-            }
-        };
+                        break;
+                    default:
+                        formatString = value;
+                        break;
+                }
+                $this.val(formatString);
+                $this.prop('rawValue', value);
+                return formatString;
+            };
 
-        if ($.isInt($this.val())) {
             _set();
-        }
-
-        $this.on('keyup input change', function(e, programmatic) {
-            var $this = $(this);
-            if (timer) {
-                clearTimeout(timer);
-            }
-            if ($this.prop('rawValue') !== _get()) {
-                timer = setTimeout(function() {
-                    _set(programmatic === true);
+            $this.on('input', function (e, a, b) {
+                var $this = $(this);
+                if (timer) {
+                    clearTimeout(timer);
+                }
+                timer = setTimeout(function () {
+                    if ($this.prop('rawValue') !== _get()) {
+                        var value = _set();
+                        $this.trigger('formatinput', [value]);
+                    }
                 }, 10);
-            }
-        });
+            });
+        },
+        exports: {},
+        setOptionsBefore: null,
+        setOptionsAfter: null,
+        destroyBefore: null,
+        initAfter: null,
+        isThirdPart: false,
     };
-    $(document).on('dom.load.inputformat', function() {
-        $('[data-inputformat]').each(function(index, item) {
+    $.CUI.plugin(inputformatConfig);
+    $(document).on('dom.load.inputformat', function () {
+        $('[data-inputformat]').each(function (index, item) {
             var $this = $(item);
             $this.inputformat($this.data());
             $this.removeAttr('data-inputformat');
@@ -15149,7 +15467,7 @@ if (!Number.isNaN) {
 
 })(jQuery);
 
-(function($) {
+(function ($) {
     'use strict';
     var pluginName = 'rangeslider',
         pluginIdentifier = 0,
@@ -15301,7 +15619,7 @@ if (!Number.isNaN) {
         var grabPos;
         var position;
 
-        var init = function() {
+        var init = function () {
             update(false);
 
             if (opt.oninit && typeof opt.oninit === 'function') {
@@ -15309,7 +15627,7 @@ if (!Number.isNaN) {
             }
         };
 
-        var update = function(triggerSlide) {
+        var update = function (triggerSlide) {
             handleDimension = getDimension($handle[0], 'offset' + ucfirst(DIMENSION));
             rangeDimension = getDimension($range[0], 'offset' + ucfirst(DIMENSION));
             maxHandlePos = rangeDimension - handleDimension;
@@ -15326,7 +15644,7 @@ if (!Number.isNaN) {
             setPosition(position, triggerSlide);
         };
 
-        var handleDown = function(e) {
+        var handleDown = function (e) {
             $document.on(moveEvent, handleMove);
             $document.on(endEvent, handleEnd);
 
@@ -15347,14 +15665,14 @@ if (!Number.isNaN) {
             }
         };
 
-        var handleMove = function(e) {
+        var handleMove = function (e) {
             e.preventDefault();
             var pos = getRelativePosition(e);
             var setPos = (opt.orientation === 'vertical') ? (maxHandlePos - (pos - grabPos)) : (pos - grabPos);
             setPosition(setPos);
         };
 
-        var handleEnd = function(e) {
+        var handleEnd = function (e) {
             e.preventDefault();
             $document.off(moveEvent, handleMove);
             $document.off(endEvent, handleEnd);
@@ -15368,7 +15686,7 @@ if (!Number.isNaN) {
             }
         };
 
-        var cap = function(pos, min, max) {
+        var cap = function (pos, min, max) {
             if (pos < min) {
                 return min;
             }
@@ -15378,7 +15696,7 @@ if (!Number.isNaN) {
             return pos;
         };
 
-        var setPosition = function(pos, triggerSlide) {
+        var setPosition = function (pos, triggerSlide, isInputFormat) {
             var value, newPos;
 
             if (triggerSlide === undefined) {
@@ -15392,7 +15710,9 @@ if (!Number.isNaN) {
             // Update ui
             $fill[0].style[DIMENSION] = (newPos + grabPos) + 'px';
             $handle[0].style[DIRECTION_STYLE] = newPos + 'px';
-            setValue(value);
+            if (!isInputFormat) {
+                setValue(value);
+            }
             // Update globals
             position = newPos;
             opt.value = value;
@@ -15402,7 +15722,7 @@ if (!Number.isNaN) {
         };
 
         // Returns element position relative to the parent
-        var getPositionFromNode = function(node) {
+        var getPositionFromNode = function (node) {
             var i = 0;
             while (node !== null) {
                 i += node.offsetLeft;
@@ -15411,7 +15731,7 @@ if (!Number.isNaN) {
             return i;
         };
 
-        var getRelativePosition = function(e) {
+        var getRelativePosition = function (e) {
             // Get the offset DIRECTION relative to the viewport
             var ucCoordinate = ucfirst(COORDINATE),
                 rangePos = $range[0].getBoundingClientRect()[DIRECTION],
@@ -15429,21 +15749,21 @@ if (!Number.isNaN) {
             return pageCoordinate - rangePos;
         };
 
-        var getPositionFromValue = function(value) {
+        var getPositionFromValue = function (value) {
             var percentage, pos;
             percentage = (value - opt.min) / (opt.max - opt.min);
             pos = (!Number.isNaN(percentage)) ? percentage * maxHandlePos : 0;
             return pos;
         };
 
-        var getValueFromPosition = function(pos) {
+        var getValueFromPosition = function (pos) {
             var percentage, value;
             percentage = ((pos) / (maxHandlePos || 1));
             value = opt.step * Math.round(percentage * (opt.max - opt.min) / opt.step) + opt.min;
             return Number((value).toFixed(_toFixed));
         };
 
-        var setValue = function(value) {
+        var setValue = function (value) {
             if (value === opt.value && $this[0].value !== '') {
                 return;
             }
@@ -15461,24 +15781,14 @@ if (!Number.isNaN) {
         handleEnd = $.proxy(handleEnd, this);
 
         init();
-        $document.on('dom.resize', function() {
+        $document.on('dom.resize', function () {
             update(false);
         });
 
         $document.on(startEvent, '#' + identifier + ':not(.' + opt.disabledClass + ')', handleDown);
 
-        // Listen to programmatic value changes
-        $this.on('change.' + identifier, function(e, data) {
-            if (data && data.origin === identifier) {
-                return;
-            }
-            var value = e.target.value,
-                pos = getPositionFromValue(value);
-            setPosition(pos);
-        });
-
         var obj = {
-            switch: function() {
+            switch: function () {
                 var isSlider;
                 if ($container.is(':hidden')) {
                     $range.hide();
@@ -15505,28 +15815,38 @@ if (!Number.isNaN) {
         if ($watcher.length) {
             $watcher.click(obj.switch);
         }
-        if (opt.onchange) {
-            $this.on('change input', function() {
-                var $this = $(this);
-                var timer;
-                if (timer) {
-                    clearTimeout(timer);
+
+        // Listen to programmatic value changes
+        $this.on('formatinput change.' + identifier, function (e, data) {
+            var isFormatInput = false;
+            if (e.type === 'formatinput') {
+                isFormatInput = true;
+            } else {
+                if (data && data.origin === identifier) {
+                    return;
                 }
-                timer = setTimeout(function() {
-                    if ($.isFunction(opt.onchange)) {
-                        opt.onchange($this, $this.val(), $watcher);
-                    } else {
-                        $(document).trigger(opt.onchange, [$this, $this.val(), $watcher]);
-                    }
-                }, 20);
-            });
-        }
+            }
+
+            var $target = $(e.target);
+            var value = $target.prop('rawValue') || $target.val(),
+                pos = getPositionFromValue(value);
+            setPosition(pos, true, isFormatInput);
+
+            if (opt.onchange) {
+                var $this = $(this);
+                if ($.isFunction(opt.onchange)) {
+                    opt.onchange($this, $this.prop('rawValue') || $this.val(), $watcher);
+                } else {
+                    $(document).trigger(opt.onchange, [$this, $this.prop('rawValue') || $this.val(), $watcher]);
+                }
+            }
+        });
         return obj;
     }
 
     // A really lightweight plugin wrapper around the constructor,
     // preventing against multiple instantiations
-    $.fn.rangeslider = function(options) {
+    $.fn.rangeslider = function (options) {
         var $this = $(this);
         var defaultOpt = {
             orientation: 'horizontal',
@@ -15553,11 +15873,11 @@ if (!Number.isNaN) {
         $this.data('rangesilder', obj);
         return obj;
     };
-    $(document).on('dom.load', function() {
-        $('input[data-rangesilder]').each(function() {
+    $(document).on('dom.load', function () {
+        $('input[data-rangesilder]').each(function () {
             var $this = $(this);
             var data = $this.data();
-            data.value = $this.val() * 1;
+            data.value = ($this.prop('rawValue') || $this.val()) * 1;
             $this.rangeslider(data);
             $this.removeAttr('data-rangesilder');
         });
@@ -16513,31 +16833,31 @@ if (!Number.isNaN) {
         });
     });
 })(jQuery);
-(function($) {
+(function ($) {
     //customer validate
     var customValidate = {
-        max: function($element) {
+        max: function ($element) {
             var value = $element.val();
             var max = $element.attr('data-max');
             var a = $.isNumeric(value) ? value : Date.parse(value);
             var b = $.isNumeric(max) ? max : Date.parse(max);
             return (a - b) <= 0;
         },
-        less: function($element) {
+        less: function ($element) {
             var value = $element.val();
             var less = $element.attr('data-less');
             var a = $.isNumeric(value) ? value : Date.parse(value);
             var b = $.isNumeric(less) ? less : Date.parse(less);
             return (a - b) < 0;
         },
-        min: function($element) {
+        min: function ($element) {
             var value = $element.val();
             var min = $element.attr('data-min');
             var a = $.isNumeric(value) ? value : Date.parse(value);
             var b = $.isNumeric(min) ? min : Date.parse(min);
             return (a - b) >= 0;
         },
-        greater: function($element) {
+        greater: function ($element) {
             var value = $element.val();
             var greater = $element.attr('data-greater');
             var a = $.isNumeric(value) ? value : Date.parse(value);
@@ -16545,7 +16865,7 @@ if (!Number.isNaN) {
             return (a - b) > 0;
         }
     };
-    var _showValidate = function($element, message) {
+    var _showValidate = function ($element, message) {
         $element.closest('.input').removeClass('has-success');
         $element.closest('.input').addClass('has-error');
         if (message) {
@@ -16558,7 +16878,7 @@ if (!Number.isNaN) {
             }).show();
         }
     };
-    var _passValidate = function($element, isRequried) {
+    var _passValidate = function ($element, isRequried) {
         $element.closest('.input').removeClass('has-error');
         if ($element.data('tip')) {
             $element.data('tip').hide();
@@ -16574,7 +16894,7 @@ if (!Number.isNaN) {
             $element.closest('.input').removeClass('has-success');
         }
     };
-    var _validate = function($element, type, errorText, addition) {
+    var _validate = function ($element, type, errorText, addition) {
         var value = $.trim($element.val());
         var isRequired = type.indexOf('required') >= 0;
         var message = '';
@@ -16645,35 +16965,36 @@ if (!Number.isNaN) {
     var validateConfig = {
         name: 'validate',
         defaultOpt: {
-            errortext: 'Invalid value.'
+            errortext: 'Invalid value.',
+            addition: null
         },
         initBefore: null,
-        init: function(context) {
+        init: function (context) {
             var $this = context.$element;
             var opt = context.opt;
             opt.validate = opt.validate ? opt.validate.split(',') : [];
-            $this.on('change.validate', function() {
+            $this.on('change.validate', function () {
                 _validate($this, opt.validate, opt.errortext, opt.addition);
             });
         },
         exports: {
-            isValid: function() {
+            isValid: function () {
                 var $this = this.$element;
                 var opt = this.opt;
                 return _validate($this, opt.validate, opt.errortext, opt.addition);
             }
         },
-        setOptionsBefore: function(e, context, options) {
+        setOptionsBefore: function (e, context, options) {
             options.validate = options.validate ? options.validate.split(',') : [];
         },
-        setOptionsAfter: function(context) {
+        setOptionsAfter: function (context) {
             var $this = context.$element;
             var opt = context.opt;
-            $this.off('change.validate').on('change.validate', function() {
+            $this.off('change.validate').on('change.validate', function () {
                 _validate($this, opt.validate, opt.errortext, opt.addition);
             });
         },
-        destroyBefore: function(context) {
+        destroyBefore: function (context) {
             var $this = context.$element;
             $this.off('change.validate');
         },
@@ -16681,8 +17002,8 @@ if (!Number.isNaN) {
         isThirdPart: false,
     };
     $.CUI.plugin(validateConfig);
-    $(document).on('dom.load.validate', function() {
-        $('[data-validate]').each(function(index, item) {
+    $(document).on('dom.load.validate', function () {
+        $('[data-validate]').each(function (index, item) {
             var $item = $(item);
             $item.validate($item.data());
             $item.removeAttr('data-validate');
@@ -16767,55 +17088,91 @@ if (!Number.isNaN) {
         });
     });
 })(jQuery);
-// simplezoomer
 (function($) {
-    $.fn.imgzoom = function(options) {
-        var defaultOpt = {
-            zoomType: 'zoomin',
-            zoomStep: 10,
+    var imgzoomConfig = {
+        name: 'imgzoom',
+        defaultOpt: {
+            step: 0,
             max: 200,
             min: 50,
+            defaultzoom: 100,
             target: '',
-            onZoom: null,
-        };
-        var opt = $.extend({}, defaultOpt, options);
-        var $this = $(this);
-        var $target = $(opt.target);
-        var _zoom = function() {
-            var currentzoom = $target.data('currentzoom');
-            if (!currentzoom) {
-                currentzoom = Math.floor($target.find('img').width() / $target.outerWidth() * 10) * 10;
+            zoombefore: null,
+            zoomafter: null
+        },
+        init: function(context) {
+            var opt = context.opt;
+            var $this = context.$element;
+            var $target = null;
+            if (opt.target) {
+                $target = context.$target = $(opt.target);
+            } else {
+                $target = $this;
             }
-            if (opt.zoomType === 'zoomin') {
-                currentzoom = Math.min(opt.max, (currentzoom + opt.zoomStep));
-            } else if (opt.zoomType === 'zoomout') {
-                currentzoom = Math.max(opt.min, (currentzoom - opt.zoomStep));
-            }
-            $target.data('currentzoom', currentzoom);
-            $target.find('img').css({'width': currentzoom + '%'});
-            if (opt.onZoom) {
-                if ($.isFunction(opt.onZoom)) {
-                    opt.onZoom(currentzoom);
-                } else {
-                    $(document).trigger(opt.onZoom, [currentzoom]);
+            context._zoom = function(tmpStep) {
+                var step = $.isNumeric(tmpStep) || opt.step;
+                var currentzoom = $target.data('currentzoom');
+                if (!currentzoom) {
+                    currentzoom = Math.floor($target.find('img').width() / $target.outerWidth() * 10) * 10;
+                }
+                var scrollTop = $target.scrollTop();
+                var scrollTopRate = scrollTop / $target.prop('scrollHeight');
+                if (step > 0) {
+                    currentzoom = Math.min(opt.max, (currentzoom + step));
+                } else if (step < 0) {
+                    currentzoom = Math.max(opt.min, (currentzoom + step));
+                } else if (step == 0) {
+                    currentzoom = opt.defaultzoom;
+                }
+                $target.data('currentzoom', currentzoom);
+                $target.find('img').css({'width': currentzoom + '%'});
+                if (scrollTop) {
+                    scrollTop = scrollTopRate * $target.prop('scrollHeight');
+                    $target.scrollTop(scrollTop);
+                }
+            };
+        },
+        exports: {
+            getZoom: function() {
+                var $target = this.$target;
+                return Math.floor($target.find('img').width() / $target.outerWidth() * 10) * 10;
+            },
+            setZoom: function(step) {
+                var opt = this.opt;
+                if (opt.zoombefore) {
+                    $.CUI.addEvent(opt.zoombefore, this);
+                }
+                this._zoom(step);
+                if (opt.zoomafter) {
+                    $.CUI.addEvent(opt.zoomafter, this);
                 }
             }
-        }
-        $this.on('click', _zoom);
-    };
-    $(document).on('dom.load.imgzoom', function() {
-        $('[data-imgzoom]').each(function() {
-            var $this = $(this);
-            $this.imgzoom({
-                zoomType: $this.attr('data-zoomtype'),
-                zoomStep: $this.attr('data-zoomstep'),
-                max: $this.attr('data-max:'),
-                min: $this.attr('data-min'),
-                target: $this.attr('data-target'),
-                onZoom: $this.attr('data-onzoom')
+        },
+        setOptionsBefore: null,
+        setOptionsAfter: null,
+        initBefore: null,
+        initAfter: function(context) {
+            var $this = context.$element;
+            var exports = context.exports;
+            exports.setZoom(0);
+            $this.on('click.imgzoom', function() {
+                exports.setZoom();
             });
+        },
+        destroyBefore: function(context) {
+            var $this = context.$element;
+            $this.off('click.imgzoom');
+        }
+    };
+    $.CUI.plugin(imgzoomConfig);
+    $(document).on('dom.load.imgzoom', function() {
+        $('[data-imgzoom]').each(function(index, item) {
+            var $this = $(item);
+            var data = $this.data();
+            $this.imgzoom(data);
             $this.removeAttr('data-imgzoom');
+            $this.attr('data-imgzoom-load', '');
+            $this.attr('role', 'Imgzoom');
         });
     });
 })(jQuery);
-

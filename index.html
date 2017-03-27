@@ -205,15 +205,16 @@
                         <div class="col-xs-12 col-sm-6">
                             <label for="txtMail">Mail Box</label>
                             <div class="input right">
-                                <i class="icon-envelope"></i>
                                 <input type="email" id="txtMail" name='email' placeholder="email" data-validate='email'>
+                                <i class="icon-envelope"></i>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6">
                             <label for="txtPhone">Phone Box</label>
                             <div class="input left right">
                                 <i class="icon-phone"></i>
-                                <input type="tel" id="txtPhone" name='phone' data-validate='required,phone'>
+                                <input type="tel" id="txtPhone" name='phone' value="1234567890" data-validate='required,phone' data-inputformat
+                                       data-type="phone">
                                 <i class="icon-asterisk"></i>
                             </div>
                         </div>
@@ -296,27 +297,30 @@
                 <div id="texboxPanel" class="form row" data-form>
                     <div class="col-xs-12 col-sm-6">
                         <div data-textbox>
-                            <div class="input small right">
-                                <label for="txtReq2">Message</label>
-                                <input type="email" id="txtReq2" name='name' placeholder="name" value="" data-validate='required,email'>
-                                <i class="icon-envelope"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div data-textbox>
-                            <div class="input right">
-                                <label for="txtReq10">Message</label>
-                                <input type="email" id="txtReq10" name='name' placeholder="name" value="" data-validate='required,email'>
-                                <i class="icon-envelope"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div data-textbox>
-                            <div class="input large right">
+                            <div class="input small left right">
                                 <label for="txtReq1">Message</label>
-                                <input type="email" id="txtReq1" name='name' placeholder="name" value="" data-validate='required,email'>
+                                <i>@</i>
+                                <input type="email" id="txtReq1" name='name' value="" data-validate='required,email'>
+                                <i class="icon-envelope"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <div data-textbox>
+                            <div class="input left right">
+                                <label for="txtReq2">Message</label>
+                                <i>@</i>
+                                <input type="email" id="txtReq2" name='name' value="" data-validate='required,email'>
+                                <i class="icon-envelope"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <div data-textbox>
+                            <div class="input large left right">
+                                <label for="txtReq3">Message</label>
+                                <i>@</i>
+                                <input type="email" id="txtReq3" name='name' value="" data-validate='required,email'>
                                 <i class="icon-envelope"></i>
                             </div>
                         </div>
@@ -324,8 +328,8 @@
                     <div class="col-xs-12 col-sm-6">
                         <div data-textbox>
                             <div class="textarea">
-                                <label for="txtMsg">Message</label>
-                                <textarea name="message" id="txtMsg" data-validate='required'></textarea>
+                                <label for="textReq4">Message</label>
+                                <textarea name="message" id="textReq4" data-validate='required'></textarea>
                             </div>
                         </div>
                     </div>
@@ -355,7 +359,7 @@
                     </p>
                     <script id="popupPanel0" type="text/template">
                         <div class="block-center text-center" dialog-close>
-                            <div class="f0 text-light text-white text-shadow">Welcome to CUI!</div>
+                            <div class="text-light text-white">Welcome to CUI!</div>
                             <p class=" text-white">A modal dialog is a window that forces the user to interact with it before they can go back to using the
                                 parent application.</p>
                         </div>
@@ -493,12 +497,21 @@
                     class="subtitle">the rangesilder plugin</span> <i class="icon-angle-down right"></i></a>
                 <div id="rangesilderPanel" data-form class="form">
                     <div class="row">
-                        <div class="col-xs-12">
+                        <div class="col-xs-12" data-textbox>
                             <div class="input left">
-                                <label>$</label>
-                                <input type="text" id="txtPrice" name="price" data-autohide="false" value="3000" data-rangesilder data-min='0' data-step='1'
-                                       data-max='8000'
-                                       placeholder="price" data-validate="required,price"/>
+                                <label for="txtPrice">price</label>
+                                <i>$</i>
+                                <input type="text" id="txtPrice" name="price"
+                                       data-inputformat
+                                       data-type="price"
+                                       data-rangesilder
+                                       data-autohide="false"
+                                       value="3000"
+                                       data-min="0"
+                                       data-step="1"
+                                       data-max="8000"
+                                       placeholder="price"
+                                       data-validate="required,price"/>
                             </div>
                         </div>
                     </div>
@@ -516,25 +529,25 @@
                     <div class="slider" data-slider>
                         <ul class="slider-list">
                             <li>
-                                <img src="dist/src/img/01.jpg" class="img-center" alt="This is a image.">
+                                <img src="dist/src/img/01.jpg" alt="This is a image.">
                             </li>
                             <li>
-                                <img src="dist/src/img/02.jpg" class="img-center" alt="This is a image.">
+                                <img src="dist/src/img/02.jpg" alt="This is a image.">
                             </li>
                             <li>
-                                <img src="dist/src/img/03.jpg" class="img-center" alt="This is a image.">
+                                <img src="dist/src/img/03.jpg" alt="This is a image.">
                             </li>
                             <li>
-                                <img src="dist/src/img/04.jpg" class="img-center" alt="This is a image.">
+                                <img src="dist/src/img/04.jpg" alt="This is a image.">
                             </li>
                             <li>
-                                <img src="dist/src/img/05.jpg" class="img-center" alt="This is a image.">
+                                <img src="dist/src/img/05.jpg" alt="This is a image.">
                             </li>
                             <li>
-                                <img src="dist/src/img/06.jpg" class="img-center" alt="This is a image.">
+                                <img src="dist/src/img/06.jpg" alt="This is a image.">
                             </li>
                             <li>
-                                <img src="dist/src/img/07.jpg" class="img-center" alt="This is a image.">
+                                <img src="dist/src/img/07.jpg" alt="This is a image.">
                             </li>
                         </ul>
                     </div>
@@ -550,7 +563,7 @@
                     class="icon-angle-down right"></i></a>
                 <div id="shifterPanel">
                     <div class="shifter" data-shifter data-index="2">
-                        <ul class="slider-list">
+                        <ul>
                             <li>
                                 <img src="dist/src/img/01.jpg" height="100%" alt="This is a image.">
                             </li>
@@ -603,8 +616,46 @@
             </div>
         </div>
     </div>
-
-
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel">
+                <a href="javascript:;" class="h3 addition shown" data-collapse data-target="#gridviewPanel">gridview
+                    <span class="subtitle">the  gridview for show img</span><i class="icon-angle-down right"></i></a>
+                <div id="gridviewPanel" class="row">
+                    <div class="col-xs-12">
+                        <div data-gridview></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel">
+                <a href="javascript:;" class="h3 addition shown" data-collapse data-target="#imgzoomPanel">imgzoom
+                    <span class="subtitle">the plugin control img zoomin zoomout</span><i class="icon-angle-down right"></i></a>
+                <div id="imgzoomPanel" class="row">
+                    <div class="col-xs-6">
+                        <a href="javascript:;" class="btn" data-imgzoom data-max="100" data-step="10" data-target="#imgzoomView"><i class="icon-plus"></i> zoom
+                            in</a>
+                    </div>
+                    <div class="col-xs-6">
+                        <a href="javascript:;" class="btn" data-imgzoom data-min="50" data-step="-10" data-target="#imgzoomView"><i class="icon-minus"> zoom
+                            out</i></a>
+                    </div>
+                    <div class="col-xs-12">
+                        <div id="imgzoomView" class="imgzoom" style="max-height:300px; overflow:scroll;">
+                            <li><img src="dist/src/img/01.jpg" alt="This is a image."></li>
+                            <li><img src="dist/src/img/02.jpg" alt="This is a image."></li>
+                            <li><img src="dist/src/img/03.jpg" alt="This is a image."></li>
+                            <li><img src="dist/src/img/04.jpg" alt="This is a image."></li>
+                            <li><img src="dist/src/img/05.jpg" alt="This is a image."></li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-xs-12">
             <div class="panel">
@@ -632,48 +683,48 @@
             alert(msg);
         }
     }
-    var getMoveText = function (startPoint, endPoint) {
+    var getMoveText = function(startPoint, endPoint) {
         var str1;
         var str2;
         if (startPoint.touches.length) {
             var start = Array.prototype.slice.call(startPoint.touches);
-            str1 = start.reduce(function (pre, next, index) {
+            str1 = start.reduce(function(pre, next, index) {
 
                 return pre + 'Y:' + next.pageY + 'X:' + next.pageX + ' ';
             }, '(Start) ');
         }
         if (endPoint.touches.length) {
             var end = Array.prototype.slice.call(endPoint.touches);
-            str2 = end.reduce(function (pre, next, index) {
+            str2 = end.reduce(function(pre, next, index) {
                 return pre + 'Y:' + next.pageY + 'X:' + next.pageX + ' ';
             }, '(End) - ');
         }
 
         return str1 + '<br>' + str2;
     };
-    $("#eventDiv").on('moving', function (t, start, end) {
+    $("#eventDiv").on('moving', function(t, start, end) {
         $(this).html('moving... <br>' + getMoveText(start, end));
     });
-    $("#eventDiv").on('pinchin', function (t, start, end) {
+    $("#eventDiv").on('pinchin', function(t, start, end) {
         $(this).html('pinchin <br>' + getMoveText(start, end));
     });
-    $("#eventDiv").on('pinchout', function (t, start, end) {
+    $("#eventDiv").on('pinchout', function(t, start, end) {
         $(this).html('pinchout <br>' + getMoveText(start, end));
     });
-    $("#eventDiv").on('swipeleft', function (t, start, end) {
+    $("#eventDiv").on('swipeleft', function(t, start, end) {
         $(this).html('swipeleft <br>' + getMoveText(start, end));
     });
-    $("#eventDiv").on('swiperight', function (t, start, end) {
+    $("#eventDiv").on('swiperight', function(t, start, end) {
         $(this).html('swiperight <br>' + getMoveText(start, end));
     });
-    $("#eventDiv").on('swipedown', function (t, start, end) {
+    $("#eventDiv").on('swipedown', function(t, start, end) {
         $(this).html('swipedown <br>' + getMoveText(start, end));
     });
-    $("#eventDiv").on('swipeup', function (t, start, end) {
+    $("#eventDiv").on('swipeup', function(t, start, end) {
         $(this).html('swipeup <br>' + getMoveText(start, end));
     });
 
-    $(document).one('datatable.inital', function (e, element, obj) {
+    $(document).one('datatable.inital', function(e, element, obj) {
         obj.setOptions({
             columns: [{
                 key: 'name',
@@ -687,7 +738,7 @@
             }, {
                 key: 'birthday',
                 type: 'date',
-                format: 'm/d/yyyy',
+                format: 'Y-M-D',
                 display: 'Birthday',
                 sortable: true
             }, {
