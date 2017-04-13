@@ -304,91 +304,92 @@ h6,
 /* line 158, ../../../src/scss/base/_text.scss */
 b,
 .text-bold {
-  font-weight: bold;
+  font-weight: normal;
+  font-family: "robotobold" !important;
 }
 
-/* line 167, ../../../src/scss/base/_text.scss */
+/* line 168, ../../../src/scss/base/_text.scss */
 .text-light, .dialog.dialog-default .dialog-title {
   font-weight: normal;
-  font-family: "robotolight";
+  font-family: "robotolight" !important;
 }
 
-/* line 176, ../../../src/scss/base/_text.scss */
+/* line 177, ../../../src/scss/base/_text.scss */
 .text-left {
   text-align: left;
 }
 
-/* line 180, ../../../src/scss/base/_text.scss */
+/* line 181, ../../../src/scss/base/_text.scss */
 .text-right {
   text-align: right;
 }
 
-/* line 184, ../../../src/scss/base/_text.scss */
+/* line 185, ../../../src/scss/base/_text.scss */
 .text-center {
   text-align: center;
 }
 
-/* line 188, ../../../src/scss/base/_text.scss */
-.text-shadow {
+/* line 189, ../../../src/scss/base/_text.scss */
+.text-shadow, .circle-item {
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-/* line 192, ../../../src/scss/base/_text.scss */
+/* line 193, ../../../src/scss/base/_text.scss */
 .text-white {
   color: white;
 }
 
-/* line 196, ../../../src/scss/base/_text.scss */
+/* line 197, ../../../src/scss/base/_text.scss */
 .text-darkgray {
   color: #333333;
 }
 
-/* line 200, ../../../src/scss/base/_text.scss */
+/* line 201, ../../../src/scss/base/_text.scss */
 .text-gray {
   color: #777777;
 }
 
-/* line 204, ../../../src/scss/base/_text.scss */
+/* line 205, ../../../src/scss/base/_text.scss */
 .text-lightgray {
   color: #aaaaaa;
 }
 
-/* line 208, ../../../src/scss/base/_text.scss */
+/* line 209, ../../../src/scss/base/_text.scss */
 .text-green, .text-safe {
   color: #357935;
 }
 
-/* line 212, ../../../src/scss/base/_text.scss */
+/* line 213, ../../../src/scss/base/_text.scss */
 .text-orange, .text-warning {
   color: #c05b00;
 }
 
-/* line 216, ../../../src/scss/base/_text.scss */
+/* line 217, ../../../src/scss/base/_text.scss */
 .text-red, .text-error {
   color: #a02622;
 }
 
-/* line 220, ../../../src/scss/base/_text.scss */
+/* line 221, ../../../src/scss/base/_text.scss */
 .text-blue {
   color: #0b0dad;
 }
 
-/* line 224, ../../../src/scss/base/_text.scss */
+/* line 225, ../../../src/scss/base/_text.scss */
 .text-main {
   color: #78004E;
 }
 
-/* line 228, ../../../src/scss/base/_text.scss */
+/* line 229, ../../../src/scss/base/_text.scss */
 .text-uppercase {
   text-transform: uppercase;
 }
 
-/* line 232, ../../../src/scss/base/_text.scss */
+/* line 233, ../../../src/scss/base/_text.scss */
 .text-lowercase {
   text-transform: lowercase;
 }
 
-/* line 236, ../../../src/scss/base/_text.scss */
+/* line 237, ../../../src/scss/base/_text.scss */
 .text-capitalize {
   text-transform: capitalize;
 }
@@ -7176,8 +7177,9 @@ select {
 .shifter {
   overflow: hidden;
   position: relative;
+  height: 300;
 }
-/* line 4, ../../../src/scss/plugin/_shifter.scss */
+/* line 5, ../../../src/scss/plugin/_shifter.scss */
 .shifter .wrap {
   overflow-x: scroll;
   overflow-y: hidden;
@@ -7189,16 +7191,16 @@ select {
   scrollbar-track-color: rgba(255, 255, 255, 0);
   scrollbar-arrow-color: rgba(255, 255, 255, 0);
 }
-/* line 8, ../../../src/scss/plugin/_shifter.scss */
+/* line 9, ../../../src/scss/plugin/_shifter.scss */
 .shifter .wrap::-webkit-scrollbar {
   width: 0;
   height: 0;
 }
-/* line 13, ../../../src/scss/plugin/_shifter.scss */
+/* line 14, ../../../src/scss/plugin/_shifter.scss */
 .shifter ul {
   overflow: hidden;
 }
-/* line 15, ../../../src/scss/plugin/_shifter.scss */
+/* line 16, ../../../src/scss/plugin/_shifter.scss */
 .shifter ul > li {
   float: left;
   overflow: hidden;
@@ -7206,7 +7208,7 @@ select {
   -webkit-transition: opacity 1s .5s;
           transition: opacity 1s .5s;
 }
-/* line 25, ../../../src/scss/plugin/_shifter.scss */
+/* line 26, ../../../src/scss/plugin/_shifter.scss */
 .shifter .next,
 .shifter .prev {
   z-index: 2;
@@ -7225,61 +7227,61 @@ select {
   background-color: #333333;
   border-radius: 100%;
 }
-/* line 41, ../../../src/scss/plugin/_shifter.scss */
+/* line 42, ../../../src/scss/plugin/_shifter.scss */
 .shifter .next:hover,
 .shifter .prev:hover {
   color: white;
 }
-/* line 44, ../../../src/scss/plugin/_shifter.scss */
+/* line 45, ../../../src/scss/plugin/_shifter.scss */
 .shifter .next.disable,
 .shifter .prev.disable {
   opacity: 0 !important;
   pointer-events: none;
 }
-/* line 49, ../../../src/scss/plugin/_shifter.scss */
+/* line 50, ../../../src/scss/plugin/_shifter.scss */
 .shifter .prev {
   left: 15px;
   -webkit-transition: opacity, left 0.5s ease;
           transition: opacity, left 0.5s ease;
 }
-/* line 52, ../../../src/scss/plugin/_shifter.scss */
+/* line 53, ../../../src/scss/plugin/_shifter.scss */
 .shifter .prev i {
   margin-left: -5px;
 }
-/* line 56, ../../../src/scss/plugin/_shifter.scss */
+/* line 57, ../../../src/scss/plugin/_shifter.scss */
 .shifter .next {
   right: 15px;
   -webkit-transition: opacity, right 0.5s ease;
           transition: opacity, right 0.5s ease;
 }
-/* line 59, ../../../src/scss/plugin/_shifter.scss */
+/* line 60, ../../../src/scss/plugin/_shifter.scss */
 .shifter .next i {
   margin-left: 5px;
 }
-/* line 64, ../../../src/scss/plugin/_shifter.scss */
+/* line 65, ../../../src/scss/plugin/_shifter.scss */
 .shifter:hover .prev {
   left: 5px;
   opacity: 1;
 }
-/* line 68, ../../../src/scss/plugin/_shifter.scss */
+/* line 69, ../../../src/scss/plugin/_shifter.scss */
 .shifter:hover .next {
   right: 5px;
   opacity: 1;
 }
-/* line 73, ../../../src/scss/plugin/_shifter.scss */
+/* line 74, ../../../src/scss/plugin/_shifter.scss */
 .shifter .img-loading {
   opacity: .8;
 }
 
-/* line 80, ../../../src/scss/plugin/_shifter.scss */
+/* line 81, ../../../src/scss/plugin/_shifter.scss */
 .shifter {
   height: 300px;
 }
-/* line 82, ../../../src/scss/plugin/_shifter.scss */
+/* line 83, ../../../src/scss/plugin/_shifter.scss */
 .shifter .wrap {
   height: 321px;
 }
-/* line 85, ../../../src/scss/plugin/_shifter.scss */
+/* line 86, ../../../src/scss/plugin/_shifter.scss */
 .shifter li {
   height: 300px;
   width: 425px;
@@ -7564,6 +7566,18 @@ select {
     margin: 0 20px;
   }
 }
+/* line 1, ../../../src/scss/plugin/_table.scss */
+table {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+/* line 8, ../../../src/scss/plugin/_table.scss */
+.table td, .table tr {
+  padding: 2px 5px;
+}
+
 /* line 1, ../../../src/scss/plugin/_gridtable.scss */
 table.gridtable {
   width: 100%;
@@ -8058,4 +8072,210 @@ table.gridtable tbody tr {
   display: block;
   position: relative;
   overflow: hidden;
+}
+
+/* line 1, ../../../src/scss/plugin/_sharp.scss */
+.circle-item {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: block;
+  margin: 10px auto;
+  color: white;
+  line-height: 80px;
+  text-align: center;
+}
+/* line 11, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-main {
+  background-color: #78004E;
+}
+/* line 15, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-main-l1 {
+  background-color: #c50080;
+}
+/* line 19, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-main-l2 {
+  background-color: #ff12ac;
+}
+/* line 23, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-main-l3 {
+  background-color: #ffabe2;
+}
+/* line 27, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-danger {
+  background-color: #a02622;
+}
+/* line 31, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-danger-l1 {
+  background-color: #d53e39;
+}
+/* line 35, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-danger-l2 {
+  background-color: #e27c79;
+}
+/* line 39, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-danger-l3 {
+  background-color: #f0b9b8;
+}
+/* line 43, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-warning {
+  background-color: #c05b00;
+}
+/* line 47, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-warning-l1 {
+  background-color: #ff800e;
+}
+/* line 51, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-warning-l2 {
+  background-color: #ffa85a;
+}
+/* line 55, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-warning-l3 {
+  background-color: #ffd0a7;
+}
+/* line 59, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-tip {
+  background-color: #cccc00;
+}
+/* line 63, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-tip-l1 {
+  background-color: #ffff1a;
+}
+/* line 67, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-tip-l2 {
+  background-color: #ffff66;
+}
+/* line 71, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-tip-l3 {
+  background-color: #ffffb3;
+}
+/* line 75, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-safe {
+  background-color: #357935;
+}
+/* line 79, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-safe-l1 {
+  background-color: #4cae4c;
+}
+/* line 83, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-safe-l2 {
+  background-color: #80c780;
+}
+/* line 87, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-safe-l3 {
+  background-color: #b5dfb5;
+}
+/* line 90, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-0 {
+  background-color: black;
+}
+/* line 93, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-1 {
+  background-color: #111111;
+}
+/* line 96, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-2 {
+  background-color: #222222;
+}
+/* line 99, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-3 {
+  background-color: #333333;
+}
+/* line 102, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-4 {
+  background-color: #444444;
+}
+/* line 105, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-5 {
+  background-color: #555555;
+}
+/* line 108, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-6 {
+  background-color: #666666;
+}
+/* line 111, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-7 {
+  background-color: #777777;
+}
+/* line 114, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-8 {
+  background-color: #888888;
+}
+/* line 117, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-9 {
+  background-color: #999999;
+}
+/* line 120, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-a {
+  background-color: #aaaaaa;
+}
+/* line 123, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-b {
+  background-color: #bbbbbb;
+}
+/* line 126, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-c {
+  background-color: #cccccc;
+}
+/* line 129, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-d {
+  background-color: #dddddd;
+}
+/* line 132, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-e {
+  background-color: #eeeeee;
+}
+/* line 135, ../../../src/scss/plugin/_sharp.scss */
+.circle-item.color-f {
+  background-color: white;
+}
+
+/* line 1, ../../../src/scss/plugin/_measurement.scss */
+.measurement {
+  position: relative;
+  width: 100%;
+  margin: 20px 0 10px 0;
+}
+/* line 5, ../../../src/scss/plugin/_measurement.scss */
+.measurement .measurement-line {
+  height: 40px;
+  border-bottom: 2px solid #dddddd;
+}
+/* line 9, ../../../src/scss/plugin/_measurement.scss */
+.measurement .measurement-item {
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  position: absolute;
+  bottom: 3px;
+}
+/* line 13, ../../../src/scss/plugin/_measurement.scss */
+.measurement .measurement-item .pin {
+  width: 30px;
+  height: 40px;
+  line-height: 30px;
+  border-top-right-radius: 10%;
+  border-top-left-radius: 10%;
+  border-bottom-right-radius: 100%;
+  border-bottom-left-radius: 100%;
+  background-color: #333333;
+  color: white;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+/* line 26, ../../../src/scss/plugin/_measurement.scss */
+.measurement .measurement-min, .measurement .measurement-max {
+  color: #333333;
+  font-size: 16px;
+  position: absolute;
+  bottom: 5px;
+  height: 20px;
+  line-height: 20px;
+}
+/* line 34, ../../../src/scss/plugin/_measurement.scss */
+.measurement .measurement-min {
+  left: 0;
+}
+/* line 37, ../../../src/scss/plugin/_measurement.scss */
+.measurement .measurement-max {
+  right: 0;
 }
