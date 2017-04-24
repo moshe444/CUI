@@ -13845,9 +13845,18 @@ if (!Number.isNaN) {
         var orginalScrollLeft;
         var currentScrolLeft;
         var scrollEnd;
-        var isMoving;
         var duration = 200;
         var subduration;
+        var _lazingLoadImage = function () {
+            var currentItem = $ul.children('li').eq(column + 2);
+            currentItem.find('img').each(function (index, img) {
+                if ($(img).data('src')) {
+                    $(img).attr('src', $(img).data('src'));
+                    $(img).data('src', null);
+                }
+            });
+        };
+
         var _prev = function () {
             currentScrolLeft = 0;
             $scroller.stop().animate({
@@ -13860,7 +13869,9 @@ if (!Number.isNaN) {
                 $scroller.stop().animate({
                     scrollLeft: '-=' + offsetLeft + 'px'
                 }, subduration);
-                isMoving = false;
+                if (opt.lazingload) {
+                    _lazingLoadImage();
+                }
             });
         };
         var _next = function () {
@@ -13875,18 +13886,17 @@ if (!Number.isNaN) {
                 $scroller.stop().animate({
                     scrollLeft: '+=' + offsetLeft + 'px'
                 }, subduration);
-                isMoving = false;
+                if (opt.lazingload) {
+                    _lazingLoadImage();
+                }
             });
         };
         var _revert = function () {
             $scroller.stop().animate({
                 scrollLeft: orginalScrollLeft + 'px'
-            }, duration, function () {
-                isMoving = false;
-            });
+            }, duration);
         };
         var _autoScroll = function () {
-            isMoving = true;
             currentScrolLeft = $scroller.scrollLeft();
             var offset = orginalScrollLeft - currentScrolLeft;
             if (Math.abs(offset) > 5) {
@@ -13895,7 +13905,6 @@ if (!Number.isNaN) {
                 } else {
                     _next();
                 }
-
             } else {
                 _revert();
             }
@@ -13963,7 +13972,7 @@ if (!Number.isNaN) {
             _refresh();
             $scroller.on('scroll', $.debounce(function () {
                 _autoScroll();
-            }, 50));
+            }, 200));
             $this.removeClass('loading');
             $this.data('data-caoursel', obj);
         };
