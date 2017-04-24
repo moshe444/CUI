@@ -13857,7 +13857,7 @@ if (!Number.isNaN) {
                 $ul.prepend($last);
                 currentScrolLeft += liWidth;
                 $scroller.scrollLeft(currentScrolLeft);
-                $scroller.animate({
+                $scroller.stop().animate({
                     scrollLeft: '-=' + offsetLeft + 'px'
                 }, subduration);
                 isMoving = false;
@@ -13872,10 +13872,7 @@ if (!Number.isNaN) {
                 $ul.append($last);
                 currentScrolLeft -= liWidth;
                 $scroller.scrollLeft(currentScrolLeft);
-                $scroller.animate({
-                    scrollLeft: currentScrolLeft + 'px'
-                }, duration);
-                $scroller.animate({
+                $scroller.stop().animate({
                     scrollLeft: '+=' + offsetLeft + 'px'
                 }, subduration);
                 isMoving = false;
@@ -13892,7 +13889,7 @@ if (!Number.isNaN) {
             isMoving = true;
             currentScrolLeft = $scroller.scrollLeft();
             var offset = orginalScrollLeft - currentScrolLeft;
-            if (Math.abs(offset) > 80) {
+            if (Math.abs(offset) > 5) {
                 if (offset > 0) {
                     _prev();
                 } else {
