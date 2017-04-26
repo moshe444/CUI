@@ -13828,11 +13828,13 @@ if (!Number.isNaN) {
     };
 }
 (function ($) {
-    $.fn.caoursel = function (option) {
+    $.fn.carousel = function (option) {
         var $this = $(this);
-        var defaultOpt = {};
+        var defaultOpt = {
+            lazingload: true
+        }
         var opt = $.extend({}, defaultOpt, option);
-        var $scroller = $this.find('.caoursel-list');
+        var $scroller = $this.find('.carousel-list');
         var $ul = $this.find('ul');
         var $li = $ul.children('li');
         var prevLink = $('<a href="javascript:void(0)" class="prev"><i class="icon-angle-left"></i></a>');
@@ -13848,11 +13850,11 @@ if (!Number.isNaN) {
         var duration = 200;
         var subduration;
         var _lazingLoadImage = function () {
-            var currentItem = $ul.children('li').eq(column + 2);
+            var currentItem = $ul.children('li:lt(' + (column + 2) + ')');
             currentItem.find('img').each(function (index, img) {
-                if ($(img).data('src')) {
-                    $(img).attr('src', $(img).data('src'));
-                    $(img).data('src', null);
+                if ($(img).is('[data-src]')) {
+                    $(img).attr('src', $(img).attr('data-src'));
+                    $(img).removeAttr('data-src');
                 }
             });
         };
@@ -13951,9 +13953,9 @@ if (!Number.isNaN) {
             $li.each(function (index, item) {
                 var $item = $(item);
                 if (index === 0) {
-                    $item.attr('caoursel-index', $li.length);
+                    $item.attr('carousel-index', $li.length);
                 } else {
-                    $item.attr('caoursel-index', index);
+                    $item.attr('carousel-index', index);
                 }
             });
             prevLink.click(function () {
@@ -13970,21 +13972,22 @@ if (!Number.isNaN) {
                 _refresh();
             });
             _refresh();
+            _lazingLoadImage();
             $scroller.on('scroll', $.debounce(function () {
                 _autoScroll();
-            }, 200));
+            }, 100));
             $this.removeClass('loading');
-            $this.data('data-caoursel', obj);
+            $this.data('data-carousel', obj);
         };
         setTimeout(function () {
             _inital();
         });
     };
     $(document).on('dom.load', function () {
-        $('[data-caoursel]').each(function (index, item) {
+        $('[data-carousel]').each(function (index, item) {
             var $item = $(item);
-            $item.caoursel($item);
-            $item.removeAttr('data-caoursel');
+            $item.carousel($item);
+            $item.removeAttr('data-carousel');
         });
     });
 })(jQuery);

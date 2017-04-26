@@ -517,7 +517,7 @@ b,
 
 /* line 118, ../../../src/scss/base/_utilities.scss */
 [class^="icon-"],
-[class*=" icon-"], .slider .img-loading:before, .shifter .img-loading:before, .caoursel .img-loading:before, .checkbox label > i, .radio label > i, .tooltip.info .tooltip-inner:before, .tooltip.warning .tooltip-inner:before, .tooltip.error .tooltip-inner:before, .header-menu-item .caret, .datatable-sort.active:before, .datatable-sort.active.desc:before {
+[class*=" icon-"], .slider .img-loading:before, .shifter .img-loading:before, .carousel .img-loading:before, .checkbox label > i, .radio label > i, .tooltip.info .tooltip-inner:before, .tooltip.warning .tooltip-inner:before, .tooltip.error .tooltip-inner:before, .header-menu-item .caret, .datatable-sort.active:before, .datatable-sort.active.desc:before {
   display: inline-block;
   font: normal normal normal 14px/1 fonticon;
   font-size: inherit;
@@ -527,7 +527,7 @@ b,
 }
 /* line 125, ../../../src/scss/base/_utilities.scss */
 [class^="icon-"]:before,
-[class*=" icon-"]:before, .slider .img-loading:before, .shifter .img-loading:before, .caoursel .img-loading:before, .checkbox label > i:before, .radio label > i:before, .tooltip.info .tooltip-inner:before, .tooltip.warning .tooltip-inner:before, .tooltip.error .tooltip-inner:before, .header-menu-item .caret:before, .datatable-sort.active:before, .datatable-sort.active.desc:before {
+[class*=" icon-"]:before, .slider .img-loading:before, .shifter .img-loading:before, .carousel .img-loading:before, .checkbox label > i:before, .radio label > i:before, .tooltip.info .tooltip-inner:before, .tooltip.warning .tooltip-inner:before, .tooltip.error .tooltip-inner:before, .header-menu-item .caret:before, .datatable-sort.active:before, .datatable-sort.active.desc:before {
   text-align: center;
   font-style: normal;
 }
@@ -3167,7 +3167,7 @@ b,
 }
 
 /* line 1005, ../../../src/scss/base/_icon.scss */
-.icon-spinner:before, .slider .img-loading:before, .shifter .img-loading:before, .caoursel .img-loading:before {
+.icon-spinner:before, .slider .img-loading:before, .shifter .img-loading:before, .carousel .img-loading:before {
   content: "\f110";
 }
 
@@ -5374,11 +5374,11 @@ b,
   }
 }
 /* line 79, ../../../src/scss/base/_animation.scss */
-.slider .img-loading, .shifter .img-loading, .caoursel .img-loading {
+.slider .img-loading, .shifter .img-loading, .carousel .img-loading {
   position: relative;
 }
 /* line 81, ../../../src/scss/base/_animation.scss */
-.slider .img-loading:before, .shifter .img-loading:before, .caoursel .img-loading:before {
+.slider .img-loading:before, .shifter .img-loading:before, .carousel .img-loading:before {
   font-size: 18px;
   position: absolute;
   top: 50%;
@@ -8280,17 +8280,17 @@ table.gridtable tbody tr {
   right: 0;
 }
 
-/* line 1, ../../../src/scss/plugin/_caoursel.scss */
-.caoursel {
+/* line 1, ../../../src/scss/plugin/_carousel.scss */
+.carousel {
   display: block;
   width: 100%;
   overflow: hidden;
   height: 240px;
   position: relative;
 }
-/* line 7, ../../../src/scss/plugin/_caoursel.scss */
-.caoursel > .next,
-.caoursel > .prev {
+/* line 7, ../../../src/scss/plugin/_carousel.scss */
+.carousel > .next,
+.carousel > .prev {
   z-index: 2;
   display: block;
   position: absolute;
@@ -8307,56 +8307,56 @@ table.gridtable tbody tr {
   background-color: #333333;
   border-radius: 100%;
 }
-/* line 23, ../../../src/scss/plugin/_caoursel.scss */
-.caoursel > .next:hover,
-.caoursel > .prev:hover {
+/* line 23, ../../../src/scss/plugin/_carousel.scss */
+.carousel > .next:hover,
+.carousel > .prev:hover {
   color: white;
 }
-/* line 27, ../../../src/scss/plugin/_caoursel.scss */
-.caoursel > .prev {
+/* line 27, ../../../src/scss/plugin/_carousel.scss */
+.carousel > .prev {
   left: 15px;
   -webkit-transition: left 0.5s .5s ease, opacity 0.5s .5s ease;
           transition: left 0.5s .5s ease, opacity 0.5s .5s ease;
 }
-/* line 31, ../../../src/scss/plugin/_caoursel.scss */
-.caoursel > .next {
+/* line 31, ../../../src/scss/plugin/_carousel.scss */
+.carousel > .next {
   right: 15px;
   -webkit-transition: right 0.5s .5s ease, opacity 0.5s .5s ease;
           transition: right 0.5s .5s ease, opacity 0.5s .5s ease;
 }
-/* line 36, ../../../src/scss/plugin/_caoursel.scss */
-.caoursel.loading > .prev {
+/* line 36, ../../../src/scss/plugin/_carousel.scss */
+.carousel.loading > .prev {
   opacity: 0;
 }
-/* line 39, ../../../src/scss/plugin/_caoursel.scss */
-.caoursel.loading > .next {
+/* line 39, ../../../src/scss/plugin/_carousel.scss */
+.carousel.loading > .next {
   opacity: 0;
 }
-/* line 44, ../../../src/scss/plugin/_caoursel.scss */
-.caoursel:hover > .prev {
+/* line 44, ../../../src/scss/plugin/_carousel.scss */
+.carousel:hover > .prev {
   left: 5px;
   opacity: 1;
 }
-/* line 48, ../../../src/scss/plugin/_caoursel.scss */
-.caoursel:hover > .next {
+/* line 48, ../../../src/scss/plugin/_carousel.scss */
+.carousel:hover > .next {
   right: 5px;
   opacity: 1;
 }
-/* line 53, ../../../src/scss/plugin/_caoursel.scss */
-.caoursel .img-loading {
+/* line 53, ../../../src/scss/plugin/_carousel.scss */
+.carousel .img-loading {
   opacity: .8;
 }
 
-/* line 59, ../../../src/scss/plugin/_caoursel.scss */
-.caoursel-list {
+/* line 59, ../../../src/scss/plugin/_carousel.scss */
+.carousel-list {
   overflow: hidden;
   position: relative;
   overflow-x: scroll;
   overflow-y: hidden;
   height: calc(100% + 21px);
 }
-/* line 66, ../../../src/scss/plugin/_caoursel.scss */
-.caoursel-list > ul {
+/* line 66, ../../../src/scss/plugin/_carousel.scss */
+.carousel-list > ul {
   *zoom: 1;
   position: absolute;
   overflow: hidden;
@@ -8364,17 +8364,17 @@ table.gridtable tbody tr {
   width: 200%;
 }
 /* line 41, ../../../src/scss/base/_mixins.scss */
-.caoursel-list > ul:before, .caoursel-list > ul:after {
+.carousel-list > ul:before, .carousel-list > ul:after {
   content: "";
   display: table;
 }
 /* line 47, ../../../src/scss/base/_mixins.scss */
-.caoursel-list > ul:after {
+.carousel-list > ul:after {
   clear: both;
   overflow: hidden;
 }
-/* line 72, ../../../src/scss/plugin/_caoursel.scss */
-.caoursel-list > ul > li {
+/* line 72, ../../../src/scss/plugin/_carousel.scss */
+.carousel-list > ul > li {
   width: 320px;
   display: block;
   float: left;
@@ -8384,12 +8384,12 @@ table.gridtable tbody tr {
   overflow: hidden;
   border-left: 1px solid #333;
 }
-/* line 81, ../../../src/scss/plugin/_caoursel.scss */
-.caoursel-list > ul > li:first-child {
+/* line 81, ../../../src/scss/plugin/_carousel.scss */
+.carousel-list > ul > li:first-child {
   border-left: none;
 }
-/* line 84, ../../../src/scss/plugin/_caoursel.scss */
-.caoursel-list > ul > li img {
+/* line 84, ../../../src/scss/plugin/_carousel.scss */
+.carousel-list > ul > li img {
   position: absolute;
   height: 100%;
   left: 50%;
