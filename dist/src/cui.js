@@ -13973,7 +13973,7 @@ if (!Number.isNaN) {
             });
             _refresh();
             _lazingLoadImage();
-            $scroller.on('scroll', $.debounce(function () {
+            $this.on('mouseup', $.debounce(function () {
                 _autoScroll();
             }, 100));
             $this.removeClass('loading');
