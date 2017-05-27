@@ -13332,16 +13332,16 @@ a.version="2.15.2",b(rb),a.fn=Se,a.min=tb,a.max=ub,a.now=Fe,a.utc=j,a.unix=Jc,a.
 //     });
 // })(jQuery);
 //Extend touch event
-(function($) {
-    var _getDist = function(eventInfo) {
+(function ($) {
+    var _getDist = function (eventInfo) {
         var x = (eventInfo.touches[0].pageX - eventInfo.touches[1].pageX);
         var y = (eventInfo.touches[0].pageY - eventInfo.touches[1].pageY);
         return Math.sqrt(x * x + y * y);
     };
-    var _getInfo = function(eventInfo) {
+    var _getInfo = function (eventInfo) {
         var tmpEventInfo = Array.prototype.slice.call(eventInfo.touches);
         return {
-            touches: tmpEventInfo.map(function(e) {
+            touches: tmpEventInfo.map(function (e) {
                 return {
                     pageX: e.pageX,
                     pageY: e.pageY
@@ -13350,18 +13350,18 @@ a.version="2.15.2",b(rb),a.fn=Se,a.min=tb,a.max=ub,a.now=Fe,a.utc=j,a.unix=Jc,a.
         };
     };
     var eventSetting = {
-        setup: function() {
+        setup: function () {
             var $this = $(this);
-            $this.off('gesturestart').on('gesturestart', function(e) {
+            $this.off('gesturestart').on('gesturestart', function (e) {
                 e.preventDefault();
             });
-            $this.off('touchstart.cui').on('touchstart.cui', function() {
+            $this.off('touchstart.cui.gesture').on('touchstart.cui.gesture', function () {
                 var $ele = $(this);
                 $ele.data('_touchStart', null);
                 $ele.data('_touchEnd', null);
                 return true;
             });
-            $this.off('touchmove.cui').on('touchmove.cui', $.throttle(function(e) {
+            $this.off('touchmove.cui.gesture').on('touchmove.cui.gesture', $.throttle(function (e) {
                 var $ele = $(this);
                 var event = _getInfo(e.originalEvent);
                 if (!$ele.data('_touchStart')) {
@@ -13380,7 +13380,7 @@ a.version="2.15.2",b(rb),a.fn=Se,a.min=tb,a.max=ub,a.now=Fe,a.utc=j,a.unix=Jc,a.
                 return true;
             }, 100));
 
-            $this.off('touchend.cui').on('touchend.cui', function() {
+            $this.off('touchend.cui.gesture').on('touchend.cui.gesture', function () {
                 var $ele = $(this);
                 var start = $ele.data('_touchStart');
                 var end = $ele.data('_touchEnd');
@@ -13419,11 +13419,11 @@ a.version="2.15.2",b(rb),a.fn=Se,a.min=tb,a.max=ub,a.now=Fe,a.utc=j,a.unix=Jc,a.
                 return true;
             });
         },
-        teardown: function() {
+        teardown: function () {
             var $this = $(this);
-            $this.off('touchstart.cui');
-            $this.off('touchmove.cui');
-            $this.off('touchend.cui');
+            $this.off('touchstart.cui.gesture');
+            $this.off('touchmove.cui.gesture');
+            $this.off('touchend.cui.gesture');
 
         }
     };
@@ -13437,21 +13437,76 @@ a.version="2.15.2",b(rb),a.fn=Se,a.min=tb,a.max=ub,a.now=Fe,a.utc=j,a.unix=Jc,a.
 })(jQuery);
 
 //Extend transistion event
-(function($) {
+(function ($) {
     var eventSetting = {
-        setup: function() {
+        setup: function () {
             var $this = $(this);
             $this.off('webkitTransitionEnd.cui otransitionend.cui oTransitionEnd.cui msTransitionEnd.cui transitionend.cui')
-            .on('webkitTransitionEnd.cui otransitionend.cui oTransitionEnd.cui msTransitionEnd.cui transitionend.cui', function() {
+            .on('webkitTransitionEnd.cui otransitionend.cui oTransitionEnd.cui msTransitionEnd.cui transitionend.cui', function () {
                 $this.trigger('transitionend', []);
             });
         },
-        teardown: function() {
+        teardown: function () {
             var $this = $(this);
             $this.off('webkitTransitionEnd.cui otransitionend.cui oTransitionEnd.cui msTransitionEnd.cui transitionend.cui');
         }
     }
     $.event.special.transitionend = eventSetting;
+}(jQuery));
+
+//draggable
+(function ($) {
+    var eventSetting = {
+        setting: function () {
+            var $this = $(this);
+            var onDragStart = function () {
+                if ($.isMobile()) {
+                    $this.on('touchend.cui.draggable', onDragEnd);
+                    $this.one('touchmove.cui.draggable', onDragMove);
+                } else {
+                    $this.on('mouseup.cui.draggable', onDragEnd);
+                    $this.one('mousemove.cui.draggable', onDragMove);
+                }
+                $this.trigger('drag');
+            };
+            var onDragMove = function () {
+                $this.one('touchmove.cui.draggable', function () {
+                    $this.trigger('dragging');
+                });
+            }
+            var onDragEnd = function () {
+                $this.trigger('dragged');
+            };
+            if ($.isMobile()) {
+                $this.on('touchstart.cui.draggable', onDragStart);
+                $this.on('touchcancel.cui.draggable', onDragEnd);
+            } else {
+                $this.on('mousedown.cui.draggable', onDragStart);
+                $this.on('dragstart.cui.draggable selectstart.cui.draggable', function () {
+                    return false
+                });
+            }
+        },
+        teardown: function () {
+            var $this = $(this);
+            if ($.isMobile()) {
+                $this.off('touchstart.cui.draggable');
+                $this.off('touchcancel.cui.draggable');
+            } else {
+                this.$this.off('mousedown.cui.draggable');
+                this.$this.off('dragstart.cui.draggable selectstart.cui.draggable', function () {
+                    return false
+                });
+            }
+            $this.off('touchstart.cui.draggable mousedown.cui.draggable');
+            $this.off('touchcancel.cui.draggable mousedown.cui.draggable');
+
+            $this.off('touchmove.cui.draggable mousemove.cui.draggable');
+            $this.off('touchend.cui.draggable mouseup.cui.draggable');
+        }
+    };
+    $.event.special.swipeleft =
+        $.event.special.swiperight = eventSetting;
 }(jQuery));
 (function($) {
     var tmpdiv = null;
@@ -13831,8 +13886,10 @@ if (!Number.isNaN) {
     $.fn.carousel = function (option) {
         var $this = $(this);
         var defaultOpt = {
-            lazingload: true
-        }
+            lazingload: true,
+            _drag: null,
+            _coordinates: null,
+        };
         var opt = $.extend({}, defaultOpt, option);
         var $scroller = $this.find('.carousel-list');
         var $ul = $this.find('ul');
@@ -13849,6 +13906,149 @@ if (!Number.isNaN) {
         var scrollEnd;
         var duration = 200;
         var subduration;
+        var _difference = function (first, second) {
+            return {
+                x: first.x - second.x,
+                y: first.y - second.y
+            };
+        };
+        var _pointer = function (event) {
+            var result = {x: null, y: null};
+
+            event = event.originalEvent || event || window.event;
+
+            event = event.touches && event.touches.length ?
+                event.touches[0] : event.changedTouches && event.changedTouches.length ?
+                event.changedTouches[0] : event;
+
+            if (event.pageX) {
+                result.x = event.pageX;
+                result.y = event.pageY;
+            } else {
+                result.x = event.clientX;
+                result.y = event.clientY;
+            }
+
+            return result;
+        };
+        var _coordinates = function (position) {
+            var multiplier = 1,
+                newPosition = position - 1,
+                coordinate;
+
+            if (position === undefined) {
+                return opt._coordinates.map(function (coordinate, index) {
+                    return _coordinates(index);
+                });
+            }
+
+            coordinate = opt._coordinates[newPosition] || 0;
+
+            coordinate = Math.ceil(coordinate);
+
+            return coordinate;
+        };
+        var _maximum = function (relative) {
+            var settings = this.settings,
+                maximum = opt._coordinates.length,
+                iterator,
+                reciprocalItemsWidth,
+                elementWidth;
+
+            if (settings.loop) {
+                maximum = this._clones.length / 2 + this._items.length - 1;
+            } else if (settings.autoWidth || settings.merge) {
+                iterator = this._items.length;
+                reciprocalItemsWidth = this._items[--iterator].width();
+                elementWidth = this.$element.width();
+                while (iterator--) {
+                    reciprocalItemsWidth += this._items[iterator].width() + this.settings.margin;
+                    if (reciprocalItemsWidth > elementWidth) {
+                        break;
+                    }
+                }
+                maximum = iterator + 1;
+            } else if (settings.center) {
+                maximum = this._items.length - 1;
+            } else {
+                maximum = this._items.length - settings.items;
+            }
+
+            if (relative) {
+                maximum -= this._clones.length / 2;
+            }
+
+            return Math.max(maximum, 0);
+        };
+
+        var _minimum = function (relative) {
+            return relative ? 0 : this._clones.length / 2;
+        };
+
+        var _draggable = function () {
+            var onDragStart = function (event) {
+                // var stage = null;
+                // if (event.which === 3) {
+                //     return;
+                // }
+                // stage = $this.css('transform').replace(/.*\(|\)| /g, '').split(',');
+                // stage = {
+                //     x: stage[stage.length === 16 ? 12 : 4],
+                //     y: stage[stage.length === 16 ? 13 : 5]
+                // };
+                //
+                // opt._drag.time = new Date().getTime();
+                // opt._drag.target = $(event.target);
+                // opt._drag.stage.start = stage;
+                // opt._drag.stage.current = stage;
+                // opt._drag.pointer = _pointer(event);
+                $(document).one('mousemove.carousel.draggable touchmove.carousel.draggable', function (event) {
+                    // var delta = _difference(opt._drag.pointer, _pointer(event));
+                    $(document).on('mousemove.carousel.draggable touchmove.carousel.draggable', onDragMove);
+                    // if (Math.abs(delta.x) < Math.abs(delta.y)) {
+                    //     return;
+                    // }
+                    // event.preventDefault();
+                    $this.trigger('drag');
+                });
+                console.log('drag');
+            };
+            var onDragMove = function (event) {
+                // var minimum = null,
+                //     maximum = null,
+                //     delta = _difference(opt._drag.pointer, _pointer(event)),
+                //     stage = _difference(opt._drag.stage.start, delta);
+                // event.preventDefault();
+                // minimum = _coordinates(_minimum());
+                // maximum = _coordinates(_maximum() + 1) - minimum;
+                // stage.x = (((stage.x - minimum) % maximum + maximum) % maximum) + minimum;
+                // this._drag.stage.current = stage;
+                // $this.css({
+                //     transform: 'translate3d(' + stage.x + 'px,0px,0px)'
+                // });
+                console.log('dragging');
+
+            }
+            var onDragEnd = function (event) {
+                // var delta = _difference(opt._drag.pointer, _pointer(event)),
+                //     stage = opt._drag.stage.current,
+                //     direction = delta.x > 0 ? 'left' : 'right';
+                //
+                // $(document).off('.carousel.draggable');
+                console.log('dragged');
+                $this.trigger('dragged');
+            };
+            if ($.isMobile()) {
+                $this.on('touchstart.carousel.draggable', onDragStart);
+                $this.on('touchcancel.carousel.draggable', onDragEnd);
+            } else {
+                $this.on('mousedown.carousel.draggable', onDragStart);
+                $this.on('dragstart.carousel.draggable selectstart.cui.draggable', function () {
+                    return false;
+                });
+            }
+        };
+
         var _lazingLoadImage = function () {
             var currentItem = $ul.children('li:lt(' + (column + 2) + ')');
             currentItem.find('img').each(function (index, img) {
@@ -13971,9 +14171,10 @@ if (!Number.isNaN) {
             $(document).on('dom.resize', function () {
                 _refresh();
             });
+            _draggable();
             _refresh();
             _lazingLoadImage();
-            $this.on('mouseup', $.debounce(function () {
+            $scroller.on('scroll', $.debounce(function () {
                 _autoScroll();
             }, 100));
             $this.removeClass('loading');
@@ -13991,6 +14192,7 @@ if (!Number.isNaN) {
         });
     });
 })(jQuery);
+
 //collapse
 (function($) {
     var collapseConfig = {

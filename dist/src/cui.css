@@ -8351,11 +8351,10 @@ table.gridtable tbody tr {
 .carousel-list {
   overflow: hidden;
   position: relative;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  height: calc(100% + 21px);
+  overflow: hidden;
+  height: 100%;
 }
-/* line 66, ../../../src/scss/plugin/_carousel.scss */
+/* line 64, ../../../src/scss/plugin/_carousel.scss */
 .carousel-list > ul {
   *zoom: 1;
   position: absolute;
@@ -8373,7 +8372,7 @@ table.gridtable tbody tr {
   clear: both;
   overflow: hidden;
 }
-/* line 72, ../../../src/scss/plugin/_carousel.scss */
+/* line 70, ../../../src/scss/plugin/_carousel.scss */
 .carousel-list > ul > li {
   width: 320px;
   display: block;
@@ -8384,11 +8383,11 @@ table.gridtable tbody tr {
   overflow: hidden;
   border-left: 1px solid #333;
 }
-/* line 81, ../../../src/scss/plugin/_carousel.scss */
+/* line 79, ../../../src/scss/plugin/_carousel.scss */
 .carousel-list > ul > li:first-child {
   border-left: none;
 }
-/* line 84, ../../../src/scss/plugin/_carousel.scss */
+/* line 82, ../../../src/scss/plugin/_carousel.scss */
 .carousel-list > ul > li img {
   position: absolute;
   height: 100%;
