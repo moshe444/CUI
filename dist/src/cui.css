@@ -6,23 +6,30 @@
   font-style: normal;
 }
 @font-face {
-  font-family: 'robotoregular';
-  src: url("fonts/Roboto-Regular-webfont.eot");
-  src: url("fonts/Roboto-Regular-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/Roboto-Regular-webfont.woff") format("woff"), url("fonts/Roboto-Regular-webfont.ttf") format("truetype"), url("fonts/Roboto-Regular-webfont.svg#robotoregular") format("svg");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'robotobold';
-  src: url("fonts/Roboto-Bold-webfont.eot");
-  src: url("fonts/Roboto-Bold-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/Roboto-Bold-webfont.woff") format("woff"), url("fonts/Roboto-Bold-webfont.ttf") format("truetype"), url("fonts/Roboto-Bold-webfont.svg#robotobold") format("svg");
+  font-family: 'robotoblack';
+  src: url("fonts/roboto-black-webfont.eot");
+  src: url("fonts/roboto-black-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/roboto-black-webfont.woff2") format("woff2"), url("fonts/roboto-black-webfont.woff") format("woff"), url("fonts/roboto-black-webfont.ttf") format("truetype"), url("fonts/roboto-black-webfont.svg#robotoblack") format("svg");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'robotolight';
-  src: url("fonts/Roboto-Light-webfont.eot");
-  src: url("fonts/Roboto-Light-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/Roboto-Light-webfont.woff") format("woff"), url("fonts/Roboto-Light-webfont.ttf") format("truetype"), url("fonts/Roboto-Light-webfont.svg#robotolight") format("svg");
+  src: url("fonts/roboto-light-webfont.eot");
+  src: url("fonts/roboto-light-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/roboto-light-webfont.woff2") format("woff2"), url("fonts/roboto-light-webfont.woff") format("woff"), url("fonts/roboto-light-webfont.ttf") format("truetype"), url("fonts/roboto-light-webfont.svg#robotolight") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'robotomedium';
+  src: url("fonts/roboto-medium-webfont.eot");
+  src: url("fonts/roboto-medium-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/roboto-medium-webfont.woff2") format("woff2"), url("fonts/roboto-medium-webfont.woff") format("woff"), url("fonts/roboto-medium-webfont.ttf") format("truetype"), url("fonts/roboto-medium-webfont.svg#robotomedium") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'robotothin';
+  src: url("fonts/roboto-thin-webfont.eot");
+  src: url("fonts/roboto-thin-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/roboto-thin-webfont.woff2") format("woff2"), url("fonts/roboto-thin-webfont.woff") format("woff"), url("fonts/roboto-thin-webfont.ttf") format("truetype"), url("fonts/roboto-thin-webfont.svg#robotothin") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -67,8 +74,8 @@ ol, ul {
 /* line 36, ../../../src/scss/base/_reset.scss */
 html {
   font-size: 16px;
-  line-height: 1.2em;
-  font-family: "robotolight", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 1em;
+  font-family: "robotothin", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-style: normal;
   color: #333333;
 }
@@ -119,34 +126,40 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
   padding: 0;
   line-height: 1em;
-  font-family: "robotoregular";
+  font-family: "robotothin";
+  font-size: 1rem;
 }
 
-/* line 85, ../../../src/scss/base/_reset.scss */
+/* line 86, ../../../src/scss/base/_reset.scss */
 i {
   text-align: center;
 }
 
-/* line 89, ../../../src/scss/base/_reset.scss */
+/* line 90, ../../../src/scss/base/_reset.scss */
 abbr[title], acronym[title] {
   border-bottom: 1px dotted;
   cursor: help;
 }
 
-/* line 94, ../../../src/scss/base/_reset.scss */
+/* line 95, ../../../src/scss/base/_reset.scss */
 q:after, q:before {
   content: '';
 }
 
 @media screen and (max-width: 991px) {
-  /* line 99, ../../../src/scss/base/_reset.scss */
+  /* line 100, ../../../src/scss/base/_reset.scss */
   html::-webkit-scrollbar {
     height: 0;
     width: 0;
   }
 }
+/* line 106, ../../../src/scss/base/_reset.scss */
+p {
+  line-height: 1.618rem;
+}
+
 @media screen and (min-width: 992px) {
-  /* line 106, ../../../src/scss/base/_reset.scss */
+  /* line 111, ../../../src/scss/base/_reset.scss */
   html {
     margin-left: calc(100vw - 100%);
     margin-right: 0;
@@ -165,231 +178,142 @@ q:after, q:before {
 }
 
 /* line 12, ../../../src/scss/base/_text.scss */
-.h0 {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-/* line 17, ../../../src/scss/base/_text.scss */
-.h1 {
-  margin-top: 15px;
-  margin-bottom: 15px;
-}
-
-/* line 22, ../../../src/scss/base/_text.scss */
-.h2,
-.h3,
-.h4 {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-/* line 29, ../../../src/scss/base/_text.scss */
-.h5,
-.h6 {
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-
-/* line 35, ../../../src/scss/base/_text.scss */
 .h0,
 .f0 {
-  font-size: 40px;
+  font-size: 3.92689;
 }
 
-/* line 44, ../../../src/scss/base/_text.scss */
-h1,
+/* line 21, ../../../src/scss/base/_text.scss */
 .h1,
 .f1 {
-  font-size: 32px;
+  font-size: 2.61792rem;
 }
 
-/* line 54, ../../../src/scss/base/_text.scss */
-h2,
+/* line 30, ../../../src/scss/base/_text.scss */
 .h2,
 .f2,
 .dialog.dialog-default .dialog-title {
-  font-size: 26px;
+  font-size: 1.927rem;
 }
 
-/* line 64, ../../../src/scss/base/_text.scss */
-h3,
+/* line 39, ../../../src/scss/base/_text.scss */
 .h3,
 .f3 {
-  font-size: 22px;
+  font-size: 1.618rem;
 }
 
-/* line 74, ../../../src/scss/base/_text.scss */
-h4,
+/* line 48, ../../../src/scss/base/_text.scss */
 .h4,
 .f4 {
-  font-size: 18px;
+  font-size: 1.309rem;
 }
 
-/* line 84, ../../../src/scss/base/_text.scss */
-h5,
+/* line 57, ../../../src/scss/base/_text.scss */
 .h5,
 .f5 {
-  font-size: 16px;
+  font-size: 1rem;
 }
 
-/* line 94, ../../../src/scss/base/_text.scss */
-h6,
+/* line 66, ../../../src/scss/base/_text.scss */
 .h6,
 .f6 {
-  font-size: 12px;
+  font-size: 0.927rem;
 }
 
-@media (max-width: 991px) {
-  /* line 110, ../../../src/scss/base/_text.scss */
-  .h0,
-  .f0 {
-    font-size: 32px;
-  }
-
-  /* line 114, ../../../src/scss/base/_text.scss */
-  h1
-  .h1,
-  .f1 {
-    font-size: 26px;
-  }
-
-  /* line 119, ../../../src/scss/base/_text.scss */
-  h2
-  .h2,
-  .f2,
-  .dialog.dialog-default .dialog-title {
-    font-size: 22px;
-  }
-
-  /* line 124, ../../../src/scss/base/_text.scss */
-  h3,
-  .h3,
-  .f3 {
-    font-size: 18px;
-  }
-
-  /* line 129, ../../../src/scss/base/_text.scss */
-  h4,
-  .h4,
-  .f4 {
-    font-size: 16px;
-  }
-
-  /* line 134, ../../../src/scss/base/_text.scss */
-  h5,
-  .h5,
-  .f5 {
-    font-size: 16px;
-  }
-
-  /* line 139, ../../../src/scss/base/_text.scss */
-  h6,
-  .h6,
-  .f6 {
-    font-size: 12px;
-  }
-
-  /* line 144, ../../../src/scss/base/_text.scss */
-  .f7 {
-    font-size: 11px;
-  }
-}
-/* line 149, ../../../src/scss/base/_text.scss */
+/* line 80, ../../../src/scss/base/_text.scss */
 .text-normal {
   font-weight: normal;
-  font-family: "robotoregular" !important;
+  font-family: "robotomedium" !important;
 }
 
-/* line 158, ../../../src/scss/base/_text.scss */
-b,
-.text-bold {
+/* line 89, ../../../src/scss/base/_text.scss */
+b, .text-bold {
   font-weight: normal;
-  font-family: "robotobold" !important;
+  font-family: "robotoblack" !important;
 }
 
-/* line 168, ../../../src/scss/base/_text.scss */
+/* line 98, ../../../src/scss/base/_text.scss */
 .text-light, .dialog.dialog-default .dialog-title {
   font-weight: normal;
   font-family: "robotolight" !important;
 }
 
-/* line 177, ../../../src/scss/base/_text.scss */
+/* line 107, ../../../src/scss/base/_text.scss */
 .text-left {
   text-align: left;
 }
 
-/* line 181, ../../../src/scss/base/_text.scss */
+/* line 111, ../../../src/scss/base/_text.scss */
 .text-right {
   text-align: right;
 }
 
-/* line 185, ../../../src/scss/base/_text.scss */
+/* line 115, ../../../src/scss/base/_text.scss */
 .text-center {
   text-align: center;
 }
 
-/* line 189, ../../../src/scss/base/_text.scss */
+/* line 119, ../../../src/scss/base/_text.scss */
 .text-shadow, .circle-item {
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-/* line 193, ../../../src/scss/base/_text.scss */
+/* line 123, ../../../src/scss/base/_text.scss */
 .text-white {
   color: white;
 }
 
-/* line 197, ../../../src/scss/base/_text.scss */
+/* line 127, ../../../src/scss/base/_text.scss */
 .text-darkgray {
   color: #333333;
 }
 
-/* line 201, ../../../src/scss/base/_text.scss */
+/* line 131, ../../../src/scss/base/_text.scss */
 .text-gray {
   color: #777777;
 }
 
-/* line 205, ../../../src/scss/base/_text.scss */
+/* line 135, ../../../src/scss/base/_text.scss */
 .text-lightgray {
   color: #aaaaaa;
 }
 
-/* line 209, ../../../src/scss/base/_text.scss */
+/* line 139, ../../../src/scss/base/_text.scss */
 .text-green, .text-safe {
   color: #357935;
 }
 
-/* line 213, ../../../src/scss/base/_text.scss */
+/* line 143, ../../../src/scss/base/_text.scss */
 .text-orange, .text-warning {
   color: #c05b00;
 }
 
-/* line 217, ../../../src/scss/base/_text.scss */
+/* line 147, ../../../src/scss/base/_text.scss */
 .text-red, .text-error {
   color: #a02622;
 }
 
-/* line 221, ../../../src/scss/base/_text.scss */
+/* line 151, ../../../src/scss/base/_text.scss */
 .text-blue {
   color: #0b0dad;
 }
 
-/* line 225, ../../../src/scss/base/_text.scss */
+/* line 155, ../../../src/scss/base/_text.scss */
 .text-main {
   color: #78004E;
 }
 
-/* line 229, ../../../src/scss/base/_text.scss */
+/* line 159, ../../../src/scss/base/_text.scss */
 .text-uppercase {
   text-transform: uppercase;
 }
 
-/* line 233, ../../../src/scss/base/_text.scss */
+/* line 163, ../../../src/scss/base/_text.scss */
 .text-lowercase {
   text-transform: lowercase;
 }
 
-/* line 237, ../../../src/scss/base/_text.scss */
+/* line 167, ../../../src/scss/base/_text.scss */
 .text-capitalize {
   text-transform: capitalize;
 }
@@ -478,16 +402,16 @@ b,
 }
 
 /* line 87, ../../../src/scss/base/_utilities.scss */
-.clearfix, .form, .panel .h1, .panel .h2, .panel .h3, .panel .h4, .panel .h5, .gridview {
+.clearfix, .form, .gridview {
   *zoom: 1;
 }
 /* line 41, ../../../src/scss/base/_mixins.scss */
-.clearfix:before, .form:before, .panel .h1:before, .panel .h2:before, .panel .h3:before, .panel .h4:before, .panel .h5:before, .gridview:before, .clearfix:after, .form:after, .panel .h1:after, .panel .h2:after, .panel .h3:after, .panel .h4:after, .panel .h5:after, .gridview:after {
+.clearfix:before, .form:before, .gridview:before, .clearfix:after, .form:after, .gridview:after {
   content: "";
   display: table;
 }
 /* line 47, ../../../src/scss/base/_mixins.scss */
-.clearfix:after, .form:after, .panel .h1:after, .panel .h2:after, .panel .h3:after, .panel .h4:after, .panel .h5:after, .gridview:after {
+.clearfix:after, .form:after, .gridview:after {
   clear: both;
   overflow: hidden;
 }
@@ -503,7 +427,7 @@ b,
 }
 
 /* line 104, ../../../src/scss/base/_utilities.scss */
-.singleline, [data-textbox] .input > label[for], [data-textbox] .textarea > label[for], [data-textbox-load] .input > label[for], [data-textbox-load] .textarea > label[for], .panel .h1 > sub, .panel .h2 > sub, .panel .h3 > sub, .panel .h4 > sub, .panel .h5 > sub, .dialog.dialog-default .dialog-title {
+.singleline, [data-textbox] .input > label[for], [data-textbox] .textarea > label[for], [data-textbox-load] .input > label[for], [data-textbox-load] .textarea > label[for], .dialog.dialog-default .dialog-title {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -517,7 +441,7 @@ b,
 
 /* line 118, ../../../src/scss/base/_utilities.scss */
 [class^="icon-"],
-[class*=" icon-"], .slider .img-loading:before, .shifter .img-loading:before, .carousel .img-loading:before, .checkbox label > i, .radio label > i, .tooltip.info .tooltip-inner:before, .tooltip.warning .tooltip-inner:before, .tooltip.error .tooltip-inner:before, .header-menu-item .caret, .datatable-sort.active:before, .datatable-sort.active.desc:before {
+[class*=" icon-"], .slider .img-loading:before, .shifter .img-loading:before, .carousel .img-loading:before, .checkbox label > i, .radio label > i, .tooltip.info .tooltip-inner:before, .tooltip.warning .tooltip-inner:before, .tooltip.error .tooltip-inner:before, .panel [data-collapse]:before, .panel [data-collapse-load]:before, .header-menu-item .caret, .datatable-sort.active:before, .datatable-sort.active.desc:before {
   display: inline-block;
   font: normal normal normal 14px/1 fonticon;
   font-size: inherit;
@@ -525,28 +449,28 @@ b,
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-/* line 125, ../../../src/scss/base/_utilities.scss */
+/* line 232, ../../../src/scss/base/_mixins.scss */
 [class^="icon-"]:before,
-[class*=" icon-"]:before, .slider .img-loading:before, .shifter .img-loading:before, .carousel .img-loading:before, .checkbox label > i:before, .radio label > i:before, .tooltip.info .tooltip-inner:before, .tooltip.warning .tooltip-inner:before, .tooltip.error .tooltip-inner:before, .header-menu-item .caret:before, .datatable-sort.active:before, .datatable-sort.active.desc:before {
+[class*=" icon-"]:before, .slider .img-loading:before, .shifter .img-loading:before, .carousel .img-loading:before, .checkbox label > i:before, .radio label > i:before, .tooltip.info .tooltip-inner:before, .tooltip.warning .tooltip-inner:before, .tooltip.error .tooltip-inner:before, .panel [data-collapse]:before, .panel [data-collapse-load]:before, .header-menu-item .caret:before, .datatable-sort.active:before, .datatable-sort.active.desc:before {
   text-align: center;
   font-style: normal;
 }
 
-/* line 136, ../../../src/scss/base/_utilities.scss */
+/* line 127, ../../../src/scss/base/_utilities.scss */
 [disabled] {
   pointer-events: none;
 }
 
-/* line 141, ../../../src/scss/base/_utilities.scss */
+/* line 131, ../../../src/scss/base/_utilities.scss */
 .gs-sin {
   padding: 0px;
 }
-/* line 143, ../../../src/scss/base/_utilities.scss */
+/* line 133, ../../../src/scss/base/_utilities.scss */
 .gs-sin .row {
   margin-left: 0;
   margin-right: 0;
 }
-/* line 147, ../../../src/scss/base/_utilities.scss */
+/* line 137, ../../../src/scss/base/_utilities.scss */
 .gs-sin [class^="col-"], .gs-sin [class*=" col-"] {
   padding: 0px;
 }
@@ -3126,7 +3050,7 @@ b,
 }
 
 /* line 972, ../../../src/scss/base/_icon.scss */
-.icon-angle-down:before {
+.icon-angle-down:before, .panel [data-collapse]:before, .panel [data-collapse-load]:before {
   content: "\f107";
 }
 
@@ -5430,7 +5354,6 @@ a[href='javascript:;'] {
   white-space: nowrap;
   height: 40px;
   line-height: 22px;
-  font-size: 16px;
   padding: 8px 10px;
   display: block;
   text-align: center;
@@ -5442,281 +5365,280 @@ a[href='javascript:;'] {
           transition: opacity 0.5s;
   opacity: 1;
 }
-/* line 15, ../../../src/scss/plugin/_button.scss */
+/* line 14, ../../../src/scss/plugin/_button.scss */
 .btn > * {
   display: inline;
 }
-/* line 18, ../../../src/scss/plugin/_button.scss */
+/* line 17, ../../../src/scss/plugin/_button.scss */
 .btn:link, .btn:visited {
   color: #111111;
 }
-/* line 22, ../../../src/scss/plugin/_button.scss */
+/* line 21, ../../../src/scss/plugin/_button.scss */
 .btn:focus, .btn:hover {
   text-decoration: none;
   opacity: 0.8;
   color: #111111;
 }
-/* line 28, ../../../src/scss/plugin/_button.scss */
+/* line 27, ../../../src/scss/plugin/_button.scss */
 .btn.large {
   height: 45px;
   line-height: 27px;
-  font-size: 18px;
   padding: 8px 20px;
   border-radius: 6px;
 }
-/* line 35, ../../../src/scss/plugin/_button.scss */
+/* line 33, ../../../src/scss/plugin/_button.scss */
 .btn.small {
   height: 36px;
   line-height: 34px;
-  font-size: 16px;
+  font-size: 1rem;
   padding: 0 8px;
   border-radius: 4px;
 }
-/* line 41, ../../../src/scss/plugin/_button.scss */
+/* line 39, ../../../src/scss/plugin/_button.scss */
 .btn.small > * {
   line-height: 34px;
 }
-/* line 45, ../../../src/scss/plugin/_button.scss */
+/* line 43, ../../../src/scss/plugin/_button.scss */
 .btn.white {
   background-color: white;
   color: #333333;
   border-color: #333333;
 }
-/* line 49, ../../../src/scss/plugin/_button.scss */
+/* line 47, ../../../src/scss/plugin/_button.scss */
 .btn.white:link, .btn.white:visited {
   color: #333333;
 }
-/* line 53, ../../../src/scss/plugin/_button.scss */
+/* line 51, ../../../src/scss/plugin/_button.scss */
 .btn.white:focus, .btn.white:hover {
   color: #333333;
 }
-/* line 58, ../../../src/scss/plugin/_button.scss */
+/* line 56, ../../../src/scss/plugin/_button.scss */
 .btn.orange {
   background-color: #ff800e;
 }
-/* line 60, ../../../src/scss/plugin/_button.scss */
+/* line 58, ../../../src/scss/plugin/_button.scss */
 .btn.orange:link, .btn.orange:visited {
   color: white;
 }
-/* line 64, ../../../src/scss/plugin/_button.scss */
+/* line 62, ../../../src/scss/plugin/_button.scss */
 .btn.orange:focus, .btn.orange:hover {
   color: white;
 }
-/* line 69, ../../../src/scss/plugin/_button.scss */
+/* line 67, ../../../src/scss/plugin/_button.scss */
 .btn.yellow {
   background-color: #ffff1a;
 }
-/* line 71, ../../../src/scss/plugin/_button.scss */
+/* line 69, ../../../src/scss/plugin/_button.scss */
 .btn.yellow:link, .btn.yellow:visited {
   color: black;
 }
-/* line 75, ../../../src/scss/plugin/_button.scss */
+/* line 73, ../../../src/scss/plugin/_button.scss */
 .btn.yellow:focus, .btn.yellow:hover {
   color: black;
 }
-/* line 80, ../../../src/scss/plugin/_button.scss */
+/* line 78, ../../../src/scss/plugin/_button.scss */
 .btn.cyan {
   background-color: #0bc1ff;
 }
-/* line 82, ../../../src/scss/plugin/_button.scss */
+/* line 80, ../../../src/scss/plugin/_button.scss */
 .btn.cyan:link, .btn.cyan:visited {
   color: white;
 }
-/* line 86, ../../../src/scss/plugin/_button.scss */
+/* line 84, ../../../src/scss/plugin/_button.scss */
 .btn.cyan:focus, .btn.cyan:hover {
   color: white;
 }
-/* line 91, ../../../src/scss/plugin/_button.scss */
+/* line 89, ../../../src/scss/plugin/_button.scss */
 .btn.pink {
   background-color: #c50080;
 }
-/* line 93, ../../../src/scss/plugin/_button.scss */
+/* line 91, ../../../src/scss/plugin/_button.scss */
 .btn.pink:link, .btn.pink:visited {
   color: white;
 }
-/* line 97, ../../../src/scss/plugin/_button.scss */
+/* line 95, ../../../src/scss/plugin/_button.scss */
 .btn.pink:focus, .btn.pink:hover {
   color: white;
 }
-/* line 102, ../../../src/scss/plugin/_button.scss */
+/* line 100, ../../../src/scss/plugin/_button.scss */
 .btn.blue {
   background-color: #1417f0;
 }
-/* line 104, ../../../src/scss/plugin/_button.scss */
+/* line 102, ../../../src/scss/plugin/_button.scss */
 .btn.blue:link, .btn.blue:visited {
   color: white;
 }
-/* line 108, ../../../src/scss/plugin/_button.scss */
+/* line 106, ../../../src/scss/plugin/_button.scss */
 .btn.blue:focus, .btn.blue:hover {
   color: white;
 }
-/* line 113, ../../../src/scss/plugin/_button.scss */
+/* line 111, ../../../src/scss/plugin/_button.scss */
 .btn.gray {
   background-color: #999999;
 }
-/* line 115, ../../../src/scss/plugin/_button.scss */
+/* line 113, ../../../src/scss/plugin/_button.scss */
 .btn.gray:link, .btn.gray:visited {
   color: white;
 }
-/* line 119, ../../../src/scss/plugin/_button.scss */
+/* line 117, ../../../src/scss/plugin/_button.scss */
 .btn.gray:focus, .btn.gray:hover {
   color: white;
 }
-/* line 124, ../../../src/scss/plugin/_button.scss */
+/* line 122, ../../../src/scss/plugin/_button.scss */
 .btn.black {
   background-color: #333333;
 }
-/* line 126, ../../../src/scss/plugin/_button.scss */
+/* line 124, ../../../src/scss/plugin/_button.scss */
 .btn.black:link, .btn.black:visited {
   color: white;
 }
-/* line 130, ../../../src/scss/plugin/_button.scss */
+/* line 128, ../../../src/scss/plugin/_button.scss */
 .btn.black:focus, .btn.black:hover {
   color: white;
 }
-/* line 135, ../../../src/scss/plugin/_button.scss */
+/* line 133, ../../../src/scss/plugin/_button.scss */
 .btn.red {
   background-color: #d53e39;
   background-color: black;
 }
-/* line 138, ../../../src/scss/plugin/_button.scss */
+/* line 136, ../../../src/scss/plugin/_button.scss */
 .btn.red:link, .btn.red:visited {
   color: white;
 }
-/* line 142, ../../../src/scss/plugin/_button.scss */
+/* line 140, ../../../src/scss/plugin/_button.scss */
 .btn.red:focus, .btn.red:hover {
   color: white;
 }
-/* line 147, ../../../src/scss/plugin/_button.scss */
+/* line 145, ../../../src/scss/plugin/_button.scss */
 .btn.green {
   background-color: #4cae4c;
 }
-/* line 149, ../../../src/scss/plugin/_button.scss */
+/* line 147, ../../../src/scss/plugin/_button.scss */
 .btn.green:link, .btn.green:visited {
   color: white;
 }
-/* line 153, ../../../src/scss/plugin/_button.scss */
+/* line 151, ../../../src/scss/plugin/_button.scss */
 .btn.green:focus, .btn.green:hover {
   color: white;
 }
-/* line 158, ../../../src/scss/plugin/_button.scss */
+/* line 156, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-white {
   border-color: white;
   background-color: transparent;
 }
-/* line 161, ../../../src/scss/plugin/_button.scss */
+/* line 159, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-white:link, .btn.ghost-white:visited {
   color: white;
 }
-/* line 165, ../../../src/scss/plugin/_button.scss */
+/* line 163, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-white:focus, .btn.ghost-white:hover {
   color: white;
 }
-/* line 170, ../../../src/scss/plugin/_button.scss */
+/* line 168, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-black {
   border-color: #111111;
   background-color: transparent;
 }
-/* line 173, ../../../src/scss/plugin/_button.scss */
+/* line 171, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-black:link, .btn.ghost-black:visited {
   color: #111111;
 }
-/* line 177, ../../../src/scss/plugin/_button.scss */
+/* line 175, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-black:focus, .btn.ghost-black:hover {
   color: #111111;
 }
-/* line 182, ../../../src/scss/plugin/_button.scss */
+/* line 180, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-red {
   border-color: #a02622;
   background-color: transparent;
 }
-/* line 185, ../../../src/scss/plugin/_button.scss */
+/* line 183, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-red:link, .btn.ghost-red:visited {
   color: #a02622;
 }
-/* line 189, ../../../src/scss/plugin/_button.scss */
+/* line 187, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-red:focus, .btn.ghost-red:hover {
   color: #a02622;
 }
-/* line 194, ../../../src/scss/plugin/_button.scss */
+/* line 192, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-yellow {
   border-color: #cccc00;
   background-color: transparent;
 }
-/* line 197, ../../../src/scss/plugin/_button.scss */
+/* line 195, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-yellow:link, .btn.ghost-yellow:visited {
   color: #cccc00;
 }
-/* line 201, ../../../src/scss/plugin/_button.scss */
+/* line 199, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-yellow:focus, .btn.ghost-yellow:hover {
   color: #cccc00;
 }
-/* line 206, ../../../src/scss/plugin/_button.scss */
+/* line 204, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-cyan {
   border-color: #008dbd;
   background-color: transparent;
 }
-/* line 209, ../../../src/scss/plugin/_button.scss */
+/* line 207, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-cyan:link, .btn.ghost-cyan:visited {
   color: #008dbd;
 }
-/* line 213, ../../../src/scss/plugin/_button.scss */
+/* line 211, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-cyan:focus, .btn.ghost-cyan:hover {
   color: #008dbd;
 }
-/* line 218, ../../../src/scss/plugin/_button.scss */
+/* line 216, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-orange {
   border-color: #c05b00;
   background-color: transparent;
 }
-/* line 221, ../../../src/scss/plugin/_button.scss */
+/* line 219, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-orange:link, .btn.ghost-orange:visited {
   color: #c05b00;
 }
-/* line 225, ../../../src/scss/plugin/_button.scss */
+/* line 223, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-orange:focus, .btn.ghost-orange:hover {
   color: #c05b00;
 }
-/* line 230, ../../../src/scss/plugin/_button.scss */
+/* line 228, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-pink {
   border-color: #78004E;
   background-color: transparent;
 }
-/* line 233, ../../../src/scss/plugin/_button.scss */
+/* line 231, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-pink:link, .btn.ghost-pink:visited {
   color: #78004E;
 }
-/* line 237, ../../../src/scss/plugin/_button.scss */
+/* line 235, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-pink:focus, .btn.ghost-pink:hover {
   color: #78004E;
 }
-/* line 242, ../../../src/scss/plugin/_button.scss */
+/* line 240, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-green {
   border-color: #357935;
   background-color: transparent;
 }
-/* line 245, ../../../src/scss/plugin/_button.scss */
+/* line 243, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-green:link, .btn.ghost-green:visited {
   color: #357935;
 }
-/* line 249, ../../../src/scss/plugin/_button.scss */
+/* line 247, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-green:focus, .btn.ghost-green:hover {
   color: #357935;
 }
-/* line 254, ../../../src/scss/plugin/_button.scss */
+/* line 252, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-blue {
   border-color: #0b0dad;
   background-color: transparent;
 }
-/* line 257, ../../../src/scss/plugin/_button.scss */
+/* line 255, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-blue:link, .btn.ghost-blue:visited {
   color: #0b0dad;
 }
-/* line 261, ../../../src/scss/plugin/_button.scss */
+/* line 259, ../../../src/scss/plugin/_button.scss */
 .btn.ghost-blue:focus, .btn.ghost-blue:hover {
   color: #0b0dad;
 }
-/* line 266, ../../../src/scss/plugin/_button.scss */
+/* line 264, ../../../src/scss/plugin/_button.scss */
 .btn.circle {
   display: inline-block;
   height: 40px;
@@ -5725,26 +5647,26 @@ a[href='javascript:;'] {
   border-radius: 100%;
   font-size: 17px;
 }
-/* line 273, ../../../src/scss/plugin/_button.scss */
+/* line 271, ../../../src/scss/plugin/_button.scss */
 .btn.circle.blue {
   background-color: #0b0dad;
 }
-/* line 275, ../../../src/scss/plugin/_button.scss */
+/* line 273, ../../../src/scss/plugin/_button.scss */
 .btn.circle.blue:link, .btn.circle.blue:visited {
   color: white;
 }
-/* line 279, ../../../src/scss/plugin/_button.scss */
+/* line 277, ../../../src/scss/plugin/_button.scss */
 .btn.circle.blue:focus, .btn.circle.blue:hover {
   color: white;
 }
-/* line 286, ../../../src/scss/plugin/_button.scss */
+/* line 284, ../../../src/scss/plugin/_button.scss */
 .btn[disabled] {
   background-color: #cccccc !important;
   border-color: #777777 !important;
   color: #777777 !important;
   pointer-events: none !important;
 }
-/* line 292, ../../../src/scss/plugin/_button.scss */
+/* line 290, ../../../src/scss/plugin/_button.scss */
 .btn.loading {
   opacity: .5 !important;
   cursor: wait !important;
@@ -5766,7 +5688,7 @@ input[type='text'], input[type='password'], input[type='email'], input[type='tel
   height: 100%;
   line-height: 100%;
   border: 1px solid #dddddd;
-  font-family: "robotolight";
+  font-family: "robotothin";
 }
 
 /* line 9, ../../../src/scss/plugin/_input.scss */
@@ -6016,7 +5938,7 @@ input[type='text']::-ms-clear {
   padding: 0 2px;
   border: none;
   color: #777777;
-  font-size: 16px;
+  font-size: 1rem;
   z-index: 1;
   text-align: left;
 }
@@ -6210,7 +6132,7 @@ textarea {
   min-height: 70px;
   overflow-y: auto;
   border-radius: 2px;
-  font-family: "robotolight";
+  font-family: "robotothin";
 }
 
 /* line 12, ../../../src/scss/plugin/_textarea.scss */
@@ -6225,7 +6147,7 @@ select {
   height: 100%;
   line-height: 100%;
   border: 1px solid #dddddd;
-  font-family: "robotolight";
+  font-family: "robotothin";
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -6286,7 +6208,7 @@ select {
 .checkbox label > i, .radio label > i {
   display: inline-block;
   width: 18px;
-  font-size: 16px;
+  font-size: 1rem;
   color: #888888;
 }
 /* line 28, ../../../src/scss/plugin/_checkboxradio.scss */
@@ -6358,7 +6280,7 @@ select {
   position: absolute;
   z-index: 1800;
   display: block;
-  font-size: 11px;
+  font-size: 0.618rem;
   font-weight: normal;
   line-height: 1.5;
   opacity: 0;
@@ -6530,78 +6452,35 @@ select {
 /* line 1, ../../../src/scss/plugin/_panel.scss */
 .panel {
   position: relative;
-  padding-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0.927rem auto;
 }
-/* line 7, ../../../src/scss/plugin/_panel.scss */
+/* line 4, ../../../src/scss/plugin/_panel.scss */
 .panel .h1, .panel .h2, .panel .h3, .panel .h4, .panel .h5 {
-  color: #333333;
-  padding-bottom: 8px;
   position: relative;
   border-bottom: solid 1px #dddddd;
-  margin-bottom: 10px;
   display: block;
+  padding-top: 0.618rem;
+  padding-bottom: 0.618rem;
 }
-/* line 16, ../../../src/scss/plugin/_panel.scss */
-.panel .h1 > span, .panel .h2 > span, .panel .h3 > span, .panel .h4 > span, .panel .h5 > span {
-  margin-right: 5px;
+/* line 8, ../../../src/scss/plugin/_panel.scss */
+.panel .h1 .subtitle, .panel .h2 .subtitle, .panel .h3 .subtitle, .panel .h4 .subtitle, .panel .h5 .subtitle {
+  font-size: 1rem;
+  color: #777777;
+}
+/* line 15, ../../../src/scss/plugin/_panel.scss */
+.panel [data-collapse], .panel [data-collapse-load] {
+  padding-right: 1.927rem;
+  margin-bottom: 0.927rem;
 }
 /* line 18, ../../../src/scss/plugin/_panel.scss */
-.panel .h1 > span.h5, .panel .h2 > span.h5, .panel .h3 > span.h5, .panel .h4 > span.h5, .panel .h5 > span.h5 {
-  margin-top: 2px;
-}
-/* line 22, ../../../src/scss/plugin/_panel.scss */
-.panel .h1 > sub, .panel .h2 > sub, .panel .h3 > sub, .panel .h4 > sub, .panel .h5 > sub {
-  position: absolute;
-  text-align: right;
-  left: 0;
-  right: 0;
-  bottom: -20px;
-  line-height: 20px;
-  font-size: 11px;
-}
-/* line 34, ../../../src/scss/plugin/_panel.scss */
-.panel .h1 .subtitle, .panel .h2 .subtitle, .panel .h3 .subtitle, .panel .h4 .subtitle, .panel .h5 .subtitle {
-  font-size: 16px;
-  color: #777777;
-}
-/* line 39, ../../../src/scss/plugin/_panel.scss */
-.panel .h1.noborder, .panel .h2.noborder, .panel .h3.noborder, .panel .h4.noborder, .panel .h5.noborder {
-  border-bottom: none;
-  line-height: 1em;
-  padding-bottom: 0;
-  margin-bottom: 0;
-}
-/* line 46, ../../../src/scss/plugin/_panel.scss */
-.panel .h1.addition, .panel .h2.addition, .panel .h3.addition, .panel .h4.addition, .panel .h5.addition {
-  padding-right: 25px;
-}
-/* line 48, ../../../src/scss/plugin/_panel.scss */
-.panel .h1.addition .right, .panel .h2.addition .right, .panel .h3.addition .right, .panel .h4.addition .right, .panel .h5.addition .right {
-  display: block;
+.panel [data-collapse]:before, .panel [data-collapse-load]:before {
   position: absolute;
   right: 0;
-  width: 25px;
-  text-align: center;
-  bottom: 8px;
-  font-size: 22px;
-  line-height: 20px;
-}
-/* line 62, ../../../src/scss/plugin/_panel.scss */
-.panel .h4.addition .right, .panel .h5.addition .right {
-  right: 4px;
-}
-/* line 67, ../../../src/scss/plugin/_panel.scss */
-.panel .footer {
-  color: #777777;
-  font-size: 12px;
-  text-align: right;
-  height: 16px;
-  line-height: 16px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  top: 50%;
+  width: 1.927rem;
+  height: 1.927rem;
+  line-height: 1.927rem;
+  margin-top: -0.9635rem;
 }
 
 /* line 1, ../../../src/scss/plugin/_datetimepicker.scss */
@@ -7031,7 +6910,7 @@ select {
           transform: rotate(180deg);
 }
 /* line 10, ../../../src/scss/plugin/_collapse.scss */
-.shown.icon-angle-down, .shown > .icon-angle-down {
+.shown.icon-angle-down, .panel .shown[data-collapse]:before, .panel .shown[data-collapse-load]:before, .shown > .icon-angle-down, .panel .shown > [data-collapse]:before, .panel .shown > [data-collapse-load]:before {
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);
 }
@@ -7853,7 +7732,7 @@ table.gridtable tbody tr {
   margin: 0;
   padding: 0;
   text-align: left;
-  font-size: 18px;
+  font-size: 1.309rem;
 }
 /* line 113, ../../../src/scss/plugin/_dialog.scss */
 .dialog.dialog-dropdown ul > li a {
@@ -7865,7 +7744,7 @@ table.gridtable tbody tr {
 .dialog.dialog-dropdown ul > li a > i {
   float: left;
   margin-right: 10px;
-  font-size: 22px;
+  font-size: 1.618rem;
 }
 
 /* line 128, ../../../src/scss/plugin/_dialog.scss */
@@ -8381,13 +8260,12 @@ table.gridtable tbody tr {
   background: black;
   height: 100%;
   overflow: hidden;
-  border-left: 1px solid #333;
 }
-/* line 79, ../../../src/scss/plugin/_carousel.scss */
+/* line 78, ../../../src/scss/plugin/_carousel.scss */
 .carousel-list > ul > li:first-child {
   border-left: none;
 }
-/* line 82, ../../../src/scss/plugin/_carousel.scss */
+/* line 81, ../../../src/scss/plugin/_carousel.scss */
 .carousel-list > ul > li img {
   position: absolute;
   height: 100%;
