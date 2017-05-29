@@ -14226,6 +14226,9 @@ if (!Number.isNaN) {
                         $this.text(opt.showtext);
                     }
                 }
+                if (opt.once) {
+                    $this.hide();
+                }
             };
             var _hidetext = function () {
                 if (opt.hidetext) {
@@ -14234,9 +14237,6 @@ if (!Number.isNaN) {
                     } else {
                         $this.text(opt.hidetext);
                     }
-                }
-                if (opt.once) {
-                    $this.hide();
                 }
             };
             if (opt.isexpand) {
@@ -14319,10 +14319,12 @@ if (!Number.isNaN) {
                 $(document).on('dom.resize.collapse', _resetForExpand);
                 _resetForExpand();
             }
-            if ($target.is(':hidden')) {
-                exports.hide();
-            } else {
-                exports.show();
+            if (!opt.isexpand) {
+                if ($target.is(':hidden')) {
+                    exports.hide();
+                } else {
+                    exports.show();
+                }
             }
             $this.on('click.collapse', exports.toggle);
         },

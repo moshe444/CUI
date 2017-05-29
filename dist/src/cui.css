@@ -33,95 +33,72 @@
   font-weight: normal;
   font-style: normal;
 }
-/* line 2, ../../../src/scss/base/_reset.scss */
-html {
-  overflow-y: scroll;
-}
-
-/* line 6, ../../../src/scss/base/_reset.scss */
-:root {
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-/* line 11, ../../../src/scss/base/_reset.scss */
-:root body {
-  position: absolute;
-}
-
-/* line 15, ../../../src/scss/base/_reset.scss */
-body {
-  width: 100vw;
-  overflow: hidden;
-}
-
-/* line 22, ../../../src/scss/base/_reset.scss */
+/* line 1, ../../../src/scss/base/_reset.scss */
 * {
   box-sizing: border-box;
 }
 
-/* line 26, ../../../src/scss/base/_reset.scss */
+/* line 5, ../../../src/scss/base/_reset.scss */
 input, div, span, ul, li, ol, p, select, textarea, dl, dt, dd, html, body, select, form {
   margin: 0;
   padding: 0;
 }
 
-/* line 31, ../../../src/scss/base/_reset.scss */
+/* line 10, ../../../src/scss/base/_reset.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 36, ../../../src/scss/base/_reset.scss */
+/* line 15, ../../../src/scss/base/_reset.scss */
 html {
   font-size: 16px;
   line-height: 1em;
   font-family: "robotothin", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-style: normal;
-  color: #333333;
 }
 
-/* line 44, ../../../src/scss/base/_reset.scss */
+/* line 22, ../../../src/scss/base/_reset.scss */
 body,
 html {
   min-height: 100%;
   overflow-x: hidden;
 }
 
-/* line 50, ../../../src/scss/base/_reset.scss */
+/* line 28, ../../../src/scss/base/_reset.scss */
 fieldset {
   padding: 0;
   margin: 0;
   border: 0;
 }
 
-/* line 56, ../../../src/scss/base/_reset.scss */
+/* line 34, ../../../src/scss/base/_reset.scss */
 legend {
   color: black;
 }
 
-/* line 60, ../../../src/scss/base/_reset.scss */
+/* line 38, ../../../src/scss/base/_reset.scss */
 label[for] {
   cursor: pointer;
 }
 
-/* line 64, ../../../src/scss/base/_reset.scss */
+/* line 42, ../../../src/scss/base/_reset.scss */
 input, select, textarea, button {
   font-size: 100%;
   outline: none;
   color: #333333;
 }
 
-/* line 70, ../../../src/scss/base/_reset.scss */
+/* line 48, ../../../src/scss/base/_reset.scss */
 img {
   border: 0;
 }
 
-/* line 74, ../../../src/scss/base/_reset.scss */
+/* line 52, ../../../src/scss/base/_reset.scss */
 [readonly] {
   cursor: not-allowed;
 }
 
-/* line 78, ../../../src/scss/base/_reset.scss */
+/* line 56, ../../../src/scss/base/_reset.scss */
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
   padding: 0;
@@ -130,192 +107,207 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 1rem;
 }
 
-/* line 86, ../../../src/scss/base/_reset.scss */
+/* line 64, ../../../src/scss/base/_reset.scss */
 i {
   text-align: center;
 }
 
-/* line 90, ../../../src/scss/base/_reset.scss */
+/* line 68, ../../../src/scss/base/_reset.scss */
 abbr[title], acronym[title] {
   border-bottom: 1px dotted;
   cursor: help;
 }
 
-/* line 95, ../../../src/scss/base/_reset.scss */
+/* line 73, ../../../src/scss/base/_reset.scss */
 q:after, q:before {
   content: '';
 }
 
-@media screen and (max-width: 991px) {
-  /* line 100, ../../../src/scss/base/_reset.scss */
-  html::-webkit-scrollbar {
-    height: 0;
-    width: 0;
-  }
-}
-/* line 106, ../../../src/scss/base/_reset.scss */
-p {
-  line-height: 1.618rem;
-}
-
-@media screen and (min-width: 992px) {
-  /* line 111, ../../../src/scss/base/_reset.scss */
-  html {
-    margin-left: calc(100vw - 100%);
-    margin-right: 0;
-  }
-}
 /* line 1, ../../../src/scss/base/_text.scss */
 .h0,
 .h1,
 .h2,
 .h3,
+.dialog.dialog-default .dialog-title,
 .h4,
 .h5,
 .h6 {
-  font-weight: bold;
   line-height: 1em;
 }
 
-/* line 12, ../../../src/scss/base/_text.scss */
+/* line 11, ../../../src/scss/base/_text.scss */
 .h0,
 .f0 {
-  font-size: 3.92689;
+  font-size: 3.92689rem;
 }
 
-/* line 21, ../../../src/scss/base/_text.scss */
+/* line 20, ../../../src/scss/base/_text.scss */
 .h1,
 .f1 {
   font-size: 2.61792rem;
 }
 
-/* line 30, ../../../src/scss/base/_text.scss */
+/* line 29, ../../../src/scss/base/_text.scss */
 .h2,
-.f2,
-.dialog.dialog-default .dialog-title {
+.f2 {
   font-size: 1.927rem;
 }
 
-/* line 39, ../../../src/scss/base/_text.scss */
-.h3,
+/* line 38, ../../../src/scss/base/_text.scss */
+.h3, .dialog.dialog-default .dialog-title,
 .f3 {
   font-size: 1.618rem;
 }
 
-/* line 48, ../../../src/scss/base/_text.scss */
+/* line 47, ../../../src/scss/base/_text.scss */
 .h4,
 .f4 {
   font-size: 1.309rem;
 }
 
-/* line 57, ../../../src/scss/base/_text.scss */
+/* line 56, ../../../src/scss/base/_text.scss */
 .h5,
 .f5 {
   font-size: 1rem;
 }
 
-/* line 66, ../../../src/scss/base/_text.scss */
+/* line 65, ../../../src/scss/base/_text.scss */
 .h6,
 .f6 {
   font-size: 0.927rem;
 }
 
-/* line 80, ../../../src/scss/base/_text.scss */
+/* line 79, ../../../src/scss/base/_text.scss */
 .text-normal {
   font-weight: normal;
   font-family: "robotomedium" !important;
 }
 
-/* line 89, ../../../src/scss/base/_text.scss */
-b, .text-bold {
+/* line 88, ../../../src/scss/base/_text.scss */
+.text-bold, b {
   font-weight: normal;
   font-family: "robotoblack" !important;
 }
 
-/* line 98, ../../../src/scss/base/_text.scss */
-.text-light, .dialog.dialog-default .dialog-title {
+/* line 97, ../../../src/scss/base/_text.scss */
+.text-light, .h5, .h6, code, table td, table th, .dialog.dialog-default .dialog-title {
   font-weight: normal;
   font-family: "robotolight" !important;
 }
 
-/* line 107, ../../../src/scss/base/_text.scss */
+/* line 106, ../../../src/scss/base/_text.scss */
 .text-left {
   text-align: left;
 }
 
-/* line 111, ../../../src/scss/base/_text.scss */
+/* line 110, ../../../src/scss/base/_text.scss */
 .text-right {
   text-align: right;
 }
 
-/* line 115, ../../../src/scss/base/_text.scss */
+/* line 114, ../../../src/scss/base/_text.scss */
 .text-center {
   text-align: center;
 }
 
-/* line 119, ../../../src/scss/base/_text.scss */
+/* line 118, ../../../src/scss/base/_text.scss */
 .text-shadow, .circle-item {
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-/* line 123, ../../../src/scss/base/_text.scss */
+/* line 122, ../../../src/scss/base/_text.scss */
 .text-white {
   color: white;
 }
 
-/* line 127, ../../../src/scss/base/_text.scss */
+/* line 126, ../../../src/scss/base/_text.scss */
 .text-darkgray {
   color: #333333;
 }
 
-/* line 131, ../../../src/scss/base/_text.scss */
+/* line 130, ../../../src/scss/base/_text.scss */
 .text-gray {
   color: #777777;
 }
 
-/* line 135, ../../../src/scss/base/_text.scss */
+/* line 134, ../../../src/scss/base/_text.scss */
 .text-lightgray {
   color: #aaaaaa;
 }
 
-/* line 139, ../../../src/scss/base/_text.scss */
+/* line 138, ../../../src/scss/base/_text.scss */
 .text-green, .text-safe {
   color: #357935;
 }
 
-/* line 143, ../../../src/scss/base/_text.scss */
+/* line 142, ../../../src/scss/base/_text.scss */
 .text-orange, .text-warning {
   color: #c05b00;
 }
 
-/* line 147, ../../../src/scss/base/_text.scss */
+/* line 146, ../../../src/scss/base/_text.scss */
 .text-red, .text-error {
   color: #a02622;
 }
 
-/* line 151, ../../../src/scss/base/_text.scss */
+/* line 150, ../../../src/scss/base/_text.scss */
 .text-blue {
   color: #0b0dad;
 }
 
-/* line 155, ../../../src/scss/base/_text.scss */
+/* line 154, ../../../src/scss/base/_text.scss */
 .text-main {
   color: #78004E;
 }
 
-/* line 159, ../../../src/scss/base/_text.scss */
+/* line 158, ../../../src/scss/base/_text.scss */
 .text-uppercase {
   text-transform: uppercase;
 }
 
-/* line 163, ../../../src/scss/base/_text.scss */
+/* line 162, ../../../src/scss/base/_text.scss */
 .text-lowercase {
   text-transform: lowercase;
 }
 
-/* line 167, ../../../src/scss/base/_text.scss */
+/* line 166, ../../../src/scss/base/_text.scss */
 .text-capitalize {
   text-transform: capitalize;
+}
+
+/* line 1, ../../../src/scss/base/_typograph.scss */
+html {
+  color: #333333;
+}
+
+/* line 5, ../../../src/scss/base/_typograph.scss */
+.h0, .h1, .h2 {
+  margin: 0.927rem auto;
+}
+
+/* line 9, ../../../src/scss/base/_typograph.scss */
+.h3, .dialog.dialog-default .dialog-title, .h4 {
+  margin: 0.927rem auto;
+}
+
+/* line 13, ../../../src/scss/base/_typograph.scss */
+.h5, .h6 {
+  margin: 0.927rem auto;
+}
+
+/* line 22, ../../../src/scss/base/_typograph.scss */
+p, .paragraph {
+  line-height: 1.618em;
+}
+
+/* line 30, ../../../src/scss/base/_typograph.scss */
+dt {
+  line-height: 1.618rem;
+}
+
+/* line 34, ../../../src/scss/base/_typograph.scss */
+dd {
+  line-height: 1.927rem;
 }
 
 /* line 2, ../../../src/scss/base/_utilities.scss */
@@ -427,7 +419,7 @@ b, .text-bold {
 }
 
 /* line 104, ../../../src/scss/base/_utilities.scss */
-.singleline, [data-textbox] .input > label[for], [data-textbox] .textarea > label[for], [data-textbox-load] .input > label[for], [data-textbox-load] .textarea > label[for], .dialog.dialog-default .dialog-title {
+.singleline, [data-textbox] .input > label, [data-textbox] .textarea > label, [data-textbox-load] .input > label, [data-textbox-load] .textarea > label, .panel > .h1, .panel > .h2, .panel > .h3, .panel > .h4, .panel > .h5, .dialog.dialog-default .dialog-title {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -441,7 +433,7 @@ b, .text-bold {
 
 /* line 118, ../../../src/scss/base/_utilities.scss */
 [class^="icon-"],
-[class*=" icon-"], .slider .img-loading:before, .shifter .img-loading:before, .carousel .img-loading:before, .checkbox label > i, .radio label > i, .tooltip.info .tooltip-inner:before, .tooltip.warning .tooltip-inner:before, .tooltip.error .tooltip-inner:before, .panel [data-collapse]:before, .panel [data-collapse-load]:before, .header-menu-item .caret, .datatable-sort.active:before, .datatable-sort.active.desc:before {
+[class*=" icon-"], .slider .img-loading:before, .shifter .img-loading:before, .carousel .img-loading:before, .checkbox label > i, .radio label > i, .tooltip.info .tooltip-inner:before, .tooltip.warning .tooltip-inner:before, .tooltip.error .tooltip-inner:before, .panel > [data-collapse]:before, .panel > [data-collapse-load]:before, .header-menu-item .caret, .datatable-sort.active:before, .datatable-sort.active.desc:before {
   display: inline-block;
   font: normal normal normal 14px/1 fonticon;
   font-size: inherit;
@@ -451,7 +443,7 @@ b, .text-bold {
 }
 /* line 232, ../../../src/scss/base/_mixins.scss */
 [class^="icon-"]:before,
-[class*=" icon-"]:before, .slider .img-loading:before, .shifter .img-loading:before, .carousel .img-loading:before, .checkbox label > i:before, .radio label > i:before, .tooltip.info .tooltip-inner:before, .tooltip.warning .tooltip-inner:before, .tooltip.error .tooltip-inner:before, .panel [data-collapse]:before, .panel [data-collapse-load]:before, .header-menu-item .caret:before, .datatable-sort.active:before, .datatable-sort.active.desc:before {
+[class*=" icon-"]:before, .slider .img-loading:before, .shifter .img-loading:before, .carousel .img-loading:before, .checkbox label > i:before, .radio label > i:before, .tooltip.info .tooltip-inner:before, .tooltip.warning .tooltip-inner:before, .tooltip.error .tooltip-inner:before, .panel > [data-collapse]:before, .panel > [data-collapse-load]:before, .header-menu-item .caret:before, .datatable-sort.active:before, .datatable-sort.active.desc:before {
   text-align: center;
   font-style: normal;
 }
@@ -3050,7 +3042,7 @@ b, .text-bold {
 }
 
 /* line 972, ../../../src/scss/base/_icon.scss */
-.icon-angle-down:before, .panel [data-collapse]:before, .panel [data-collapse-load]:before {
+.icon-angle-down:before, .panel > [data-collapse]:before, .panel > [data-collapse-load]:before {
   content: "\f107";
 }
 
@@ -5675,11 +5667,15 @@ a[href='javascript:;'] {
 /* line 3, ../../../src/scss/plugin/_form.scss */
 .form .input {
   width: 100%;
-  margin-bottom: 20px;
+  margin: 0.927rem 0;
 }
 /* line 7, ../../../src/scss/plugin/_form.scss */
 .form .radio, .form .checkbox {
-  margin-bottom: 20px;
+  margin-bottom: 0.927rem;
+}
+/* line 10, ../../../src/scss/plugin/_form.scss */
+.form .btn {
+  margin: 0.927rem 0;
 }
 
 /* line 1, ../../../src/scss/plugin/_input.scss */
@@ -5929,7 +5925,8 @@ input[type='text']::-ms-clear {
   color: transparent;
 }
 /* line 17, ../../../src/scss/plugin/_textbox.scss */
-[data-textbox] .input > label[for], [data-textbox] .textarea > label[for], [data-textbox-load] .input > label[for], [data-textbox-load] .textarea > label[for] {
+[data-textbox] .input > label, [data-textbox] .textarea > label, [data-textbox-load] .input > label, [data-textbox-load] .textarea > label {
+  margin: 0;
   position: absolute;
   line-height: 20px;
   height: 20px;
@@ -5943,102 +5940,114 @@ input[type='text']::-ms-clear {
   text-align: left;
 }
 /* line 32, ../../../src/scss/plugin/_textbox.scss */
-[data-textbox] .input > label[for], [data-textbox-load] .input > label[for] {
+[data-textbox] .input .tooltip.error, [data-textbox] .textarea .tooltip.error, [data-textbox-load] .input .tooltip.error, [data-textbox-load] .textarea .tooltip.error {
+  top: 0 !important;
+  right: 0 !important;
+  left: auto !important;
+  -webkit-transform: translateY(0) !important;
+          transform: translateY(0) !important;
+}
+/* line 36, ../../../src/scss/plugin/_textbox.scss */
+[data-textbox] .input .tooltip.error .tooltip-inner, [data-textbox] .textarea .tooltip.error .tooltip-inner, [data-textbox-load] .input .tooltip.error .tooltip-inner, [data-textbox-load] .textarea .tooltip.error .tooltip-inner {
+  text-align: right;
+}
+/* line 43, ../../../src/scss/plugin/_textbox.scss */
+[data-textbox] .input > label, [data-textbox-load] .input > label {
   left: 10px;
   right: auto;
   top: 50%;
   max-width: calc(100% - 10px);
 }
-/* line 39, ../../../src/scss/plugin/_textbox.scss */
-[data-textbox] .input.right > label[for], [data-textbox] .input.left > label[for], [data-textbox-load] .input.right > label[for], [data-textbox-load] .input.left > label[for] {
+/* line 50, ../../../src/scss/plugin/_textbox.scss */
+[data-textbox] .input.right > label, [data-textbox] .input.left > label, [data-textbox-load] .input.right > label, [data-textbox-load] .input.left > label {
   max-width: calc(100% - 40px);
 }
-/* line 44, ../../../src/scss/plugin/_textbox.scss */
-[data-textbox] .input.right.left > label[for], [data-textbox-load] .input.right.left > label[for] {
+/* line 55, ../../../src/scss/plugin/_textbox.scss */
+[data-textbox] .input.right.left > label, [data-textbox-load] .input.right.left > label {
   max-width: calc(100% - 70px);
 }
-/* line 48, ../../../src/scss/plugin/_textbox.scss */
+/* line 59, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .input > input, [data-textbox-load] .input > input {
   padding: 15px 10px 0 10px;
 }
-/* line 51, ../../../src/scss/plugin/_textbox.scss */
+/* line 62, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .input > i, [data-textbox-load] .input > i {
   line-height: 35px;
 }
-/* line 54, ../../../src/scss/plugin/_textbox.scss */
+/* line 65, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .input > a, [data-textbox-load] .input > a {
   line-height: 52px;
 }
-/* line 58, ../../../src/scss/plugin/_textbox.scss */
-[data-textbox] .input.large > label[for], [data-textbox-load] .input.large > label[for] {
+/* line 69, ../../../src/scss/plugin/_textbox.scss */
+[data-textbox] .input.large > label, [data-textbox-load] .input.large > label {
   right: auto;
   top: 50%;
   font-size: 18px;
 }
-/* line 63, ../../../src/scss/plugin/_textbox.scss */
+/* line 74, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .input.large > input, [data-textbox-load] .input.large > input {
   padding: 15px 10px 0 10px;
 }
-/* line 66, ../../../src/scss/plugin/_textbox.scss */
+/* line 77, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .input.large > i, [data-textbox-load] .input.large > i {
   font-size: 18px;
   line-height: 45px;
 }
-/* line 70, ../../../src/scss/plugin/_textbox.scss */
+/* line 81, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .input.large > a, [data-textbox-load] .input.large > a {
   line-height: 45px;
 }
-/* line 75, ../../../src/scss/plugin/_textbox.scss */
-[data-textbox] .input.small > label[for], [data-textbox-load] .input.small > label[for] {
+/* line 86, ../../../src/scss/plugin/_textbox.scss */
+[data-textbox] .input.small > label, [data-textbox-load] .input.small > label {
   right: auto;
   top: 50%;
   font-size: 11px;
 }
-/* line 80, ../../../src/scss/plugin/_textbox.scss */
+/* line 91, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .input.small > input, [data-textbox-load] .input.small > input {
   padding: 8px 10px 0 10px;
 }
-/* line 83, ../../../src/scss/plugin/_textbox.scss */
+/* line 94, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .input.small > i, [data-textbox-load] .input.small > i {
   font-size: 12px;
   line-height: 35px;
 }
-/* line 87, ../../../src/scss/plugin/_textbox.scss */
+/* line 98, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .input.small > a, [data-textbox-load] .input.small > a {
   line-height: 52px;
 }
-/* line 92, ../../../src/scss/plugin/_textbox.scss */
+/* line 103, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .input.right > input, [data-textbox-load] .input.right > input {
   padding-right: 30px;
 }
-/* line 95, ../../../src/scss/plugin/_textbox.scss */
+/* line 106, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .input.right > i, [data-textbox] .input.right > a, [data-textbox-load] .input.right > i, [data-textbox-load] .input.right > a {
   width: 30px;
 }
-/* line 100, ../../../src/scss/plugin/_textbox.scss */
-[data-textbox] .input.left > label[for], [data-textbox-load] .input.left > label[for] {
+/* line 111, ../../../src/scss/plugin/_textbox.scss */
+[data-textbox] .input.left > label, [data-textbox-load] .input.left > label {
   left: 30px;
 }
-/* line 103, ../../../src/scss/plugin/_textbox.scss */
+/* line 114, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .input.left > input, [data-textbox-load] .input.left > input {
   padding-left: 30px;
 }
-/* line 106, ../../../src/scss/plugin/_textbox.scss */
+/* line 117, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .input.left > i, [data-textbox] .input.left > a, [data-textbox-load] .input.left > i, [data-textbox-load] .input.left > a {
   width: 30px;
 }
-/* line 111, ../../../src/scss/plugin/_textbox.scss */
+/* line 123, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .textarea, [data-textbox-load] .textarea {
   background-color: white;
   border: 1px solid #dddddd;
 }
-/* line 114, ../../../src/scss/plugin/_textbox.scss */
-[data-textbox] .textarea label[for], [data-textbox-load] .textarea label[for] {
+/* line 126, ../../../src/scss/plugin/_textbox.scss */
+[data-textbox] .textarea label, [data-textbox-load] .textarea label {
   left: 5px;
   right: auto;
   top: 12px;
 }
-/* line 119, ../../../src/scss/plugin/_textbox.scss */
+/* line 131, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .textarea textarea, [data-textbox-load] .textarea textarea {
   border: none;
   margin: 19px 0 10px 0;
@@ -6046,12 +6055,16 @@ input[type='text']::-ms-clear {
   min-height: 2em;
   overflow: hidden;
 }
-/* line 128, ../../../src/scss/plugin/_textbox.scss */
+/* line 138, ../../../src/scss/plugin/_textbox.scss */
+[data-textbox] .textarea .tooltip.error, [data-textbox-load] .textarea .tooltip.error {
+  margin-top: -2px;
+}
+/* line 143, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox].focus input, [data-textbox].focus textarea, [data-textbox-load].focus input, [data-textbox-load].focus textarea {
   color: #333333;
 }
-/* line 132, ../../../src/scss/plugin/_textbox.scss */
-[data-textbox].focus .input > label[for], [data-textbox].focus .textarea > label[for], [data-textbox-load].focus .input > label[for], [data-textbox-load].focus .textarea > label[for] {
+/* line 147, ../../../src/scss/plugin/_textbox.scss */
+[data-textbox].focus .input > label, [data-textbox].focus .textarea > label, [data-textbox-load].focus .input > label, [data-textbox-load].focus .textarea > label {
   top: 0;
   left: 5px;
   right: auto;
@@ -6061,66 +6074,31 @@ input[type='text']::-ms-clear {
           transform-origin: left;
   max-width: 100%;
 }
-/* line 142, ../../../src/scss/plugin/_textbox.scss */
+/* line 157, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox].focus .input > i, [data-textbox-load].focus .input > i {
   line-height: 52px;
 }
-/* line 146, ../../../src/scss/plugin/_textbox.scss */
-[data-textbox].focus .input.small > label[for], [data-textbox-load].focus .input.small > label[for] {
+/* line 161, ../../../src/scss/plugin/_textbox.scss */
+[data-textbox].focus .input.small > label, [data-textbox-load].focus .input.small > label {
   top: -2px;
 }
-/* line 149, ../../../src/scss/plugin/_textbox.scss */
+/* line 164, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox].focus .input.small > i, [data-textbox-load].focus .input.small > i {
   line-height: 45px;
 }
-/* line 154, ../../../src/scss/plugin/_textbox.scss */
+/* line 169, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox].focus .input.large > i, [data-textbox-load].focus .input.large > i {
   line-height: 60px;
 }
-/* line 160, ../../../src/scss/plugin/_textbox.scss */
+/* line 175, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .tooltip.error, [data-textbox-load] .tooltip.error {
   top: auto;
   bottom: 0;
 }
-/* line 163, ../../../src/scss/plugin/_textbox.scss */
+/* line 178, ../../../src/scss/plugin/_textbox.scss */
 [data-textbox] .tooltip.error .tooltip-inner, [data-textbox-load] .tooltip.error .tooltip-inner {
   background: transparent !important;
   border: none !important;
-}
-
-/* line 173, ../../../src/scss/plugin/_textbox.scss */
-#body.mobile [data-textbox] .textarea .tooltip.error, #body.mobile [data-textbox-load] .textarea .tooltip.error {
-  top: 0 !important;
-}
-/* line 179, ../../../src/scss/plugin/_textbox.scss */
-#body.mobile [data-textbox] .input, #body.mobile [data-textbox-load] .input {
-  margin-bottom: -1px;
-}
-/* line 181, ../../../src/scss/plugin/_textbox.scss */
-#body.mobile [data-textbox] .input input, #body.mobile [data-textbox-load] .input input {
-  border-color: #dddddd !important;
-  border-radius: 0;
-}
-/* line 187, ../../../src/scss/plugin/_textbox.scss */
-#body.mobile [data-textbox] .textarea .tooltip.error, #body.mobile [data-textbox-load] .textarea .tooltip.error {
-  top: -5px !important;
-}
-/* line 192, ../../../src/scss/plugin/_textbox.scss */
-#body.mobile [data-textbox] .input .tooltip.error, #body.mobile [data-textbox-load] .input .tooltip.error {
-  top: 0 !important;
-}
-/* line 196, ../../../src/scss/plugin/_textbox.scss */
-#body.mobile [data-textbox] .tooltip.error, #body.mobile [data-textbox-load] .tooltip.error {
-  right: 0 !important;
-  left: auto !important;
-  -webkit-transform: translateY(0) !important;
-          transform: translateY(0) !important;
-}
-/* line 199, ../../../src/scss/plugin/_textbox.scss */
-#body.mobile [data-textbox] .tooltip.error .tooltip-inner, #body.mobile [data-textbox-load] .tooltip.error .tooltip-inner {
-  -webkit-transform: scale(0.8) translateY(-20%);
-          transform: scale(0.8) translateY(-20%);
-  text-align: right;
 }
 
 /* line 1, ../../../src/scss/plugin/_textarea.scss */
@@ -6455,25 +6433,31 @@ select {
   margin: 0.927rem auto;
 }
 /* line 4, ../../../src/scss/plugin/_panel.scss */
-.panel .h1, .panel .h2, .panel .h3, .panel .h4, .panel .h5 {
+.panel > .h1, .panel > .h2, .panel > .h3, .dialog.dialog-default .panel > .dialog-title, .panel > .h4, .panel > .h5 {
   position: relative;
-  border-bottom: solid 1px #dddddd;
   display: block;
+  margin: 0;
   padding-top: 0.618rem;
   padding-bottom: 0.618rem;
+  border-bottom: solid 1px #dddddd;
 }
-/* line 8, ../../../src/scss/plugin/_panel.scss */
-.panel .h1 .subtitle, .panel .h2 .subtitle, .panel .h3 .subtitle, .panel .h4 .subtitle, .panel .h5 .subtitle {
+/* line 7, ../../../src/scss/plugin/_panel.scss */
+.panel > .h1 .subtitle, .panel > .h2 .subtitle, .panel > .h3 .subtitle, .dialog.dialog-default .panel > .dialog-title .subtitle, .panel > .h4 .subtitle, .panel > .h5 .subtitle {
   font-size: 1rem;
   color: #777777;
 }
-/* line 15, ../../../src/scss/plugin/_panel.scss */
-.panel [data-collapse], .panel [data-collapse-load] {
-  padding-right: 1.927rem;
-  margin-bottom: 0.927rem;
+@media (max-width: 639px) {
+  /* line 18, ../../../src/scss/plugin/_panel.scss */
+  .panel .subtitle {
+    display: none;
+  }
 }
-/* line 18, ../../../src/scss/plugin/_panel.scss */
-.panel [data-collapse]:before, .panel [data-collapse-load]:before {
+/* line 22, ../../../src/scss/plugin/_panel.scss */
+.panel > [data-collapse], .panel > [data-collapse-load] {
+  padding-right: 1.927rem;
+}
+/* line 24, ../../../src/scss/plugin/_panel.scss */
+.panel > [data-collapse]:before, .panel > [data-collapse-load]:before {
   position: absolute;
   right: 0;
   top: 50%;
@@ -6481,6 +6465,10 @@ select {
   height: 1.927rem;
   line-height: 1.927rem;
   margin-top: -0.9635rem;
+}
+/* line 35, ../../../src/scss/plugin/_panel.scss */
+.panel > [data-collapse] + div, .panel > [data-collapse-load] + div {
+  padding-top: 0.927rem;
 }
 
 /* line 1, ../../../src/scss/plugin/_datetimepicker.scss */
@@ -6910,7 +6898,7 @@ select {
           transform: rotate(180deg);
 }
 /* line 10, ../../../src/scss/plugin/_collapse.scss */
-.shown.icon-angle-down, .panel .shown[data-collapse]:before, .panel .shown[data-collapse-load]:before, .shown > .icon-angle-down, .panel .shown > [data-collapse]:before, .panel .shown > [data-collapse-load]:before {
+.shown.icon-angle-down, .panel > .shown[data-collapse]:before, .panel > .shown[data-collapse-load]:before, .shown > .icon-angle-down, .panel.shown > [data-collapse]:before, .panel.shown > [data-collapse-load]:before {
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);
 }
@@ -7450,11 +7438,12 @@ table {
   width: 100%;
   border-spacing: 0;
   border-collapse: collapse;
+  color: #333333;
 }
 
-/* line 8, ../../../src/scss/plugin/_table.scss */
-.table td, .table tr {
-  padding: 2px 5px;
+/* line 9, ../../../src/scss/plugin/_table.scss */
+table td, table th {
+  padding: 0.618rem 0.309rem;
 }
 
 /* line 1, ../../../src/scss/plugin/_gridtable.scss */
@@ -7672,31 +7661,30 @@ table.gridtable tbody tr {
 .dialog.dialog-default .dialog-title {
   position: relative;
   padding-right: 30px;
-  margin-bottom: 10px;
 }
-/* line 59, ../../../src/scss/plugin/_dialog.scss */
+/* line 58, ../../../src/scss/plugin/_dialog.scss */
 .dialog.dialog-default .dialog-title .dialog-title-close {
   position: absolute;
-  font-size: 21px;
+  font-size: 25px;
   color: #cccccc;
   right: 0;
 }
-/* line 66, ../../../src/scss/plugin/_dialog.scss */
+/* line 65, ../../../src/scss/plugin/_dialog.scss */
 .dialog.dialog-default .dialog-body {
   padding: 20px 0;
 }
-/* line 72, ../../../src/scss/plugin/_dialog.scss */
+/* line 71, ../../../src/scss/plugin/_dialog.scss */
 .dialog.dialog-fullscreen.dialog-active .dialog-panel {
   opacity: 1;
 }
-/* line 76, ../../../src/scss/plugin/_dialog.scss */
+/* line 75, ../../../src/scss/plugin/_dialog.scss */
 .dialog.dialog-fullscreen .dialog-body {
   margin: 0 !important;
   min-height: 100%;
   min-width: 100% !important;
   padding: 0 !important;
 }
-/* line 82, ../../../src/scss/plugin/_dialog.scss */
+/* line 81, ../../../src/scss/plugin/_dialog.scss */
 .dialog.dialog-fullscreen .dialog-panel {
   min-width: 100% !important;
   color: white;
@@ -7705,54 +7693,54 @@ table.gridtable tbody tr {
   padding: 0 !important;
   margin: 0 auto !important;
 }
-/* line 83, ../../../src/scss/plugin/_dialog.scss */
+/* line 82, ../../../src/scss/plugin/_dialog.scss */
 .dialog.dialog-fullscreen .dialog-panel:before {
   background: transparent;
 }
-/* line 95, ../../../src/scss/plugin/_dialog.scss */
+/* line 94, ../../../src/scss/plugin/_dialog.scss */
 .dialog.dialog-dropdown .dialog-header {
   display: none;
 }
-/* line 98, ../../../src/scss/plugin/_dialog.scss */
+/* line 97, ../../../src/scss/plugin/_dialog.scss */
 .dialog.dialog-dropdown .dialog-body {
   margin: 0;
 }
-/* line 100, ../../../src/scss/plugin/_dialog.scss */
+/* line 99, ../../../src/scss/plugin/_dialog.scss */
 .dialog.dialog-dropdown .dialog-body > div {
   padding: 15px 15px 0 15px;
 }
-/* line 104, ../../../src/scss/plugin/_dialog.scss */
+/* line 103, ../../../src/scss/plugin/_dialog.scss */
 .dialog.dialog-dropdown ul {
   margin: 0;
   padding: 0;
   z-index: 10;
 }
-/* line 108, ../../../src/scss/plugin/_dialog.scss */
+/* line 107, ../../../src/scss/plugin/_dialog.scss */
 .dialog.dialog-dropdown ul > li {
   margin: 0;
   padding: 0;
   text-align: left;
   font-size: 1.309rem;
 }
-/* line 113, ../../../src/scss/plugin/_dialog.scss */
+/* line 112, ../../../src/scss/plugin/_dialog.scss */
 .dialog.dialog-dropdown ul > li a {
   display: block;
   padding: 12px 20px;
   border-top: 1px solid #dddddd;
 }
-/* line 114, ../../../src/scss/plugin/_dialog.scss */
+/* line 113, ../../../src/scss/plugin/_dialog.scss */
 .dialog.dialog-dropdown ul > li a > i {
   float: left;
   margin-right: 10px;
   font-size: 1.618rem;
 }
 
-/* line 128, ../../../src/scss/plugin/_dialog.scss */
+/* line 127, ../../../src/scss/plugin/_dialog.scss */
 .model-dialog {
   overflow-y: hidden !important;
   overflow-x: hidden !important;
 }
-/* line 131, ../../../src/scss/plugin/_dialog.scss */
+/* line 130, ../../../src/scss/plugin/_dialog.scss */
 .model-dialog body {
   overflow-y: hidden !important;
   overflow-x: hidden !important;
@@ -7760,13 +7748,13 @@ table.gridtable tbody tr {
 }
 
 @media (max-width: 639px) {
-  /* line 140, ../../../src/scss/plugin/_dialog.scss */
+  /* line 139, ../../../src/scss/plugin/_dialog.scss */
   .dialog .dialog-panel {
     margin: 0 5px;
   }
 }
 @media (min-width: 640px) {
-  /* line 148, ../../../src/scss/plugin/_dialog.scss */
+  /* line 147, ../../../src/scss/plugin/_dialog.scss */
   .dialog .dialog-panel {
     margin-left: auto;
     margin-right: auto;
