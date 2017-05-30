@@ -5126,29 +5126,36 @@ dd {
   clip: auto;
 }
 
-/* line 64, ../img/s-img/*.png */
-.s-img-sprite, .s-img-cn, .s-img-jp, .s-img-us {
-  background-image: url('img/s-img/../img/s-img-sca78e83fa6.png');
+/* line 72, ../img/s-img/*.png */
+.s-img-sprite, .s-img-cn, .s-img-jp, .s-img-typograph, .s-img-us {
+  background-image: url('img/s-img/../img/s-img-sf94dc03a18.png');
   background-repeat: no-repeat;
 }
 
 /* line 84, ../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .s-img-cn {
-  background-position: 0 0;
+  background-position: 0 -111px;
   height: 128px;
   width: 128px;
 }
 
 /* line 84, ../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .s-img-jp {
-  background-position: 0 -128px;
+  background-position: -128px -111px;
   height: 128px;
   width: 128px;
 }
 
 /* line 84, ../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.s-img-typograph {
+  background-position: 0 0;
+  height: 111px;
+  width: 439px;
+}
+
+/* line 84, ../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .s-img-us {
-  background-position: 0 -256px;
+  background-position: -256px -111px;
   height: 128px;
   width: 128px;
 }
