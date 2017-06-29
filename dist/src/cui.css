@@ -2819,7 +2819,7 @@ dd {
 }
 
 /* line 792, ../../../src/scss/base/_icon.scss */
-.icon-caret-left:before {
+.icon-caret-left:before, .panel > [data-collapse]:before, .panel > [data-collapse-load]:before {
   content: "\f0d9";
 }
 
@@ -3042,7 +3042,7 @@ dd {
 }
 
 /* line 972, ../../../src/scss/base/_icon.scss */
-.icon-angle-down:before, .panel > [data-collapse]:before, .panel > [data-collapse-load]:before {
+.icon-angle-down:before {
   content: "\f107";
 }
 
@@ -6468,7 +6468,7 @@ select {
 }
 /* line 35, ../../../src/scss/plugin/_panel.scss */
 .panel > [data-collapse] + div, .panel > [data-collapse-load] + div {
-  padding-top: 0.927rem;
+  padding: 0.927rem 0;
 }
 
 /* line 1, ../../../src/scss/plugin/_datetimepicker.scss */
@@ -6898,7 +6898,7 @@ select {
           transform: rotate(180deg);
 }
 /* line 10, ../../../src/scss/plugin/_collapse.scss */
-.shown.icon-angle-down, .panel > .shown[data-collapse]:before, .panel > .shown[data-collapse-load]:before, .shown > .icon-angle-down, .panel.shown > [data-collapse]:before, .panel.shown > [data-collapse-load]:before {
+.shown.icon-angle-down, .shown > .icon-angle-down {
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);
 }
@@ -6912,19 +6912,24 @@ select {
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);
 }
-/* line 26, ../../../src/scss/plugin/_collapse.scss */
+/* line 21, ../../../src/scss/plugin/_collapse.scss */
+.shown.icon-caret-left, .panel > .shown[data-collapse]:before, .panel > .shown[data-collapse-load]:before, .shown > .icon-caret-left, .panel.shown > [data-collapse]:before, .panel.shown > [data-collapse-load]:before {
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+/* line 27, ../../../src/scss/plugin/_collapse.scss */
 .shown.icon-caret-right, .shown > .icon-caret-right {
   -webkit-transform: rotate(90deg);
           transform: rotate(90deg);
 }
 
-/* line 31, ../../../src/scss/plugin/_collapse.scss */
+/* line 32, ../../../src/scss/plugin/_collapse.scss */
 .collapse-expand {
   height: auto !important;
   max-height: 999999px !important;
 }
 
-/* line 36, ../../../src/scss/plugin/_collapse.scss */
+/* line 37, ../../../src/scss/plugin/_collapse.scss */
 .collapse-menu {
   display: none;
   position: absolute;
@@ -6937,7 +6942,7 @@ select {
   box-shadow: 1px 1px 1px #dddddd;
 }
 
-/* line 48, ../../../src/scss/plugin/_collapse.scss */
+/* line 49, ../../../src/scss/plugin/_collapse.scss */
 .collapse-more {
   position: absolute;
   padding-left: 30px;
@@ -6948,9 +6953,15 @@ select {
   opacity: 1;
 }
 
-/* line 57, ../../../src/scss/plugin/_collapse.scss */
+/* line 58, ../../../src/scss/plugin/_collapse.scss */
 [data-collapse] {
   visibility: hidden;
+}
+
+/* line 63, ../../../src/scss/plugin/_collapse.scss */
+[data-collapse-load]:before {
+  -webkit-transition: -webkit-transform ease-in-out 0.1s;
+          transition: transform ease-in-out 0.1s;
 }
 
 /* line 1, ../../../src/scss/plugin/_slider.scss */
@@ -7454,10 +7465,9 @@ table.gridtable {
 }
 /* line 5, ../../../src/scss/plugin/_gridtable.scss */
 table.gridtable th {
-  background-color: #333;
+  background-color: #eeeeee;
   font-weight: bold;
   text-align: left;
-  color: white;
 }
 /* line 11, ../../../src/scss/plugin/_gridtable.scss */
 table.gridtable td,
@@ -7474,7 +7484,7 @@ table.gridtable tbody tr {
   table.gridtable td,
   table.gridtable th {
     border: 1px solid #cccccc;
-    padding: 10px !important;
+    padding: 0.618rem !important;
   }
   /* line 28, ../../../src/scss/plugin/_gridtable.scss */
   table.gridtable tbody tr {
@@ -7508,91 +7518,59 @@ table.gridtable tbody tr {
   }
   /* line 55, ../../../src/scss/plugin/_gridtable.scss */
   table.gridtable tr {
-    padding: 10px 0;
     border-bottom: dashed 1px #dddddd;
     overflow: hidden;
     @inlcude clearfix();
   }
-  /* line 60, ../../../src/scss/plugin/_gridtable.scss */
+  /* line 59, ../../../src/scss/plugin/_gridtable.scss */
   table.gridtable tr td {
-    float: left;
-    width: 50%;
-    padding-right: 15px;
+    margin: 0.618rem;
+    padding: 0;
     word-break: break-all;
   }
-  /* line 67, ../../../src/scss/plugin/_gridtable.scss */
+  /* line 63, ../../../src/scss/plugin/_gridtable.scss */
+  table.gridtable tr td:before {
+    float: left;
+    content: attr(data-th) ": ";
+  }
+  /* line 68, ../../../src/scss/plugin/_gridtable.scss */
   table.gridtable tr.open {
     position: relative;
-    background-color: #555555;
   }
-  /* line 70, ../../../src/scss/plugin/_gridtable.scss */
-  table.gridtable tr.open td {
-    color: white;
-  }
-  /* line 72, ../../../src/scss/plugin/_gridtable.scss */
-  table.gridtable tr.open td:before {
-    color: #aaaaaa;
-  }
-  /* line 76, ../../../src/scss/plugin/_gridtable.scss */
-  table.gridtable tr.open:before {
-    color: #78004E;
-    display: inline-block;
-    -webkit-transform: rotate(-90deg);
-            transform: rotate(-90deg);
-  }
-  /* line 82, ../../../src/scss/plugin/_gridtable.scss */
+  /* line 71, ../../../src/scss/plugin/_gridtable.scss */
   table.gridtable tr.close {
+    max-height: 40px;
     position: relative;
     cursor: pointer;
-  }
-  /* line 85, ../../../src/scss/plugin/_gridtable.scss */
-  table.gridtable tr.close:before {
-    display: inline-block;
-  }
-  /* line 88, ../../../src/scss/plugin/_gridtable.scss */
-  table.gridtable tr.close:hover {
     opacity: .8;
-    background-color: #555555;
   }
-  /* line 91, ../../../src/scss/plugin/_gridtable.scss */
-  table.gridtable tr.close:hover td {
-    color: white;
+  /* line 76, ../../../src/scss/plugin/_gridtable.scss */
+  table.gridtable tr.close:hover {
+    opacity: 1;
   }
-  /* line 93, ../../../src/scss/plugin/_gridtable.scss */
-  table.gridtable tr.close:hover td:before {
-    color: #aaaaaa;
-  }
-  /* line 98, ../../../src/scss/plugin/_gridtable.scss */
+  /* line 79, ../../../src/scss/plugin/_gridtable.scss */
   table.gridtable tr.close td {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  /* line 102, ../../../src/scss/plugin/_gridtable.scss */
+  /* line 83, ../../../src/scss/plugin/_gridtable.scss */
   table.gridtable tr:last-child {
     border-bottom: none;
   }
-  /* line 107, ../../../src/scss/plugin/_gridtable.scss */
+  /* line 88, ../../../src/scss/plugin/_gridtable.scss */
   table.gridtable tbody td {
     border: none;
     position: relative;
-    padding-top: 3px;
-    padding-bottom: 3px;
   }
-  /* line 113, ../../../src/scss/plugin/_gridtable.scss */
+  /* line 92, ../../../src/scss/plugin/_gridtable.scss */
   table.gridtable tbody td:before {
-    position: absolute;
-    left: 6px;
     color: #555555;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-  }
-}
-@media (max-width: 379px) {
-  /* line 127, ../../../src/scss/plugin/_gridtable.scss */
-  table.gridtable tr td {
-    width: 100%;
+    display: inline-block;
+    width: 6.5rem;
   }
 }
 /* line 1, ../../../src/scss/plugin/_dialog.scss */
@@ -8168,7 +8146,7 @@ table.gridtable tbody tr {
   border: transparent;
   border-radius: 50%;
   box-shadow: none;
-  background: #2759a4;
+  background: #c50080;
   cursor: pointer;
   outline: none;
 }
@@ -8190,7 +8168,7 @@ table.gridtable tbody tr {
   height: 2px;
   margin-top: 18px;
   margin-bottom: 15px;
-  background-color: #c50080;
+  background-color: #333333;
 }
 
 /* line 336, ../../../src/scss/plugin/_ranger.scss */
