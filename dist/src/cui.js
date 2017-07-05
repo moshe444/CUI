@@ -17215,8 +17215,8 @@ if (!Number.isNaN) {
     });
 })(jQuery);
 
-(function() {
-    $.fn.gridview = function(option) {
+(function () {
+    $.fn.gridview = function (option) {
         var defaultOpt = {
             items: [{
                 src: 'dist/src/img/ex_1.jpg',
@@ -17336,20 +17336,20 @@ if (!Number.isNaN) {
         var opt = $.extend({}, defaultOpt, option);
         var $this = opt.target ? $(opt.target) : $(this);
         var $container = opt.container ? $(opt.container) : $(window);
-        var _getpositionInfo = function() {
+        var _getpositionInfo = function () {
             return {
                 scrollTop: $container.scrollTop(),
-                scrollBottom: $container.scrollTop() + $container.height(),
+                scrollBottom: $container.scrollTop() + Math.min($container.outerHeight(), window.innerHeight),
                 offsetTop: $this.offset().top,
                 offsetBottom: $this.offset().top + $this.height()
             };
         };
         var positionInfo = _getpositionInfo();
-        var _getColumnByBreakPoint = function(newBreakPoint) {
+        var _getColumnByBreakPoint = function (newBreakPoint) {
             opt.breakpoint = newBreakPoint || opt.breakpoint;
             var containerWidth = $this.width();
             if (opt.breakpoint && opt.breakpoint.length) {
-                return opt.breakpoint.reduce(function(pre, next, index) {
+                return opt.breakpoint.reduce(function (pre, next, index) {
                     if (containerWidth > next) {
                         return pre + 1;
                     } else {
@@ -17359,8 +17359,8 @@ if (!Number.isNaN) {
             }
             return 1;
         };
-        var _getSmallestColumn = function(array) {
-            return array.reduce(function(pre, next) {
+        var _getSmallestColumn = function (array) {
+            return array.reduce(function (pre, next) {
                 if (pre) {
                     return pre.data('ratio') <= next.data('ratio') ? pre : next;
                 } else {
@@ -17368,7 +17368,7 @@ if (!Number.isNaN) {
                 }
             }, null);
         };
-        var _createColumns = function(count) {
+        var _createColumns = function (count) {
             var columns = [];
             var columnswidth = (100 / count) + '%';
             while (count > 0) {
@@ -17381,7 +17381,7 @@ if (!Number.isNaN) {
             }
             return columns;
         };
-        var _createItemInColumns = function(item) {
+        var _createItemInColumns = function (item) {
             var $tmp = $('<li class="gridview-li">' + opt.template + '</li>');
             var ratio = item.height / item.width;
             $tmp.data({
@@ -17393,8 +17393,8 @@ if (!Number.isNaN) {
             });
             return $tmp;
         };
-        var _loadImage = function() {
-            $this.find('li').each(function(index, item) {
+        var _loadImage = function () {
+            $this.find('li').each(function (index, item) {
                 var $item = $(item);
                 var offsetTop = $item.offset().top;
                 var offsetBottom = offsetTop + $item.outerHeight();
@@ -17402,11 +17402,11 @@ if (!Number.isNaN) {
                     var src = $item.data('src');
                     var $img = $item.find('img');
                     $item.addClass('gridview-loading');
-                    $img.on('load', function() {
+                    $img.on('load', function () {
                         $item.removeClass('gridview-loading');
                         $item.addClass('gridview-loaded');
                     });
-                    $img.on('error', function() {
+                    $img.on('error', function () {
                         $item.removeClass('gridview-loading');
                         $item.addClass('gridview-error');
                     });
@@ -17414,9 +17414,9 @@ if (!Number.isNaN) {
                 }
             });
         };
-        var _moveByScroll = function(isScrollDown) {
+        var _moveByScroll = function (isScrollDown) {
             var verticalBottom = $this.hasClass('verticalBottom');
-            var heightList = $this.find('> ul').map(function(index, item) {
+            var heightList = $this.find('> ul').map(function (index, item) {
                 return $(item).outerHeight();
             });
             var needMove = false;
@@ -17436,7 +17436,7 @@ if (!Number.isNaN) {
                 if (isScrollDown) {
                     $this.removeClass('scrollUP');
                     var containerHeight = $this.height();
-                    $this.find('.gridview-ul').each(function(index, item) {
+                    $this.find('.gridview-ul').each(function (index, item) {
                         var $item = $(item);
                         var offsetY = containerHeight - $item.height();
                         $item.css('transform', ('translateY(' + offsetY + 'px)'));
@@ -17444,7 +17444,7 @@ if (!Number.isNaN) {
                     $this.addClass('verticalBottom');
                 } else {
                     $this.addClass('scrollUP');
-                    $this.find('.gridview-ul').each(function(index, item) {
+                    $this.find('.gridview-ul').each(function (index, item) {
                         var $item = $(item);
                         $item.css('transform', ('translateY(' + 0 + ')'));
                     });
@@ -17454,9 +17454,9 @@ if (!Number.isNaN) {
 
         };
 
-        var _render = function() {
+        var _render = function () {
             var ulList = _createColumns(opt.colCount);
-            $.each(opt.items, function(index, item) {
+            $.each(opt.items, function (index, item) {
                 var $li = _createItemInColumns(item);
                 var $ul = _getSmallestColumn(ulList);
                 $ul.append($li);
@@ -17465,13 +17465,13 @@ if (!Number.isNaN) {
             });
             $this.addClass('gridview');
             $this.empty();
-            $.each(ulList, function(index, ul) {
+            $.each(ulList, function (index, ul) {
                 $this.append(ul);
             });
             _loadImage();
             $(document).trigger('dom.load');
         };
-        var _reload = function(force) {
+        var _reload = function (force) {
             if (force) {
                 opt.colCount = -1;
             }
@@ -17487,21 +17487,21 @@ if (!Number.isNaN) {
         var obj = {
             reload: _reload
         };
-        $container.on('scroll', $.throttle(function() {
+        $container.on('scroll', $.throttle(function () {
             var currentPositionInfo = _getpositionInfo();
             var isDown = positionInfo.scrollTop < currentPositionInfo.scrollTop;
             positionInfo = currentPositionInfo;
             _moveByScroll(isDown);
             _loadImage();
         }));
-        $(document).on('dom.resize', function() {
+        $(document).on('dom.resize', function () {
             positionInfo = _getpositionInfo();
             _reload();
         });
         $this.data('gridview', obj);
     };
-    $(document).on('dom.load', function() {
-        $('[data-gridview]').each(function(index, item) {
+    $(document).on('dom.load', function () {
+        $('[data-gridview]').each(function (index, item) {
             var $item = $(item);
             $item.removeAttr('data-gridview');
             $item.gridview($item.data());
