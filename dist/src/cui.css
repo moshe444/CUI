@@ -64,7 +64,7 @@ ol, ul {
 html {
   font-size: 16px;
   line-height: 1em;
-  font-family: "robotothin", "lantingthin", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "robotothin", "lantingthin", "monospace", sans-serif;
   font-style: normal;
 }
 
@@ -5237,8 +5237,8 @@ dd {
 
 /* line 36, ../../../src/scss/base/_animation.scss */
 .animation-img-hover img {
-  -webkit-transition: width 1s;
-          transition: width 1s;
+  -webkit-transition: width 1s ease-in-out;
+          transition: width 1s ease-in-out;
 }
 /* line 40, ../../../src/scss/base/_animation.scss */
 .animation-img-hover:hover img {
