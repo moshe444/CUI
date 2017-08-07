@@ -8563,3 +8563,24 @@ table.gridtable tbody tr {
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
 }
+
+/* line 1, ../../../src/scss/plugin/_loading.scss */
+[data-img], [data-img-load] {
+  -webkit-transition: opacity .5s ease-in-out;
+          transition: opacity .5s ease-in-out;
+  opacity: 0;
+}
+/* line 4, ../../../src/scss/plugin/_loading.scss */
+[data-img].img-loading, [data-img-load].img-loading {
+  opacity: .5;
+  background: black;
+}
+/* line 8, ../../../src/scss/plugin/_loading.scss */
+[data-img].data-img-load-success, [data-img-load].data-img-load-success {
+  opacity: 1;
+}
+/* line 11, ../../../src/scss/plugin/_loading.scss */
+[data-img].data-img-load-error, [data-img-load].data-img-load-error {
+  background: red;
+  opacity: 1;
+}
