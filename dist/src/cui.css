@@ -5137,28 +5137,28 @@ dd {
   background-repeat: no-repeat;
 }
 
-/* line 84, C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 84, ../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .s-img-cn {
   background-position: 0 -111px;
   height: 128px;
   width: 128px;
 }
 
-/* line 84, C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 84, ../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .s-img-jp {
   background-position: -128px -111px;
   height: 128px;
   width: 128px;
 }
 
-/* line 84, C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 84, ../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .s-img-typograph {
   background-position: 0 0;
   height: 111px;
   width: 439px;
 }
 
-/* line 84, C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 84, ../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .s-img-us {
   background-position: -256px -111px;
   height: 128px;
@@ -8572,6 +8572,138 @@ table.gridtable tbody tr {
   top: 0;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
+}
+
+/* Slider */
+/* line 2, ../../../src/scss/plugin/_slick.scss */
+.slick-slider {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+  -ms-touch-action: pan-y;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* line 20, ../../../src/scss/plugin/_slick.scss */
+.slick-list {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 30, ../../../src/scss/plugin/_slick.scss */
+.slick-list:focus {
+  outline: none;
+}
+
+/* line 34, ../../../src/scss/plugin/_slick.scss */
+.slick-list.dragging {
+  cursor: pointer;
+  cursor: hand;
+}
+
+/* line 39, ../../../src/scss/plugin/_slick.scss */
+.slick-slider .slick-track,
+.slick-slider .slick-list {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+/* line 48, ../../../src/scss/plugin/_slick.scss */
+.slick-track {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: block;
+}
+
+/* line 56, ../../../src/scss/plugin/_slick.scss */
+.slick-track:before,
+.slick-track:after {
+  display: table;
+  content: '';
+}
+
+/* line 63, ../../../src/scss/plugin/_slick.scss */
+.slick-track:after {
+  clear: both;
+}
+
+/* line 67, ../../../src/scss/plugin/_slick.scss */
+.slick-loading .slick-track {
+  visibility: hidden;
+}
+
+/* line 71, ../../../src/scss/plugin/_slick.scss */
+.slick-slide {
+  display: none;
+  float: left;
+  height: 100%;
+  min-height: 1px;
+}
+
+/* line 79, ../../../src/scss/plugin/_slick.scss */
+[dir='rtl'] .slick-slide {
+  float: right;
+}
+
+/* line 83, ../../../src/scss/plugin/_slick.scss */
+.slick-slide img {
+  display: block;
+}
+
+/* line 87, ../../../src/scss/plugin/_slick.scss */
+.slick-slide.slick-loading img {
+  display: none;
+}
+
+/* line 91, ../../../src/scss/plugin/_slick.scss */
+.slick-slide.dragging img {
+  pointer-events: none;
+}
+
+/* line 95, ../../../src/scss/plugin/_slick.scss */
+.slick-initialized .slick-slide {
+  display: block;
+}
+
+/* line 99, ../../../src/scss/plugin/_slick.scss */
+.slick-loading .slick-slide {
+  visibility: hidden;
+}
+
+/* line 103, ../../../src/scss/plugin/_slick.scss */
+.slick-vertical .slick-slide {
+  display: block;
+  height: auto;
+  border: 1px solid transparent;
+}
+
+/* line 111, ../../../src/scss/plugin/_slick.scss */
+.slick-arrow.slick-hidden {
+  display: none;
+}
+
+/* line 116, ../../../src/scss/plugin/_slick.scss */
+.slick li {
+  width: 375;
+  height: 250px;
+}
+/* line 119, ../../../src/scss/plugin/_slick.scss */
+.slick li img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 /* line 1, ../../../src/scss/plugin/_loading.scss */
