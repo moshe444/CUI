@@ -48,6 +48,7 @@
     .table.responsive .container td {
         background-color: #fff4d0
     }
+
 </style>
 </head>
 <div data-header class="header">
@@ -800,23 +801,6 @@
     <div class="row">
     <div class="col-xs-12">
         <div class="panel">
-    <a href="javascript:;" class="h2 shown" data-collapse data-target="#loadimagePanel">
-        加载图片
-        <span class="subtitle"> 延迟加载图片</span>
-    </a>
-    <div id="loadimagePanel" data-loadimage>
-        <div><img data-img="dist/src/img/download-1.jpg" style="height:200px;width:300px;"></div>
-        <div><img data-img="dist/src/img/download-2.jpg" style="height:200px;width:300px;"></div>
-        <div><img data-img="dist/src/img/download-3.jpg" style="height:200px;width:300px;"></div>
-
-    </div>
-</div>
-
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-12">
-        <div class="panel">
     <a href="javascript:;" class="h2" data-collapse data-target="#dialogPanel">
         对话框
         <span class="subtitle"> 对话框插件</span>
@@ -1041,9 +1025,9 @@
         幻灯片
         <span class="subtitle"> 幻灯片插件</span>
     </a>
-    <div id="sliderPanel" >
+    <div id="sliderPanel">
         <div class="slider" data-slider>
-            <ul class="slider-list">
+            <ul>
                 <li>
                     <img src="dist/src/img/01.jpg" alt="This is a image.">
                 </li>
@@ -1236,6 +1220,23 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="panel">
+    <a href="javascript:;" class="h2 shown" data-collapse data-target="#loadimagePanel">
+        加载图片
+        <span class="subtitle"> 延迟加载图片</span>
+    </a>
+    <div id="loadimagePanel" data-loadimage>
+        <div><img data-img="dist/src/img/download-1.jpg" style="height:200px;width:300px;"></div>
+        <div><img data-img="dist/src/img/download-2.jpg" style="height:200px;width:300px;"></div>
+        <div><img data-img="dist/src/img/download-3.jpg" style="height:200px;width:300px;"></div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="panel">
     <a href="javascript:;" class="h2 shown" data-collapse data-target="#gridviewPanel">
         瀑布流
         <span class="subtitle"> 适合海量图片展示的瀑布流布局</span>
@@ -1251,6 +1252,7 @@
 
     </div>
 </div>
+
 </div>
 </body>
 <script src="dist/src/cui.lib.js" type="text/javascript"></script>

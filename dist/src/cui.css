@@ -362,7 +362,7 @@ dd {
 }
 
 /* line 42, ../../../src/scss/base/_utilities.scss */
-.block-center, .slider > .slider-list > li > div, .slider > .slider-list > li > img, .shifter ul > li > div > img {
+.block-center, .slider > ul > li > div, .slider > ul > li > img, .shifter ul > li > div > img {
   display: block;
   position: absolute;
   top: 50%;
@@ -5137,28 +5137,28 @@ dd {
   background-repeat: no-repeat;
 }
 
-/* line 84, ../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 84, C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .s-img-cn {
   background-position: 0 -111px;
   height: 128px;
   width: 128px;
 }
 
-/* line 84, ../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 84, C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .s-img-jp {
   background-position: -128px -111px;
   height: 128px;
   width: 128px;
 }
 
-/* line 84, ../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 84, C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .s-img-typograph {
   background-position: 0 0;
   height: 111px;
   width: 439px;
 }
 
-/* line 84, ../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 84, C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .s-img-us {
   background-position: -256px -111px;
   height: 128px;
@@ -6992,14 +6992,14 @@ select {
   overflow: hidden;
 }
 /* line 6, ../../../src/scss/plugin/_slider.scss */
-.slider > .slider-list {
+.slider > ul {
   position: absolute;
   width: 200%;
   height: 100%;
   overflow: hidden;
 }
 /* line 11, ../../../src/scss/plugin/_slider.scss */
-.slider > .slider-list > li {
+.slider > ul > li {
   width: 50%;
   height: 100%;
   float: left;
@@ -7009,7 +7009,7 @@ select {
           transition: opacity 1s 0.5s ease-in-out;
 }
 /* line 18, ../../../src/scss/plugin/_slider.scss */
-.slider > .slider-list > li > div, .slider > .slider-list > li > img {
+.slider > ul > li > div, .slider > ul > li > img {
   min-width: 100%;
 }
 /* line 24, ../../../src/scss/plugin/_slider.scss */
@@ -7540,7 +7540,17 @@ table.gridtable tbody tr {
   table.gridtable tr {
     border-bottom: dashed 1px #dddddd;
     overflow: hidden;
-    @inlcude clearfix();
+    *zoom: 1;
+  }
+  /* line 41, ../../../src/scss/base/_mixins.scss */
+  table.gridtable tr:before, table.gridtable tr:after {
+    content: "";
+    display: table;
+  }
+  /* line 47, ../../../src/scss/base/_mixins.scss */
+  table.gridtable tr:after {
+    clear: both;
+    overflow: hidden;
   }
   /* line 59, ../../../src/scss/plugin/_gridtable.scss */
   table.gridtable tr td {
