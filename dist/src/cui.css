@@ -438,7 +438,7 @@ dd {
 
 /* line 118, ../../../src/scss/base/_utilities.scss */
 [class^="icon-"],
-[class*=" icon-"], .shifter .img-loading:before, .checkbox label > i, .radio label > i, .tooltip.info .tooltip-inner:before, .tooltip.warning .tooltip-inner:before, .tooltip.error .tooltip-inner:before, .panel > [data-collapse]:before, .panel > [data-collapse-load]:before, [data-slicker] .slick-arrow, [data-slicker-load] .slick-arrow, .header-menu-item .caret, .datatable-sort.active:before, .datatable-sort.active.desc:before {
+[class*=" icon-"], .shifter .img-loading:before, .checkbox label > i, .radio label > i, .tooltip.info .tooltip-inner:before, .tooltip.warning .tooltip-inner:before, .tooltip.error .tooltip-inner:before, .panel > [data-collapse]:before, .panel > [data-collapse-load]:before, .slicker .slick-arrow, .header-menu-item .caret, .datatable-sort.active:before, .datatable-sort.active.desc:before {
   display: inline-block;
   font: normal normal normal 14px/1 fonticon;
   font-size: inherit;
@@ -448,7 +448,7 @@ dd {
 }
 /* line 232, ../../../src/scss/base/_mixins.scss */
 [class^="icon-"]:before,
-[class*=" icon-"]:before, .shifter .img-loading:before, .checkbox label > i:before, .radio label > i:before, .tooltip.info .tooltip-inner:before, .tooltip.warning .tooltip-inner:before, .tooltip.error .tooltip-inner:before, .panel > [data-collapse]:before, .panel > [data-collapse-load]:before, [data-slicker] .slick-arrow:before, [data-slicker-load] .slick-arrow:before, .header-menu-item .caret:before, .datatable-sort.active:before, .datatable-sort.active.desc:before {
+[class*=" icon-"]:before, .shifter .img-loading:before, .checkbox label > i:before, .radio label > i:before, .tooltip.info .tooltip-inner:before, .tooltip.warning .tooltip-inner:before, .tooltip.error .tooltip-inner:before, .panel > [data-collapse]:before, .panel > [data-collapse-load]:before, .slicker .slick-arrow:before, .header-menu-item .caret:before, .datatable-sort.active:before, .datatable-sort.active.desc:before {
   text-align: center;
   font-style: normal;
 }
@@ -3032,12 +3032,12 @@ dd {
 }
 
 /* line 960, ../../../src/scss/base/_icon.scss */
-.icon-angle-left:before, [data-slicker] .slick-prev:before, [data-slicker-load] .slick-prev:before {
+.icon-angle-left:before, .slicker .slick-prev:before {
   content: "\f104";
 }
 
 /* line 964, ../../../src/scss/base/_icon.scss */
-.icon-angle-right:before, [data-slicker] .slick-next:before, [data-slicker-load] .slick-next:before {
+.icon-angle-right:before, .slicker .slick-next:before {
   content: "\f105";
 }
 
@@ -6988,9 +6988,8 @@ select {
 .shifter {
   overflow: hidden;
   position: relative;
-  height: 300;
 }
-/* line 5, ../../../src/scss/plugin/_shifter.scss */
+/* line 4, ../../../src/scss/plugin/_shifter.scss */
 .shifter .wrap {
   overflow-x: scroll;
   overflow-y: hidden;
@@ -7003,15 +7002,10 @@ select {
   scrollbar-arrow-color: rgba(255, 255, 255, 0);
 }
 /* line 9, ../../../src/scss/plugin/_shifter.scss */
-.shifter .wrap::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-}
-/* line 14, ../../../src/scss/plugin/_shifter.scss */
 .shifter ul {
   overflow: hidden;
 }
-/* line 16, ../../../src/scss/plugin/_shifter.scss */
+/* line 11, ../../../src/scss/plugin/_shifter.scss */
 .shifter ul > li {
   float: left;
   overflow: hidden;
@@ -7019,7 +7013,7 @@ select {
   -webkit-transition: opacity 1s .5s ease-in-out;
           transition: opacity 1s .5s ease-in-out;
 }
-/* line 26, ../../../src/scss/plugin/_shifter.scss */
+/* line 21, ../../../src/scss/plugin/_shifter.scss */
 .shifter .next,
 .shifter .prev {
   z-index: 2;
@@ -7031,71 +7025,76 @@ select {
   font-size: 40px;
   width: 40px;
   height: 40px;
-  line-height: 40px;
+  line-height: 38px;
   text-align: center;
   color: #eeeeee;
   opacity: 0.6;
   background-color: #333333;
   border-radius: 100%;
 }
-/* line 42, ../../../src/scss/plugin/_shifter.scss */
+/* line 37, ../../../src/scss/plugin/_shifter.scss */
 .shifter .next:hover,
 .shifter .prev:hover {
   color: white;
 }
-/* line 45, ../../../src/scss/plugin/_shifter.scss */
+/* line 40, ../../../src/scss/plugin/_shifter.scss */
 .shifter .next.disable,
 .shifter .prev.disable {
   opacity: 0 !important;
   pointer-events: none;
 }
-/* line 50, ../../../src/scss/plugin/_shifter.scss */
+/* line 45, ../../../src/scss/plugin/_shifter.scss */
 .shifter .prev {
   left: 15px;
   -webkit-transition: opacity, left 0.5s ease-in-out;
           transition: opacity, left 0.5s ease-in-out;
 }
-/* line 53, ../../../src/scss/plugin/_shifter.scss */
+/* line 48, ../../../src/scss/plugin/_shifter.scss */
 .shifter .prev i {
   margin-left: -5px;
 }
-/* line 57, ../../../src/scss/plugin/_shifter.scss */
+/* line 52, ../../../src/scss/plugin/_shifter.scss */
 .shifter .next {
   right: 15px;
   -webkit-transition: opacity, right 0.5s ease-in-out;
           transition: opacity, right 0.5s ease-in-out;
 }
-/* line 60, ../../../src/scss/plugin/_shifter.scss */
+/* line 55, ../../../src/scss/plugin/_shifter.scss */
 .shifter .next i {
   margin-left: 5px;
 }
-/* line 65, ../../../src/scss/plugin/_shifter.scss */
+/* line 60, ../../../src/scss/plugin/_shifter.scss */
 .shifter:hover .prev {
   left: 5px;
   opacity: 1;
 }
-/* line 69, ../../../src/scss/plugin/_shifter.scss */
+/* line 64, ../../../src/scss/plugin/_shifter.scss */
 .shifter:hover .next {
   right: 5px;
   opacity: 1;
 }
-/* line 74, ../../../src/scss/plugin/_shifter.scss */
+/* line 69, ../../../src/scss/plugin/_shifter.scss */
 .shifter .img-loading {
   opacity: .8;
 }
 
-/* line 81, ../../../src/scss/plugin/_shifter.scss */
+/* line 76, ../../../src/scss/plugin/_shifter.scss */
 .shifter {
-  height: 300px;
+  height: 250px;
 }
-/* line 83, ../../../src/scss/plugin/_shifter.scss */
+/* line 78, ../../../src/scss/plugin/_shifter.scss */
 .shifter .wrap {
-  height: 321px;
+  height: 271px;
 }
-/* line 86, ../../../src/scss/plugin/_shifter.scss */
+/* line 81, ../../../src/scss/plugin/_shifter.scss */
 .shifter li {
-  height: 300px;
-  width: 425px;
+  height: 250px;
+  width: 375px;
+  border-left: 1px solid #dddddd;
+}
+/* line 85, ../../../src/scss/plugin/_shifter.scss */
+.shifter li:first-of-type {
+  border-left: none;
 }
 
 /* Slider */
@@ -7217,25 +7216,36 @@ select {
   display: none;
 }
 
-/* line 115, ../../../src/scss/plugin/_slicker.scss */
-[data-slicker], [data-slicker-load] {
-  height: 300px;
+/* line 117, ../../../src/scss/plugin/_slicker.scss */
+.slicker {
   overflow: hidden;
 }
-/* line 118, ../../../src/scss/plugin/_slicker.scss */
-[data-slicker] li, [data-slicker-load] li {
-  width: 375;
-  height: 250px;
+/* line 119, ../../../src/scss/plugin/_slicker.scss */
+.slicker .slick-slider {
+  height: 100%;
 }
-/* line 121, ../../../src/scss/plugin/_slicker.scss */
-[data-slicker] li img, [data-slicker-load] li img {
+/* line 122, ../../../src/scss/plugin/_slicker.scss */
+.slicker .slick-slide {
+  height: 100%;
+  outline: none;
+}
+/* line 125, ../../../src/scss/plugin/_slicker.scss */
+.slicker .slick-slide img {
   height: 100%;
   width: 100%;
   -o-object-fit: cover;
      object-fit: cover;
 }
-/* line 127, ../../../src/scss/plugin/_slicker.scss */
-[data-slicker] .slick-arrow, [data-slicker-load] .slick-arrow {
+/* line 131, ../../../src/scss/plugin/_slicker.scss */
+.slicker .slick-list {
+  height: 100%;
+}
+/* line 134, ../../../src/scss/plugin/_slicker.scss */
+.slicker .slick-track {
+  height: 100%;
+}
+/* line 137, ../../../src/scss/plugin/_slicker.scss */
+.slicker .slick-arrow {
   z-index: 2;
   display: block;
   position: absolute;
@@ -7244,9 +7254,8 @@ select {
           transform: translateY(-50%);
   width: 40px;
   height: 40px;
-  line-height: 40px;
+  line-height: 38px;
   text-align: center;
-  color: #eeeeee;
   opacity: 0.6;
   background-color: #333333;
   border-radius: 100%;
@@ -7254,50 +7263,65 @@ select {
   color: transparent;
   border-width: 0;
   padding: 0;
+  cursor: pointer;
 }
-/* line 146, ../../../src/scss/plugin/_slicker.scss */
-[data-slicker] .slick-arrow:hover, [data-slicker-load] .slick-arrow:hover {
+/* line 156, ../../../src/scss/plugin/_slicker.scss */
+.slicker .slick-arrow:hover {
   color: white;
 }
-/* line 149, ../../../src/scss/plugin/_slicker.scss */
-[data-slicker] .slick-arrow.disable, [data-slicker-load] .slick-arrow.disable {
+/* line 159, ../../../src/scss/plugin/_slicker.scss */
+.slicker .slick-arrow.disable {
   opacity: 0 !important;
   pointer-events: none;
 }
-/* line 153, ../../../src/scss/plugin/_slicker.scss */
-[data-slicker] .slick-arrow:before, [data-slicker-load] .slick-arrow:before {
+/* line 163, ../../../src/scss/plugin/_slicker.scss */
+.slicker .slick-arrow:before {
   font-size: 40px;
   color: white;
 }
-/* line 158, ../../../src/scss/plugin/_slicker.scss */
-[data-slicker] .slick-prev, [data-slicker-load] .slick-prev {
+/* line 168, ../../../src/scss/plugin/_slicker.scss */
+.slicker .slick-prev {
   left: 15px;
   -webkit-transition: opacity, left 0.5s ease-in-out;
           transition: opacity, left 0.5s ease-in-out;
 }
-/* line 162, ../../../src/scss/plugin/_slicker.scss */
-[data-slicker] .slick-prev i, [data-slicker-load] .slick-prev i {
+/* line 172, ../../../src/scss/plugin/_slicker.scss */
+.slicker .slick-prev:before {
   margin-left: -5px;
 }
-/* line 166, ../../../src/scss/plugin/_slicker.scss */
-[data-slicker] .slick-next, [data-slicker-load] .slick-next {
+/* line 176, ../../../src/scss/plugin/_slicker.scss */
+.slicker .slick-next {
   right: 15px;
   -webkit-transition: opacity, right 0.5s ease-in-out;
           transition: opacity, right 0.5s ease-in-out;
 }
-/* line 170, ../../../src/scss/plugin/_slicker.scss */
-[data-slicker] .slick-next i, [data-slicker-load] .slick-next i {
+/* line 180, ../../../src/scss/plugin/_slicker.scss */
+.slicker .slick-next:before {
   margin-left: 5px;
 }
-/* line 175, ../../../src/scss/plugin/_slicker.scss */
-[data-slicker]:hover .slick-prev, [data-slicker-load]:hover .slick-prev {
+/* line 185, ../../../src/scss/plugin/_slicker.scss */
+.slicker:hover .slick-prev {
   left: 5px;
   opacity: 1;
 }
-/* line 179, ../../../src/scss/plugin/_slicker.scss */
-[data-slicker]:hover .slick-next, [data-slicker-load]:hover .slick-next {
+/* line 189, ../../../src/scss/plugin/_slicker.scss */
+.slicker:hover .slick-next {
   right: 5px;
   opacity: 1;
+}
+
+/* line 197, ../../../src/scss/plugin/_slicker.scss */
+.slicker {
+  height: 250px;
+}
+/* line 199, ../../../src/scss/plugin/_slicker.scss */
+.slicker li {
+  max-width: 375px;
+  border-left: 1px solid #dddddd;
+}
+/* line 202, ../../../src/scss/plugin/_slicker.scss */
+.slicker li:first-of-type {
+  border-left: none;
 }
 
 /* line 1, ../../../src/scss/plugin/_header.scss */
