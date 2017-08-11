@@ -1893,44 +1893,46 @@ if (!Number.isNaN) {
 })(jQuery);
 //lazy load image
 
-(function ($) {
+(function($) {
+    $.fn.loadImg = function(key) {
+        var $img = $(this);
+        var imgsrc = $img.data(key);
+        if ($img.is('img') && imgsrc) {
+            $img.one('load', function() {
+                $img.addClass('data-img-load-success');
+                $(document).trigger('img.load.success', [$img]);
+            });
+            $img.one('error', function() {
+                $img.attr('src', 'data:image/gif;base64,R0lGODlhAQABAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAABAAEAAAICVAEAOw==');
+                $img.addClass('data-img-load-error');
+                $(document).trigger('img.load.error', [$img]);
+            });
+            imgsrc && $img.attr('src', imgsrc);
+            $img.data(key, null);
+            $img.removeAttr('data-' + key);
+            $img.attr('data-img-load', '');
+            $img.addClass('img-loading');
+        }
+    };
     var loadimageConfig = {
         name: 'loadimage',
         defaultOpt: {
             buffer: 0,
-            container: null
+            container: null,
         },
-        init: function (context) {
+        init: function(context) {
             var opt = context.opt;
             var $this = context.$element;
             var $container = context.$container = opt.container ? $(opt.container) : $(window);
-            var height = $container.height();
-            var top = $this.scrollTop() - height * opt.buffer;
-            var bottom = top + height * (1 + opt.buffer);
-            context._load = function () {
+            context._load = function() {
                 var height = $container.outerHeight();
                 var top = $container.scrollTop() - height * opt.buffer;
                 var bottom = top + height * (1 + opt.buffer);
-                $this.find('[data-img]').each(function (index, item) {
+                $this.find('[data-img]').each(function(index, item) {
                     var $img = $(item);
                     var base = $img.offset().top;
                     if (base < bottom && (base + $img.height()) > top) {
-                        var imgsrc = $img.data('img');
-                        if ($img.is('img')) {
-                            $img.one('load', function () {
-                                $img.addClass('data-img-load-success');
-                                $(document).trigger('img.load.success', [$img]);
-                            });
-                            $img.one('error', function () {
-                                $img.attr('src', 'data:image/gif;base64,R0lGODlhAQABAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAABAAEAAAICVAEAOw==');
-                                $img.addClass('data-img-load-error');
-                                $(document).trigger('img.load.error', [$img]);
-                            });
-                            imgsrc && $img.attr('src', imgsrc);
-                            $img.removeAttr('data-img');
-                            $img.attr('data-img-load', '');
-                            $img.addClass('img-loading');
-                        }
+                        $img.loadImg('img');
                     }
                 });
             };
@@ -1939,26 +1941,26 @@ if (!Number.isNaN) {
             $(document).on('dom.load', context._load);
         },
         exports: {
-            load: function () {
+            load: function() {
                 this._load();
             }
         },
         setOptionsBefore: null,
         setOptionsAfter: null,
         initBefore: null,
-        initAfter: function (context) {
+        initAfter: function(context) {
             var $this = context.$element;
             var $container = context.$container;
             var opt = context.opt;
             var exports = context.exports;
         },
-        destroyBefore: function (context) {
+        destroyBefore: function(context) {
             var $this = context.$element;
         }
     };
     $.CUI.plugin(loadimageConfig);
-    $(document).on('dom.load.loadimage', function () {
-        $('[data-loadimage]').each(function (index, item) {
+    $(document).on('dom.load.loadimage', function() {
+        $('[data-loadimage]').each(function(index, item) {
             var $this = $(item);
             var data = $this.data();
             $this.loadimage(data).load();
@@ -2468,8 +2470,7 @@ if (!Number.isNaN) {
             duration: 300,
             height: 250,
             width: 375,
-            clickable: true,
-            lazingload: true,
+            lazingload: 1,
             autoscroll: 0,
             onchange: null,
             onbefore: null,
@@ -2490,12 +2491,27 @@ if (!Number.isNaN) {
         var prevLink = $('<a href="javascript:;" class="prev"><i class="icon-angle-left"></i></a>');
         var nextLink = $('<a href="javascript:;" class="next"><i class="icon-angle-right"></i></a>');
         var ratio = opt.height / opt.width;
-
+        var _loadimage = function(cache) {
+            var activeItems = $items.filter('.active');
+            if (activeItems.length === 0) {
+                activeItems = $items;
+            }
+            var firstActiveItem = activeItems.eq(0);
+            var itemWidth = $items.last().outerWidth();
+            var wrapWidth = $wrap.outerWidth();
+            var loadingCount = Math.ceil(wrapWidth * (1 + cache) / itemWidth);
+            var loadImageItems = firstActiveItem.nextAll().addBack().slice(0, loadingCount);
+            loadImageItems.each(function(index, item) {
+                $(item).find('[data-src]').each(function(index, img) {
+                    $(img).loadImg('src');
+                });
+            });
+        };
         var _getImageSize = function() {
             var maxHeight = $(window).height() - 100;
             var screenheight = opt.height > maxHeight ? maxHeight : opt.height;
             var screenwidth = $this.width() || $(window).width();
-            var tmpWidth = screenwidth > opt.width ? opt.width : screenwidth - 2;
+            var tmpWidth = screenwidth > opt.width ? opt.width : screenwidth;
             var tmpHeight = tmpWidth * ratio;
             tmpHeight = screenheight > tmpHeight ? tmpHeight : screenheight;
             return {
@@ -2532,14 +2548,6 @@ if (!Number.isNaN) {
                 var left = $item.position().left;
                 var right = left + $item.outerWidth();
                 if (left >= 0 && left <= maxwidth || right >= 0 && right <= maxwidth) {
-                    if (opt.lazingload) {
-                        $item.find('img').each(function(index, img) {
-                            if ($(img).data('src')) {
-                                $(img).attr('src', $(img).data('src'));
-                                $(img).data('src', null);
-                            }
-                        });
-                    }
                     list.push({
                         isFull: left >= 0 && right <= maxwidth,
                         element: $item
@@ -2588,18 +2596,28 @@ if (!Number.isNaN) {
                 prevLink.removeClass('disable');
                 nextLink.removeClass('disable');
             }
+            if (opt.lazingload) {
+                _loadimage(opt.lazingload);
+            }
         };
         var _shift = function(index, disableAnimation) {
             var left;
             var ismove = false;
-            var timer = disableAnimation ? 0 : opt.duration;
+            var duration = disableAnimation ? 0 : opt.duration;
             if ($.isInt(index)) {
+                if (index > $items.length) {
+                    index = index % $items.length;
+                    duration = 0;
+                }
                 var item = $items.eq(index - 1);
                 var offset = ($wrap.outerWidth() - item.outerWidth()) / 2;
                 left = $wrap.scrollLeft() + $(item).position().left - offset;
+                $this.addClass('shifter-moving');
                 $wrap.stop().animate({
                     'scrollLeft': left
-                }, timer);
+                }, duration, function() {
+                    $this.removeClass('shifter-moving');
+                });
                 return index;
             } else {
                 var begin = $wrap.scrollLeft();
@@ -2609,11 +2627,14 @@ if (!Number.isNaN) {
                     $items.each(function(j, item) {
                         left = $(item).position().left;
                         width = $(item).outerWidth();
-                        if (left > 0 && left < end && (left + width) > end) {
+                        if (left >= 0 && left <= end && (left + width) > end) {
                             ismove = true;
+                            $this.addClass('shifter-moving');
                             $wrap.stop().animate({
                                 'scrollLeft': begin + $(item).position().left
-                            }, timer);
+                            }, duration, function() {
+                                $this.removeClass('shifter-moving');
+                            });
                             return false;
                         }
                     });
@@ -2622,11 +2643,15 @@ if (!Number.isNaN) {
                     $items.each(function(j, item) {
                         left = $(item).position().left;
                         width = $(item).outerWidth();
-                        if (left <= 0 && (left + width) > 0) {
+                        if (left < 0 && (left + width) >= 0) {
+                            ismove = true;
+                            $this.addClass('shifter-moving');
                             $wrap.stop().animate({
                                 'scrollLeft': begin - end + ($(item).width() + $(item).position().left)
-                            }, timer);
-                            return true;
+                            }, duration, function() {
+                                $this.removeClass('shifter-moving');
+                            });
+                            return false;
                         }
                     });
                     return ismove;
@@ -2646,6 +2671,18 @@ if (!Number.isNaN) {
             opt = $.extend(opt, option);
             return opt;
         };
+        var _adjust = function() {
+            var currentScrollLeft = $wrap.scrollLeft();
+            var isScrollLeft = lastScrollLeft < currentScrollLeft;
+            var offset = Math.abs(lastScrollLeft - currentScrollLeft);
+            if (offset != 0) {
+                if (isScrollLeft) {
+                    _next();
+                } else {
+                    _prev();
+                }
+            }
+        }
         var _init = function() {
             obj = {
                 prev: function() {
@@ -2672,25 +2709,6 @@ if (!Number.isNaN) {
             $items = $list.find('li');
             $items.each(function(index, item) {
                 $(item).attr('shift-index', index + 1);
-                if (opt.clickable) {
-                    var i = index + 2;
-                    $(item).click(function() {
-                        obj.go(i);
-                    });
-                }
-                if (opt.lazingload) {
-                    var img = $(item).find('img[src]');
-                    img.data('src', img.attr('src'));
-                    img.attr('src', 'data:image/gif;base64,R0lGODlhAQABAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAABAAEAAAICVAEAOw==');
-                    $(item).addClass('img-loading');
-                    img.on('load', function() {
-                        if (img.data('src') == null) {
-                            $(item).removeClass('img-loading');
-                        } else {
-                            $(item).addClass('img-loading');
-                        }
-                    });
-                }
             });
             if (opt.autoscroll && $.isNumeric(opt.autoscroll)) {
                 setInterval(function() {
@@ -2711,20 +2729,25 @@ if (!Number.isNaN) {
             });
             $this.append(prevLink);
             $this.append(nextLink);
-            if ($.isMobile()) {
-                $list.on('swipeleft', obj.next);
-                $list.on('swiperight', obj.prev);
-            }
+
             $(document).on('dom.resize.shifter', function() {
                 _resize();
                 _scroll();
+
             });
             $wrap.on('scroll', function() {
                 if (timer) {
                     clearTimeout(timer);
                 }
                 timer = setTimeout(_scroll, 500);
+
             });
+            if ($.isMobile()) {
+                $wrap.on('touchstart', function() {
+                    lastScrollLeft = $wrap.scrollLeft();
+                });
+                $wrap.on('touchend', _adjust);
+            }
             $(document).on('dom.keydown', function(ctx, e) {
                 if (e.keyCode == '37') {
                     obj.prev();
@@ -2765,13 +2788,15 @@ if (!Number.isNaN) {
     var slickerConfig = {
         name: 'slicker',
         defaultOpt: {
+            lazyload: 1,
             arrows: true,
             centerMode: true,
             slidesToShow: 3,
             slidesToScroll: 1,
             autoscroll: 0,
             width: 375,
-            padding: 50
+            padding: 50,
+            index: 0
         },
         init: function(context) {
             var opt = context.opt;
@@ -2827,9 +2852,36 @@ if (!Number.isNaN) {
                 }
             ];
             opt.centerPadding = opt.padding + 'px';
+            opt.initialSlide = opt.index;
+            delete opt.index;
             delete opt.padding;
             delete opt.width;
             delete opt.autoscroll;
+
+
+            if (opt.lazyload) {
+                var loadImage = function() {
+                    var width = $this.width();
+                    var min = width * -1 * opt.lazyload;
+                    var max = width * (1 + opt.lazyload);
+                    var loadImageItems = [];
+                    $this.find('.slick-slide').each(function(index, item) {
+                        var offsetLeft = $(item).offset().left;
+                        var offsetRight = offsetLeft + $(item).outerWidth();
+                        if (offsetRight > min && offsetLeft < max) {
+                            loadImageItems.push($(item));
+                        }
+                    });
+                    $.each(loadImageItems, function(index, item) {
+                        $(item).find('[data-src]').each(function(index, img) {
+                            $(img).loadImg('src');
+                        });
+                    });
+                };
+                $this.on('setPosition', $.debounce(function() {
+                    loadImage();
+                }, 200));
+            }
             $this.slick(opt);
         },
         exports: {
