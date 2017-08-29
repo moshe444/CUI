@@ -362,7 +362,7 @@ dd {
 }
 
 /* line 42, ../../../src/scss/base/_utilities.scss */
-.block-center, .shifter ul > li > div > img {
+.block-center {
   display: block;
   position: absolute;
   top: 50%;
@@ -438,7 +438,7 @@ dd {
 
 /* line 118, ../../../src/scss/base/_utilities.scss */
 [class^="icon-"],
-[class*=" icon-"], .shifter .img-loading:before, .checkbox label > i, .radio label > i, .tooltip.info .tooltip-inner:before, .tooltip.warning .tooltip-inner:before, .tooltip.error .tooltip-inner:before, .panel > [data-collapse]:before, .panel > [data-collapse-load]:before, .slicker .slick-arrow, .header-menu-item .caret, .datatable-sort.active:before, .datatable-sort.active.desc:before {
+[class*=" icon-"], .checkbox label > i, .radio label > i, .tooltip.info .tooltip-inner:before, .tooltip.warning .tooltip-inner:before, .tooltip.error .tooltip-inner:before, .panel > [data-collapse]:before, .panel > [data-collapse-load]:before, .slicker .slick-arrow, .header-menu-item .caret, .datatable-sort.active:before, .datatable-sort.active.desc:before {
   display: inline-block;
   font: normal normal normal 14px/1 fonticon;
   font-size: inherit;
@@ -448,7 +448,7 @@ dd {
 }
 /* line 232, ../../../src/scss/base/_mixins.scss */
 [class^="icon-"]:before,
-[class*=" icon-"]:before, .shifter .img-loading:before, .checkbox label > i:before, .radio label > i:before, .tooltip.info .tooltip-inner:before, .tooltip.warning .tooltip-inner:before, .tooltip.error .tooltip-inner:before, .panel > [data-collapse]:before, .panel > [data-collapse-load]:before, .slicker .slick-arrow:before, .header-menu-item .caret:before, .datatable-sort.active:before, .datatable-sort.active.desc:before {
+[class*=" icon-"]:before, .checkbox label > i:before, .radio label > i:before, .tooltip.info .tooltip-inner:before, .tooltip.warning .tooltip-inner:before, .tooltip.error .tooltip-inner:before, .panel > [data-collapse]:before, .panel > [data-collapse-load]:before, .slicker .slick-arrow:before, .header-menu-item .caret:before, .datatable-sort.active:before, .datatable-sort.active.desc:before {
   text-align: center;
   font-style: normal;
 }
@@ -3088,7 +3088,7 @@ dd {
 }
 
 /* line 1005, ../../../src/scss/base/_icon.scss */
-.icon-spinner:before, .shifter .img-loading:before {
+.icon-spinner:before {
   content: "\f110";
 }
 
@@ -5227,7 +5227,7 @@ dd {
             transform: scale(1);
   }
 }
-/* line 26, ../../../src/scss/base/_animation.scss */
+/* line 28, ../../../src/scss/base/_animation.scss */
 .animation-zoom {
   -webkit-animation: imageZoom linear 50s;
           animation: imageZoom linear 50s;
@@ -5235,17 +5235,17 @@ dd {
           animation-iteration-count: infinite;
 }
 
-/* line 36, ../../../src/scss/base/_animation.scss */
+/* line 38, ../../../src/scss/base/_animation.scss */
 .animation-img-hover img {
   -webkit-transition: width 1s ease-in-out;
           transition: width 1s ease-in-out;
 }
-/* line 40, ../../../src/scss/base/_animation.scss */
+/* line 42, ../../../src/scss/base/_animation.scss */
 .animation-img-hover:hover img {
   width: 150% !important;
 }
 
-/* line 49, ../../../src/scss/base/_animation.scss */
+/* line 52, ../../../src/scss/base/_animation.scss */
 .cube-up,
 .cube-down {
   -webkit-transform-style: preserve-3d;
@@ -5254,25 +5254,25 @@ dd {
           transition: transform 0.5s ease-in-out;
 }
 
-/* line 54, ../../../src/scss/base/_animation.scss */
+/* line 58, ../../../src/scss/base/_animation.scss */
 .cube-up {
   -webkit-transform: rotateY(0deg) rotateX(-90deg) translateZ(-25px);
           transform: rotateY(0deg) rotateX(-90deg) translateZ(-25px);
 }
 
-/* line 57, ../../../src/scss/base/_animation.scss */
+/* line 62, ../../../src/scss/base/_animation.scss */
 .cube-down {
   -webkit-transform: rotateY(0deg) rotateX(90deg) translateZ(-25px);
           transform: rotateY(0deg) rotateX(90deg) translateZ(-25px);
 }
 
-/* line 60, ../../../src/scss/base/_animation.scss */
+/* line 66, ../../../src/scss/base/_animation.scss */
 .cube-show {
   -webkit-transform: rotateY(0deg) rotateX(0deg) translateZ(-25px);
           transform: rotateY(0deg) rotateX(0deg) translateZ(-25px);
 }
 
-/* line 63, ../../../src/scss/base/_animation.scss */
+/* line 70, ../../../src/scss/base/_animation.scss */
 .cube-clear {
   -webkit-transform: none !important;
           transform: none !important;
@@ -5301,24 +5301,6 @@ dd {
             transform: rotate(359deg);
   }
 }
-/* line 79, ../../../src/scss/base/_animation.scss */
-.shifter .img-loading {
-  position: relative;
-}
-/* line 81, ../../../src/scss/base/_animation.scss */
-.shifter .img-loading:before {
-  font-size: 18px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translateY(-50%) translateX(-50%);
-          transform: translateY(-50%) translateX(-50%);
-  -webkit-transition: -webkit-transform 0.5s ease-in-out;
-          transition: transform 0.5s ease-in-out;
-  -webkit-animation: rotate 1s infinite steps(8);
-          animation: rotate 1s infinite steps(8);
-}
-
 /* line 1, ../../../src/scss/plugin/_link.scss */
 a {
   text-decoration: none;
@@ -7017,7 +6999,7 @@ select {
   -webkit-transition: opacity 1s .5s ease-in-out;
           transition: opacity 1s .5s ease-in-out;
 }
-/* line 24, ../../../src/scss/plugin/_shifter.scss */
+/* line 21, ../../../src/scss/plugin/_shifter.scss */
 .shifter .next,
 .shifter .prev {
   z-index: 2;
@@ -7036,69 +7018,83 @@ select {
   background-color: #333333;
   border-radius: 100%;
 }
-/* line 40, ../../../src/scss/plugin/_shifter.scss */
+/* line 37, ../../../src/scss/plugin/_shifter.scss */
 .shifter .next:hover,
 .shifter .prev:hover {
   color: white;
 }
-/* line 43, ../../../src/scss/plugin/_shifter.scss */
+/* line 40, ../../../src/scss/plugin/_shifter.scss */
 .shifter .next.disable,
 .shifter .prev.disable {
   opacity: 0 !important;
   pointer-events: none;
 }
-/* line 48, ../../../src/scss/plugin/_shifter.scss */
+/* line 45, ../../../src/scss/plugin/_shifter.scss */
 .shifter .prev {
   left: 15px;
   -webkit-transition: opacity, left 0.5s ease-in-out;
           transition: opacity, left 0.5s ease-in-out;
 }
-/* line 51, ../../../src/scss/plugin/_shifter.scss */
+/* line 48, ../../../src/scss/plugin/_shifter.scss */
 .shifter .prev i {
   margin-left: -5px;
 }
-/* line 55, ../../../src/scss/plugin/_shifter.scss */
+/* line 52, ../../../src/scss/plugin/_shifter.scss */
 .shifter .next {
   right: 15px;
   -webkit-transition: opacity, right 0.5s ease-in-out;
           transition: opacity, right 0.5s ease-in-out;
 }
-/* line 58, ../../../src/scss/plugin/_shifter.scss */
+/* line 55, ../../../src/scss/plugin/_shifter.scss */
 .shifter .next i {
   margin-left: 5px;
 }
-/* line 63, ../../../src/scss/plugin/_shifter.scss */
+/* line 60, ../../../src/scss/plugin/_shifter.scss */
 .shifter:hover .prev {
   left: 5px;
   opacity: 1;
 }
-/* line 67, ../../../src/scss/plugin/_shifter.scss */
+/* line 64, ../../../src/scss/plugin/_shifter.scss */
 .shifter:hover .next {
   right: 5px;
   opacity: 1;
 }
+
 /* line 72, ../../../src/scss/plugin/_shifter.scss */
-.shifter .img-loading {
-  opacity: .8;
+[data-shifter] ul {
+  white-space: nowrap;
+}
+/* line 75, ../../../src/scss/plugin/_shifter.scss */
+[data-shifter] li {
+  display: inline-block;
+  width: 320px;
 }
 
-/* line 79, ../../../src/scss/plugin/_shifter.scss */
+/* line 82, ../../../src/scss/plugin/_shifter.scss */
 .shifter {
   height: 250px;
 }
-/* line 81, ../../../src/scss/plugin/_shifter.scss */
+/* line 84, ../../../src/scss/plugin/_shifter.scss */
 .shifter .wrap {
   height: 271px;
 }
-/* line 84, ../../../src/scss/plugin/_shifter.scss */
+/* line 87, ../../../src/scss/plugin/_shifter.scss */
 .shifter li {
+  max-width: 375px;
   height: 250px;
-  width: 375px;
   border-left: 1px solid #dddddd;
 }
-/* line 88, ../../../src/scss/plugin/_shifter.scss */
+/* line 91, ../../../src/scss/plugin/_shifter.scss */
 .shifter li:first-of-type {
   border-left: none;
+}
+/* line 94, ../../../src/scss/plugin/_shifter.scss */
+.shifter li img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  display: block;
 }
 
 /* Slider */
@@ -7233,22 +7229,15 @@ select {
   height: 100%;
   outline: none;
 }
-/* line 125, ../../../src/scss/plugin/_slicker.scss */
-.slicker .slick-slide img {
-  height: 100%;
-  width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-/* line 131, ../../../src/scss/plugin/_slicker.scss */
+/* line 126, ../../../src/scss/plugin/_slicker.scss */
 .slicker .slick-list {
   height: 100%;
 }
-/* line 134, ../../../src/scss/plugin/_slicker.scss */
+/* line 129, ../../../src/scss/plugin/_slicker.scss */
 .slicker .slick-track {
   height: 100%;
 }
-/* line 137, ../../../src/scss/plugin/_slicker.scss */
+/* line 132, ../../../src/scss/plugin/_slicker.scss */
 .slicker .slick-arrow {
   z-index: 2;
   display: block;
@@ -7269,63 +7258,82 @@ select {
   padding: 0;
   cursor: pointer;
 }
-/* line 156, ../../../src/scss/plugin/_slicker.scss */
+/* line 151, ../../../src/scss/plugin/_slicker.scss */
 .slicker .slick-arrow:hover {
   color: white;
 }
-/* line 159, ../../../src/scss/plugin/_slicker.scss */
+/* line 154, ../../../src/scss/plugin/_slicker.scss */
 .slicker .slick-arrow.disable {
   opacity: 0 !important;
   pointer-events: none;
 }
-/* line 163, ../../../src/scss/plugin/_slicker.scss */
+/* line 158, ../../../src/scss/plugin/_slicker.scss */
 .slicker .slick-arrow:before {
   font-size: 40px;
   color: white;
 }
-/* line 168, ../../../src/scss/plugin/_slicker.scss */
+/* line 163, ../../../src/scss/plugin/_slicker.scss */
 .slicker .slick-prev {
   left: 15px;
   -webkit-transition: opacity, left 0.5s ease-in-out;
           transition: opacity, left 0.5s ease-in-out;
 }
-/* line 172, ../../../src/scss/plugin/_slicker.scss */
+/* line 167, ../../../src/scss/plugin/_slicker.scss */
 .slicker .slick-prev:before {
   margin-left: -5px;
 }
-/* line 176, ../../../src/scss/plugin/_slicker.scss */
+/* line 171, ../../../src/scss/plugin/_slicker.scss */
 .slicker .slick-next {
   right: 15px;
   -webkit-transition: opacity, right 0.5s ease-in-out;
           transition: opacity, right 0.5s ease-in-out;
 }
-/* line 180, ../../../src/scss/plugin/_slicker.scss */
+/* line 175, ../../../src/scss/plugin/_slicker.scss */
 .slicker .slick-next:before {
   margin-left: 5px;
 }
-/* line 185, ../../../src/scss/plugin/_slicker.scss */
+/* line 180, ../../../src/scss/plugin/_slicker.scss */
 .slicker:hover .slick-prev {
   left: 5px;
   opacity: 1;
 }
-/* line 189, ../../../src/scss/plugin/_slicker.scss */
+/* line 184, ../../../src/scss/plugin/_slicker.scss */
 .slicker:hover .slick-next {
   right: 5px;
   opacity: 1;
 }
 
-/* line 197, ../../../src/scss/plugin/_slicker.scss */
+/* line 192, ../../../src/scss/plugin/_slicker.scss */
+[data-slicker] ul {
+  white-space: nowrap;
+}
+/* line 195, ../../../src/scss/plugin/_slicker.scss */
+[data-slicker] li {
+  display: inline-block;
+  width: 320px;
+  max-width: 375px;
+}
+
+/* line 204, ../../../src/scss/plugin/_slicker.scss */
 .slicker {
   height: 250px;
 }
-/* line 199, ../../../src/scss/plugin/_slicker.scss */
+/* line 206, ../../../src/scss/plugin/_slicker.scss */
 .slicker li {
-  max-width: 375px;
+  height: 250px;
   border-left: 1px solid #dddddd;
 }
-/* line 202, ../../../src/scss/plugin/_slicker.scss */
+/* line 209, ../../../src/scss/plugin/_slicker.scss */
 .slicker li:first-of-type {
   border-left: none;
+}
+/* line 213, ../../../src/scss/plugin/_slicker.scss */
+.slicker img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  display: block;
 }
 
 /* line 1, ../../../src/scss/plugin/_header.scss */
@@ -7361,12 +7369,12 @@ select {
   height: 50px;
 }
 /* line 27, ../../../src/scss/plugin/_header.scss */
-.header-form > .input {
-  margin-top: 10px;
+.header-form .input {
+  margin-top: 5px;
   margin-bottom: 0;
 }
 /* line 30, ../../../src/scss/plugin/_header.scss */
-.header-form > .input input {
+.header-form .input input {
   border-color: transparent;
 }
 /* line 34, ../../../src/scss/plugin/_header.scss */
@@ -7543,48 +7551,49 @@ select {
 
   /* line 189, ../../../src/scss/plugin/_header.scss */
   .header-form {
+    padding-left: 50px;
     float: left;
   }
-  /* line 191, ../../../src/scss/plugin/_header.scss */
+  /* line 192, ../../../src/scss/plugin/_header.scss */
   .header-form > .header-form-btn {
     display: none !important;
   }
-  /* line 194, ../../../src/scss/plugin/_header.scss */
+  /* line 195, ../../../src/scss/plugin/_header.scss */
   .header-form .input {
     width: 280px;
   }
 
-  /* line 198, ../../../src/scss/plugin/_header.scss */
+  /* line 199, ../../../src/scss/plugin/_header.scss */
   .header-menu-list {
     float: left;
   }
-  /* line 200, ../../../src/scss/plugin/_header.scss */
+  /* line 201, ../../../src/scss/plugin/_header.scss */
   .header-menu-list.right {
     float: right;
   }
 
-  /* line 204, ../../../src/scss/plugin/_header.scss */
+  /* line 205, ../../../src/scss/plugin/_header.scss */
   .header-menu-item {
     float: left;
   }
-  /* line 207, ../../../src/scss/plugin/_header.scss */
+  /* line 208, ../../../src/scss/plugin/_header.scss */
   .header-menu-item:hover > ul {
     height: 51px !important;
     box-shadow: 0 0 5px #efefef;
   }
-  /* line 210, ../../../src/scss/plugin/_header.scss */
+  /* line 211, ../../../src/scss/plugin/_header.scss */
   .header-menu-item:hover > ul > li {
     opacity: 1;
   }
-  /* line 213, ../../../src/scss/plugin/_header.scss */
+  /* line 214, ../../../src/scss/plugin/_header.scss */
   .header-menu-item:hover > ul.buyers, .header-menu-item:hover > ul.learn {
     height: 102px !important;
   }
-  /* line 218, ../../../src/scss/plugin/_header.scss */
+  /* line 219, ../../../src/scss/plugin/_header.scss */
   .header-menu-item > a {
     display: inline-block;
   }
-  /* line 221, ../../../src/scss/plugin/_header.scss */
+  /* line 222, ../../../src/scss/plugin/_header.scss */
   .header-menu-item > ul {
     height: 0 !important;
     position: absolute;
@@ -7593,7 +7602,7 @@ select {
     left: 0;
     right: 0;
   }
-  /* line 228, ../../../src/scss/plugin/_header.scss */
+  /* line 229, ../../../src/scss/plugin/_header.scss */
   .header-menu-item > ul > li {
     padding: 10px;
     height: 51px;
@@ -7601,7 +7610,7 @@ select {
     color: black !important;
     text-align: right;
   }
-  /* line 234, ../../../src/scss/plugin/_header.scss */
+  /* line 235, ../../../src/scss/plugin/_header.scss */
   .header-menu-item > ul > li a {
     display: inline-block;
     margin: 0 20px;
@@ -8602,22 +8611,26 @@ table.gridtable tbody tr {
 }
 
 /* line 1, ../../../src/scss/plugin/_loading.scss */
-[data-img], [data-img-load] {
+[data-img], [data-img-load], [data-src], [data-src-load] {
   -webkit-transition: opacity .5s ease-in-out;
           transition: opacity .5s ease-in-out;
-  opacity: 0;
+  opacity: .1;
 }
-/* line 4, ../../../src/scss/plugin/_loading.scss */
-[data-img].img-loading, [data-img-load].img-loading {
-  opacity: .5;
-  background: black;
+
+/* line 6, ../../../src/scss/plugin/_loading.scss */
+.data-img-load-success {
+  opacity: 1 !important;
 }
-/* line 8, ../../../src/scss/plugin/_loading.scss */
-[data-img].data-img-load-success, [data-img-load].data-img-load-success {
-  opacity: 1;
+/* line 7, ../../../src/scss/plugin/_loading.scss */
+.data-img-load-success:before, .data-img-load-success.after {
+  display: none;
 }
-/* line 11, ../../../src/scss/plugin/_loading.scss */
-[data-img].data-img-load-error, [data-img-load].data-img-load-error {
-  background: red;
-  opacity: 1;
+
+/* line 13, ../../../src/scss/plugin/_loading.scss */
+.data-img-load-error {
+  opacity: 1 !important;
+  background-image: url("img/noimg.gif");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
 }

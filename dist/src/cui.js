@@ -1899,10 +1899,12 @@ if (!Number.isNaN) {
         var imgsrc = $img.data(key);
         if ($img.is('img') && imgsrc) {
             $img.one('load', function() {
+                $img.off('error');
                 $img.addClass('data-img-load-success');
                 $(document).trigger('img.load.success', [$img]);
             });
             $img.one('error', function() {
+                $img.off('load');
                 $img.attr('src', 'data:image/gif;base64,R0lGODlhAQABAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAABAAEAAAICVAEAOw==');
                 $img.addClass('data-img-load-error');
                 $(document).trigger('img.load.error', [$img]);
@@ -1911,7 +1913,6 @@ if (!Number.isNaN) {
             $img.data(key, null);
             $img.removeAttr('data-' + key);
             $img.attr('data-img-load', '');
-            $img.addClass('img-loading');
         }
     };
     var loadimageConfig = {
@@ -2627,11 +2628,11 @@ if (!Number.isNaN) {
                     $items.each(function(j, item) {
                         left = $(item).position().left;
                         width = $(item).outerWidth();
-                        if (left >= 0 && left <= end && (left + width) > end) {
+                        if (left >= 0 && (left + width) > end) {
                             ismove = true;
                             $this.addClass('shifter-moving');
                             $wrap.stop().animate({
-                                'scrollLeft': begin + $(item).position().left
+                                'scrollLeft': begin + left
                             }, duration, function() {
                                 $this.removeClass('shifter-moving');
                             });
@@ -2647,7 +2648,7 @@ if (!Number.isNaN) {
                             ismove = true;
                             $this.addClass('shifter-moving');
                             $wrap.stop().animate({
-                                'scrollLeft': begin - end + ($(item).width() + $(item).position().left)
+                                'scrollLeft': begin - end + (left + width)
                             }, duration, function() {
                                 $this.removeClass('shifter-moving');
                             });
